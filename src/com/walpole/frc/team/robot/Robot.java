@@ -1,14 +1,13 @@
 
-package org.usfirst.frc.team1153.robot;
+package com.walpole.frc.team.robot;
+
+import com.walpole.frc.team.robot.commands.ExampleCommand;
+import com.walpole.frc.team.robot.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team1153.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1153.robot.subsystems.Drive;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Drive exampleSubsystem = new Drive();
+	public static final Drive driveSubsystem = new Drive();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -99,6 +98,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        driveSubsystem.drive(oi.getDriverJoystick());
     }
     
     /**

@@ -1,25 +1,29 @@
 
-package org.usfirst.frc.team1153.robot.subsystems;
+package com.walpole.frc.team.robot.subsystems;
 
-import org.usfirst.frc.team1153.robot.RobotMap;
+import com.walpole.frc.team.robot.subsystems.Drive;
+
+import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class Drive extends Subsystem {
 	
 	private RobotDrive robotDrive;
 	private Encoder leftEncoder;
 	private Encoder rightEncoder;
-	private Victor  leftFrontVictor;
-	private Victor  leftBackVictor;
-	private Victor  rightFrontVictor;
-	private Victor  rightBackVictor;
+	private Victor leftFrontVictor;
+	private Victor leftBackVictor;
+	private Victor rightFrontVictor;
+	private Victor rightBackVictor;
+	private double currSpeed;
+	public enum Shifter {High, Low}
+	public enum Speed {Normal, Slow}
+	public static final Drive drive = new Drive();
 	
 	public Drive() {
 		leftFrontVictor = new Victor(RobotMap.LEFT_FRONT_MOTOR);
@@ -27,11 +31,8 @@ public class Drive extends Subsystem {
 		rightFrontVictor = new Victor(RobotMap.RIGHT_FRONT_MOTOR);
 		rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
 		
-		
 		robotDrive = new RobotDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
-				
 	}
-	
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -40,5 +41,19 @@ public class Drive extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    public void drive(Joystick joystick) {
+    	double moveValue = 0.8 * joystick.getY();
+    	currSpeed = moveValue;
+		double rotateValue = 0.75 * joystick.getX();
+		robotDrive.arcadeDrive(moveValue, rotateValue, true);
+    }
+    
+    public double getCurrSpeed () {
+		return currSpeed;
+	}
+    
+    
+    
 }
 
