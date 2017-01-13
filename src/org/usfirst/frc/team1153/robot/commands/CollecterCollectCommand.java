@@ -1,22 +1,19 @@
-
 package org.usfirst.frc.team1153.robot.commands;
 
 import org.usfirst.frc.team1153.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
-public class ExampleCommand extends Command {
+public class CollecterCollectCommand extends Command {
+	 // Called just before this Command runs the first time
+	
+	public CollecterCollectCommand() {
+        requires(Robot.collector);
 
-    public ExampleCommand() {
-        // Use requires() here to declare subsystem dependencies
-       // requires(Robot.exampleSubsystem);
-    }
-
-    // Called just before this Command runs the first time
+	}
+	
     protected void initialize() {
+    	Robot.collector.collect();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,5 +32,6 @@ public class ExampleCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.collector.stopCollecting();
     }
 }

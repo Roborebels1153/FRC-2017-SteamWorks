@@ -1,18 +1,13 @@
-
 package org.usfirst.frc.team1153.robot.commands;
 
 import org.usfirst.frc.team1153.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
-public class ExampleCommand extends Command {
-
-    public ExampleCommand() {
+public class ShooterSpeedCommand extends Command {
+    public ShooterSpeedCommand() {
         // Use requires() here to declare subsystem dependencies
-       // requires(Robot.exampleSubsystem);
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -35,5 +30,6 @@ public class ExampleCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.shooter.stopShooting();
     }
 }
