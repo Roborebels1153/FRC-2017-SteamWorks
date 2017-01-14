@@ -2,7 +2,7 @@
 package com.walpole.frc.team.robot.subsystems;
 
 import com.walpole.frc.team.robot.subsystems.Drive;
-
+import com.walpole.frc.team.lib.RebelDrive;
 import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -31,7 +31,7 @@ public class Drive extends Subsystem {
 		rightFrontVictor = new Victor(RobotMap.RIGHT_FRONT_MOTOR);
 		rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
 		
-		robotDrive = new RobotDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
+		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
 	}
     
     // Put methods for controlling this subsystem
