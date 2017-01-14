@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1153.robot;
+package com.walpole.frc.team.robot;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -12,10 +12,9 @@ public class RobotMap {
 	public static int RIGHT_FRONT_MOTOR = 2;
 	public static int RIGHT_BACK_MOTOR = 3;
 	
-	public static int SHOOTER_MOTOR1 = 4;
-	public static int SHOOTER_MOTOR2 = 5;
+	public static int SHOOTER_MOTOR = 4;
 	
-	public static int COLLECT_MOTOR = 6;
+	public static int COLLECT_MOTOR = 5;
 
 
     // For example to map the left and right motors, you could define the

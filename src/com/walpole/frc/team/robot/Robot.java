@@ -1,15 +1,15 @@
 
-package org.usfirst.frc.team1153.robot;
+package com.walpole.frc.team.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import org.usfirst.frc.team1153.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1153.robot.subsystems.Collector;
-import org.usfirst.frc.team1153.robot.subsystems.Drive;
-import org.usfirst.frc.team1153.robot.subsystems.Shooter;
+import com.walpole.frc.team.robot.commands.ExampleCommand;
+import com.walpole.frc.team.robot.subsystems.Collector;
+import com.walpole.frc.team.robot.subsystems.Drive;
+import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

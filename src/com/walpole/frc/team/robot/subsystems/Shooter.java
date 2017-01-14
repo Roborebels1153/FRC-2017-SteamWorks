@@ -1,14 +1,14 @@
-package org.usfirst.frc.team1153.robot.subsystems;
+package com.walpole.frc.team.robot.subsystems;
 
-import org.usfirst.frc.team1153.robot.RobotMap;
+import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Shooter extends Subsystem{
-	private Victor shooterMotor1;
-	private Victor shooterMotor2;
+	private Victor shooterMotor;
+	public double speed;
 
 	
     // Put methods for controlling this subsystem
@@ -17,16 +17,13 @@ public class Shooter extends Subsystem{
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-		shooterMotor1 = new Victor(RobotMap.SHOOTER_MOTOR1);
-		shooterMotor2 = new Victor(RobotMap.SHOOTER_MOTOR2);
+		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
     }
     
     public void shoot() {
-    	shooterMotor1.set(1);
-    	shooterMotor2.set(-1);
+    	shooterMotor.set(speed);
     }
     public void stopShooting() {
-    	shooterMotor1.set(0);
-    	shooterMotor2.set(0);
+    	shooterMotor.set(0);
     }
 }

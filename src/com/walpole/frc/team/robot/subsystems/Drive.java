@@ -1,7 +1,7 @@
 
-package org.usfirst.frc.team1153.robot.subsystems;
+package com.walpole.frc.team.robot.subsystems;
 
-import org.usfirst.frc.team1153.robot.RobotMap;
+import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;

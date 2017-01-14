@@ -1,11 +1,11 @@
-package org.usfirst.frc.team1153.robot;
+package com.walpole.frc.team.robot;
 
-import org.usfirst.frc.team1153.robot.commands.CollecterCollectCommand;
-import org.usfirst.frc.team1153.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1153.robot.commands.ShooterShootCommand;
-import org.usfirst.frc.team1153.robot.subsystems.Shooter;
-
-import com.walpole.frc.team1153.lib.RebelTrigger;
+import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
+import com.walpole.frc.team.robot.commands.ExampleCommand;
+import com.walpole.frc.team.robot.commands.ShooterShootCommand;
+import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
+import com.walpole.frc.team.robot.lib.RebelTrigger;
+import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -24,12 +24,22 @@ public class OI {
     Button opTriggerL = new RebelTrigger(opStick, 2);
     Button opTriggerR = new RebelTrigger(opStick, 3);
     
-    Button opBumperR = new JoystickButton(opStick, 1);
+    Button opBumperR = new JoystickButton(opStick, 5);
+    Button opBumperL = new JoystickButton(opStick, 4);
+    Button opA = new JoystickButton(opStick, 0);
+    Button opB = new JoystickButton(opStick, 1);
+    Button opX = new JoystickButton(opStick, 2);
+    Button opY = new JoystickButton(opStick, 3);
+
+
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-	opBumperR.whenPressed(new ShooterShootCommand());
+	opA.whenPressed(new ShooterSpeedCommand(0));
+	opB.whenPressed(new ShooterSpeedCommand(1));
+	opX.whenPressed(new ShooterSpeedCommand(2));
+	opY.whenPressed(new ShooterSpeedCommand(3));
 
 }
 
