@@ -1,10 +1,6 @@
 package com.walpole.frc.team.robot;
 
-import com.walpole.frc.team.lib.RebelTrigger;
-
 import com.walpole.frc.team.robot.commands.ExampleCommand;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
-import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -43,13 +39,10 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	
 	private Joystick driverJoystick = new Joystick(RobotMap.DRIVER_JOYSTICK);
-	
-	private Button drLT = new RebelTrigger(driverJoystick, 2);
-	private Button drRT = new RebelTrigger(driverJoystick, 3);
+	//private Button buttonA = new JoystickButton(joystick, 1);
+	//private Button buttonB = new JoystickButton(joystick, 2);
 	
 	public OI() {
-		drLT.whileHeld(new ShiftHighCommand());
-		drRT.whileHeld(new ShiftLowCommand());
 	}
 	
 	public Joystick getDriverJoystick() {

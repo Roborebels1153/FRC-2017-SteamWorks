@@ -3,7 +3,7 @@ package com.walpole.frc.team.lib;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 
-public final class RebelTrigger extends Button {
+public class RebelTrigger extends Button {
 
 	private Joystick joystick;
 	private int trigger;

@@ -2,7 +2,6 @@
 package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.ExampleCommand;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -24,7 +23,7 @@ public class Robot extends IterativeRobot {
 	public static final Drive driveSubsystem = new Drive();
 	public static OI oi;
 
-    private Command autonomousCommand;
+    Command autonomousCommand;
     SendableChooser chooser;
 
     /**
@@ -92,7 +91,6 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        
     }
 
     /**
@@ -109,5 +107,4 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
-    
 }
