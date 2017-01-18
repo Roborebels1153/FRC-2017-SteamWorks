@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team1153.robot;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc; 
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -13,10 +16,12 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import org.usfirst.frc.team1153.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1153.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team1153.vision.Pipeline;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,7 +37,7 @@ public class Robot extends IterativeRobot {
 	private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240; 
 	
-	private VisionThread visionThread;
+	private VisionThread visionThread;;
 	private double centerX = 0.0; 
 	private RobotDrive drive; 
 	
@@ -51,20 +56,38 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
-        double[] defaultValue = new double[0];
-        while (true) {
-        	double[] areas = table.getNumberArray("area", defaultValue);
-        	System.out.print("areas: ");
-        	for (double area : areas) {
-        		System.out.print(area + " ");
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+       
+////        chooser.addObject("My Auto", new MyAutoCommand());
+//        SmartDashboard.putData("Auto mode", chooser);
+////        double[] defaultValue = new double[0];
+////        
+////        while (true) {
+////        	double[] areas = table.getNumberArray("area", defaultValue);
+////        	System.out.print("areas: ");
+////        	for (double area : areas) {
+////        		System.out.print(area + " ");
+////        		
+////        	}
+////        	
+////        	System.out.println();
+////        	Timer.delay(1);
+////        	
+////        }
+        
+        visionThread = new VisionThread(camera, new Pipeline(), pipeline -> {
+        	if (!pipeline.filterContoursOutput().isEmpty()) {
+        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+        		synchronized (imgLock) {
+        			centerX = r.x + (r.width / 2);
+        		}
         	}
-        	System.out.println();
-        	Timer.delay(1);
-        }
+        });
         
+        visionThread.start();
         
+        drive = new RobotDrive(1,2);
         
     }
 	
@@ -113,6 +136,15 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+        	double centerX;
+        	synchronized (imgLock) {
+        		centerX = this.centerX;
+        	}
+        	
+        	double turn = centerX - (IMG_WIDTH / 2);
+        	drive.arcadeDrive(-0.6, turn * 0.005);
+        
     }
 
     public void teleopInit() {
