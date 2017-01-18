@@ -4,6 +4,7 @@ import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
+import com.walpole.frc.team.robot.commands.ShooterSpeedIncrement;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
@@ -24,22 +25,27 @@ public class OI {
     Button opTriggerL = new RebelTrigger(opStick, 2);
     Button opTriggerR = new RebelTrigger(opStick, 3);
     
-    Button opBumperR = new JoystickButton(opStick, 5);
-    Button opBumperL = new JoystickButton(opStick, 4);
-    Button opA = new JoystickButton(opStick, 0);
-    Button opB = new JoystickButton(opStick, 1);
-    Button opX = new JoystickButton(opStick, 2);
-    Button opY = new JoystickButton(opStick, 3);
+    Button opA = new JoystickButton(opStick, 1);
+    Button opB = new JoystickButton(opStick, 2);
+    Button opX = new JoystickButton(opStick, 3);
+    Button opY = new JoystickButton(opStick, 4);
+    
+    Button opBumperL = new JoystickButton(opStick, 5);
+    Button opBumperR = new JoystickButton(opStick, 6);
+
 
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-	opA.whenPressed(new ShooterSpeedCommand(0));
-	opB.whenPressed(new ShooterSpeedCommand(1));
-	opX.whenPressed(new ShooterSpeedCommand(2));
-	opY.whenPressed(new ShooterSpeedCommand(3));
+	opA.whenPressed(new ShooterSpeedCommand(0.25));
+	opB.whenPressed(new ShooterSpeedCommand(0.5));
+	opX.whenPressed(new ShooterSpeedCommand(0.75));
+	opY.whenPressed(new ShooterSpeedCommand(1));
+	
+	opBumperL.whenPressed(new ShooterSpeedIncrement(-0.1));
+	opBumperR.whenPressed(new ShooterSpeedIncrement(0.1));
 
 }
 

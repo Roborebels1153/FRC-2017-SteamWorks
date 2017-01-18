@@ -21,9 +21,6 @@ public class ShooterShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.shooter.speed == 0) {
-    		Robot.shooter.speed = 1;
-    	}
     	Robot.shooter.shoot();
     }
 
