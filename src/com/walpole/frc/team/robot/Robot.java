@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
+import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static final Drive driveSubsystem = new Drive();
 	public static OI oi;
+	public static final Climb climbSubsystem = new Climb();
 
     private Command autonomousCommand;
     SendableChooser chooser;
@@ -101,6 +103,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         driveSubsystem.drive(oi.getDriverJoystick());
+
     }
     
     /**

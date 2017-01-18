@@ -11,6 +11,7 @@ public class RobotMap {
 	public static int LEFT_BACK_MOTOR = 1;
 	public static int RIGHT_FRONT_MOTOR = 2;
 	public static int RIGHT_BACK_MOTOR = 3;
+	public static int CLIMB_MOTOR = 6;
 	
 	public static int DRIVER_JOYSTICK = 0;
 	public static int OPERATOR_JOYSTICK = 1; 
@@ -20,6 +21,7 @@ public class RobotMap {
 	
 	public static int TRANSMISSION_SOLENOID_A = 0;
 	public static int TRANSMISSION_SOLENOID_B = 1;
+	
 	
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.

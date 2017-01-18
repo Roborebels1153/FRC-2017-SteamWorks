@@ -1,10 +1,12 @@
 package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.lib.RebelTrigger;
-
+import com.walpole.frc.team.robot.commands.ClimbDownCommand;
+import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
+import com.walpole.frc.team.robot.commands.StopClimbCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -46,10 +48,16 @@ public class OI {
 	
 	private Button drLT = new RebelTrigger(driverJoystick, 2);
 	private Button drRT = new RebelTrigger(driverJoystick, 3);
+	private Button drRB = new JoystickButton(driverJoystick, 6);     //the drLb and drRb are the left and rught bumpers on the XBOX controller
+	private Button drLB = new JoystickButton(driverJoystick, 5 );
 	
 	public OI() {
 		drLT.whileHeld(new ShiftHighCommand());
 		drRT.whileHeld(new ShiftLowCommand());
+		drRB.whileHeld(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
+		drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning
+		drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
+		drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
 	}
 	
 	public Joystick getDriverJoystick() {
