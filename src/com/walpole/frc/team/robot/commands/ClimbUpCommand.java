@@ -4,6 +4,7 @@ package com.walpole.frc.team.robot.commands;
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimbUpCommand extends Command {
 
     public ClimbUpCommand() {
-    	requires(Robot.climbSubsystem);    //for this command, we require the climb subsystem
+    	requires(Robot.climbSubsystem); //for this command, we require the climb subsystem
         // Use requires() here to declare subsystem dependencies
     }
 
@@ -26,7 +27,9 @@ public class ClimbUpCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.climbSubsystem.getLimitSwitch().get();     //this is referring to whether the limit switch if true or not
+    	boolean limitSwitchState = Robot.climbSubsystem.getLimitSwitch().get();
+    	SmartDashboard.putBoolean("Limit Switch", limitSwitchState); // Write the state of the limit switch to the SmartDashboard
+    	return limitSwitchState; // this is referring to whether the limit switch if true or not
     }
 
     // Called once after isFinished returns true
