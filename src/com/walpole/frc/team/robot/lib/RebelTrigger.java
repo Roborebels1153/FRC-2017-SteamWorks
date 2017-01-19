@@ -13,6 +13,7 @@ public class RebelTrigger extends Button {
 		this.trigger = trigger;
 	}
 
+
 	@Override
 	public boolean get() {
 		
