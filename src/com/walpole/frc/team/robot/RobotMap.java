@@ -22,6 +22,8 @@ public class RobotMap {
 	public static int TRANSMISSION_SOLENOID_A = 0;
 	public static int TRANSMISSION_SOLENOID_B = 1;
 	
+	public static int CLIMB_LIMIT_SWITCH = 0;
+	
 	
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.

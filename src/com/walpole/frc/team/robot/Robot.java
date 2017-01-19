@@ -103,6 +103,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         driveSubsystem.drive(oi.getDriverJoystick());
+        climbSubsystem.checkLimitSwitch();
 
     }
     

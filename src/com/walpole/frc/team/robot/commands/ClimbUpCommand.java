@@ -36,7 +36,7 @@ public class ClimbUpCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.climbSubsystem.stopClimb();  //this stops the robot, and prohibits and climbing movement
+    	//Robot.climbSubsystem.stopClimb();  //this stops the robot, and prohibits and climbing movement
 
     }
     
