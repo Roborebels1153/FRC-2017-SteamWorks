@@ -17,24 +17,21 @@ public class ClimbUpCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.climbSubsystem.climbUp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (!Robot.climbSubsystem.getLimitSwitch().get()){
-    		Robot.climbSubsystem.climbUp();                       //to execute, we need the climbUp method, and we need to make sure that the limit switch is not true
-    	} else {
-    		Robot.climbSubsystem.stopClimb();
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	return Robot.climbSubsystem.getLimitSwitch().get();     //this is referring to whether the limit switch if true or not
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.climbSubsystem.stopClimb();         //calling the stopClimb method
     }
 
     // Called when another command which requires one or more of the same
