@@ -40,6 +40,12 @@ public class Robot extends IterativeRobot {
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
     }
+    
+    public void updateDashboard() {
+    	SmartDashboard.putBoolean("Limit Switch", climbSubsystem.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
+    	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
+		//SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
+    }
 	
 	/**
      * This function is called once each time the robot enters Disabled mode.
@@ -103,7 +109,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         driveSubsystem.drive(oi.getDriverJoystick());
-
+       updateDashboard();
     }
     
     /**

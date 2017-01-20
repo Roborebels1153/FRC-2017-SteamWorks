@@ -22,7 +22,12 @@ public class RobotMap {
 	public static int TRANSMISSION_SOLENOID_A = 0;
 	public static int TRANSMISSION_SOLENOID_B = 1;
 	
-	public static int CLIMB_LIMIT_SWITCH = 0;
+	public static int LEFT_ENCODER_A = 0;
+	public static int LEFT_ENCODER_B = 1;
+	//public static int RIGHT_ENCODER_A = 2;
+	//public static int RIGHT_ENCODER_B = 3;
+	
+	public static int CLIMB_LIMIT_SWITCH = 4;
 	
 	
     // For example to map the left and right motors, you could define the

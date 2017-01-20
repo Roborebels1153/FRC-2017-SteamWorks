@@ -6,6 +6,7 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.lib.RebelDrive;
 import com.walpole.frc.team.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem {
 
@@ -44,6 +46,10 @@ public class Drive extends Subsystem {
 		rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
 
 		transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
+		
+		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
+		
+		//rightEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);  
 
 		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
 	}
@@ -84,5 +90,14 @@ public class Drive extends Subsystem {
 		transmission.set(DoubleSolenoid.Value.kReverse);
 		currGear = Shifter.Low;
 	}
+	
+	public int getLeftEncoderCount () {
+		return leftEncoder.get();
+	}
+	
+	//public int getRightEncoderCount () {   
+	    //return rightEncoder.get();        
+	}
+	
 
-}
+

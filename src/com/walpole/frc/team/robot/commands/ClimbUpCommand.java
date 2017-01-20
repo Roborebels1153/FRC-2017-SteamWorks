@@ -27,20 +27,17 @@ public class ClimbUpCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	boolean limitSwitchState = Robot.climbSubsystem.getLimitSwitch().get();
-    	SmartDashboard.putBoolean("Limit Switch", limitSwitchState); // Write the state of the limit switch to the SmartDashboard
-    	return limitSwitchState; // this is referring to whether the limit switch if true or not
+    	return Robot.climbSubsystem.getLimitSwitch().get(); // this is referring to whether the limit switch if true or not
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.climbSubsystem.stopClimb();         //calling the stopClimb method
+    	Robot.climbSubsystem.stopClimb(); //calling the stopClimb method
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	
 
     }
     
