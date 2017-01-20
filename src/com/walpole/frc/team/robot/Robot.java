@@ -1,6 +1,7 @@
 
 package com.walpole.frc.team.robot;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -42,6 +43,11 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+    }
+    
+    public static void updateDashboard() {
+		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
+		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
     }
 	
 	/**
@@ -104,7 +110,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        
+        updateDashboard();
     }
     
     /**

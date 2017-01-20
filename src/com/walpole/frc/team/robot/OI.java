@@ -4,6 +4,7 @@ import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
+import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
 import com.walpole.frc.team.robot.commands.ShooterSpeedIncrement;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 import com.walpole.frc.team.robot.subsystems.Shooter;
@@ -44,8 +45,8 @@ public OI() {
 	opX.whenPressed(new ShooterSpeedCommand(0.75));
 	opY.whenPressed(new ShooterSpeedCommand(1));
 	
-	opBumperL.whenPressed(new ShooterSpeedIncrement(-0.1));
-	opBumperR.whenPressed(new ShooterSpeedIncrement(0.1));
+	opBumperL.whenPressed(new ShooterSpeedDecrement());
+	opBumperR.whenPressed(new ShooterSpeedIncrement());
 
 }
 

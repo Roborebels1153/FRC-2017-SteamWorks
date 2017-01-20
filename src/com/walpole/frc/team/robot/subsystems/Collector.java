@@ -10,12 +10,12 @@ public class Collector extends Subsystem{
 	
 	
     public void initDefaultCommand() {
-    	collectMotor = new Victor(RobotMap.COLLECT_MOTOR);
+    	//collectMotor = new Victor(RobotMap.COLLECT_MOTOR);
     }
     public void collect() {
-    	collectMotor.set(1);
+    	//collectMotor.set(1);
     }
     public void stopCollecting() {
-    	collectMotor.set(0);
+    	//collectMotor.set(0);
     }
 }
