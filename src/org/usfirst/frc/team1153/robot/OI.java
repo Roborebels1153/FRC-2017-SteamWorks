@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1153.robot;
 
-import org.usfirst.frc.team1153.robot.commands.ExampleCommand;
+import org.usfirst.frc.team1153.robot.commands.CountRPM;
 
 import edu.wpi.first.wpilibj.buttons.Button;
 

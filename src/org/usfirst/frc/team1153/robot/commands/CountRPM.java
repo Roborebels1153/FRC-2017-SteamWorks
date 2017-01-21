@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class CountRPM extends Command {
 
-    public ExampleCommand() {
+    public CountRPM() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.exampleSubsystem);
     }
