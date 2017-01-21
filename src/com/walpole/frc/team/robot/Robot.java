@@ -45,6 +45,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putBoolean("Limit Switch", climbSubsystem.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
     	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
 		//SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
+    	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroCount());
     }
 	
 	/**

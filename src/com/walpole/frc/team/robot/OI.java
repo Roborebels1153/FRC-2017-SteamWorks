@@ -1,6 +1,6 @@
 package com.walpole.frc.team.robot;
 
-import com.walpole.frc.team.lib.RebelTrigger;
+import com.walpole.frc.team.robot.lib.RebelTrigger;
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
