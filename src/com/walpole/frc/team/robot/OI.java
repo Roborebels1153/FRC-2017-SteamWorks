@@ -52,11 +52,11 @@ public class OI {
 	private Button drLB = new JoystickButton(driverJoystick, 5 );
 	
 	public OI() {
-		drLT.whileHeld(new ShiftHighCommand());
-		drRT.whileHeld(new ShiftLowCommand());
-		drRB.whileHeld(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
+		drLT.whenPressed(new ShiftHighCommand());
+		drLT.whenReleased(new ShiftLowCommand());
+		drRB.whenPressed(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
 		drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning
-		drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
+		drLB.whenPressed(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
 		drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
 	}
 	

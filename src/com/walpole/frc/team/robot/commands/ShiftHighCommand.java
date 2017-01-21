@@ -36,6 +36,5 @@ public class ShiftHighCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.driveSubsystem.shiftLow();   //it is necessary to put shiftLow on interrupted, not end
     }
 }
