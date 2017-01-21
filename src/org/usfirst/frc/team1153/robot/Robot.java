@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Counter exampleSubsystem = new Counter();
+	public static final Counter Counter = new Counter();
 	public static OI oi;
 
     Command autonomousCommand;

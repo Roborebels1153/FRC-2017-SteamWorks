@@ -9,18 +9,25 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class CountRPM extends Command {
+	
+	private double runCount;
+	
+	private int timer;
+	
 
     public CountRPM() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        requires(Robot.Counter);
+        this.runCount = runCount * 50;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	timer = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
