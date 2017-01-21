@@ -12,8 +12,7 @@ public class CountRPM extends Command {
 	
 	private double runCount;
 	
-	private int timer;
-	
+	private double timer;
 
     public CountRPM() {
         requires(Robot.Counter);
@@ -22,17 +21,22 @@ public class CountRPM extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.Counter.counter = 0;
     	timer = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	timer++;
     	
-    }
+    	if(Robot.Counter.getLightSensor() == true) {
+    		Robot.Counter.counter++; } 	
+    		}
+    			
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return timer > runCount;
     }
 
     // Called once after isFinished returns true

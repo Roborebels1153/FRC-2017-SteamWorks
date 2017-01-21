@@ -13,14 +13,21 @@ public class Counter extends Subsystem {
 	
 	private DigitalInput lightSensor;
 	
+	public int counter;
+	
 	public Counter () {
 		
 		lightSensor = new DigitalInput(RobotMap.LIGHT_SENSOR);
+		this.counter = counter;
 		
 	}
 	
 	public boolean getLightSensor() {
 		return lightSensor.get();
+	}
+	
+	public int getRPMCount() {
+		return counter;
 	}
     
     // Put methods for controlling this subsystem
