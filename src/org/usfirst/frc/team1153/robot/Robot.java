@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import org.usfirst.frc.team1153.robot.commands.ExampleCommand;
 import org.usfirst.frc.team1153.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team1153.vision.Pipeline;
+import org.usfirst.frc.team1153.robot.vision.Pipeline;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -59,22 +59,22 @@ public class Robot extends IterativeRobot {
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
         camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
        
-////        chooser.addObject("My Auto", new MyAutoCommand());
-//        SmartDashboard.putData("Auto mode", chooser);
-////        double[] defaultValue = new double[0];
-////        
-////        while (true) {
-////        	double[] areas = table.getNumberArray("area", defaultValue);
-////        	System.out.print("areas: ");
-////        	for (double area : areas) {
-////        		System.out.print(area + " ");
-////        		
-////        	}
-////        	
-////        	System.out.println();
-////        	Timer.delay(1);
-////        	
-////        }
+//        chooser.addObject("My Auto", new MyAutoCommand());
+     SmartDashboard.putData("Auto mode", chooser);
+        double[] defaultValue = new double[0];
+        
+        while (true) {
+        	double[] areas = table.getNumberArray("area", defaultValue);
+        	System.out.print("areas: ");
+        	for (double area : areas) {
+        		System.out.print(area + " ");
+        		
+        	}
+        	
+        	System.out.println();
+        	Timer.delay(1);
+        	
+        }
         
         visionThread = new VisionThread(camera, new Pipeline(), pipeline -> {
         	if (!pipeline.filterContoursOutput().isEmpty()) {
