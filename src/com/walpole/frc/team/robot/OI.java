@@ -3,9 +3,9 @@ package com.walpole.frc.team.robot;
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
-import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
-import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
-import com.walpole.frc.team.robot.commands.ShooterSpeedIncrement;
+import com.walpole.frc.team.robot.commands.ShooterPowerCommand;
+import com.walpole.frc.team.robot.commands.ShooterPowerDecrement;
+import com.walpole.frc.team.robot.commands.ShooterPowerIncrement;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
@@ -40,13 +40,13 @@ public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-	opA.whenPressed(new ShooterSpeedCommand(0.25));
-	opB.whenPressed(new ShooterSpeedCommand(0.5));
-	opX.whenPressed(new ShooterSpeedCommand(0.75));
-	opY.whenPressed(new ShooterSpeedCommand(1));
+	opA.whenPressed(new ShooterPowerCommand(0.25));
+	opB.whenPressed(new ShooterPowerCommand(0.5));
+	opX.whenPressed(new ShooterPowerCommand(0.75));
+	opY.whenPressed(new ShooterPowerCommand(1));
 	
-	opBumperL.whenPressed(new ShooterSpeedDecrement());
-	opBumperR.whenPressed(new ShooterSpeedIncrement());
+	opBumperL.whenPressed(new ShooterPowerDecrement());
+	opBumperR.whenPressed(new ShooterPowerIncrement());
 
 }
 

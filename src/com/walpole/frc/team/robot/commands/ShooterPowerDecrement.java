@@ -4,24 +4,23 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterSpeedCommand extends Command {
-	
-	private double shootSpeed;
-    public ShooterSpeedCommand(double speed) {
+/**
+ *
+ */
+public class ShooterPowerDecrement extends Command {
+
+    public ShooterPowerDecrement() {
         // Use requires() here to declare subsystem dependencies
-    	shootSpeed = speed;
-    	requires(Robot.shooter);
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.shooter.decrementPower();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		Robot.shooter.setSpeed(shootSpeed);
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,3 +37,5 @@ public class ShooterSpeedCommand extends Command {
     protected void interrupted() {
     }
 }
+
+

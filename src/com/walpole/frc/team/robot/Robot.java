@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.subsystems.Collector;
-import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,11 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	
-	public static final Collector collector = new Collector();
-	public static final Shooter shooter = new Shooter();
-	public static final Drive drive = new Drive();
+	public static Collector collector = new Collector();
+	public static Shooter shooter = new Shooter();
 	public static OI oi;
-
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -41,13 +38,12 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+        //chooser.addObject("My Auto", new MyAutoCommand());        
     }
     
-    public static void updateDashboard() {
-		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
-		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
+    private void updateDashboard() {
+		SmartDashboard.putNumber("Shooter Power", shooter.getPower());
+		SmartDashboard.putNumber("Shooter Speed", shooter.getEncoder().get());
     }
 	
 	/**

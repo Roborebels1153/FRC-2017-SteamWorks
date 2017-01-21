@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShooterSpeedDecrement extends Command {
-
-    public ShooterSpeedDecrement() {
+public class ShooterPowerIncrement extends Command {
+	
+    public ShooterPowerIncrement() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.shooter);
+    	requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.decrementSpeed();
+    	Robot.shooter.incrementPower();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,5 +37,3 @@ public class ShooterSpeedDecrement extends Command {
     protected void interrupted() {
     }
 }
-
-
