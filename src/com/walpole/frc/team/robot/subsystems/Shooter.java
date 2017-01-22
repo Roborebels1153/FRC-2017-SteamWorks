@@ -56,7 +56,7 @@ public class Shooter extends Subsystem{
     }
     public void shoot() {
     	shooterMotor.set(power);
-    	shooterMotor2.set(power);
+    	shooterMotor2.set(power*-1);
     }
     public void stopShooting() {
     	shooterMotor.set(0);

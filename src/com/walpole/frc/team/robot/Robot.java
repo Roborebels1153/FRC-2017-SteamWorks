@@ -38,12 +38,12 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
-        //chooser.addObject("My Auto", new MyAutoCommand());        
+        //chooser.addObject("My Auto", new MyAutoCommand());
     }
     
     private void updateDashboard() {
 		SmartDashboard.putNumber("Shooter Power", shooter.getPower());
-		SmartDashboard.putNumber("Shooter Speed", shooter.getEncoder().get());
+		SmartDashboard.putNumber("Shooter Speed", shooter.getEncoder().getRate());
     }
 	
 	/**
