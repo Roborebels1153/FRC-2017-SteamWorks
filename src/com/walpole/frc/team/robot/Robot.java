@@ -1,14 +1,17 @@
 
-package org.usfirst.frc.team1153.robot;
+package com.walpole.frc.team.robot;
+
+import org.usfirst.frc.team1153.robot.commands.CountRPM;
+import org.usfirst.frc.team1153.robot.subsystems.Counter;
+
+import com.walpole.frc.team.robot.subsystems.Collector;
+import com.walpole.frc.team.robot.subsystems.Drive;
+import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team1153.robot.commands.CountRPM;
-import org.usfirst.frc.team1153.robot.subsystems.Counter;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,7 +25,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final Counter Counter = new Counter();
+	public static final Collector collector = new Collector();
+	public static final Shooter shooter = new Shooter();
+	public static final Drive drive = new Drive();
 	public static OI oi;
+
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -39,6 +46,12 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto mode", chooser);
         
         
+    }
+    
+    public static void updateDashboard() {
+		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
+		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
+		SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
     }
 	
 	/**
@@ -100,8 +113,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-        SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+        Scheduler.getInstance().run();    
+        updateDashboard();
     }
     
     /**
