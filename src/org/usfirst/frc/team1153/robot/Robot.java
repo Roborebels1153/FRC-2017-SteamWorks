@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot {
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
         
-        SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+        
     }
 	
 	/**
@@ -101,6 +101,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
     }
     
     /**

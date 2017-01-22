@@ -13,7 +13,7 @@ public class Counter extends Subsystem {
 	
 	private DigitalInput lightSensor;
 	
-	public int counter;
+	private int counter;
 	
 	public Counter () {
 		
@@ -22,12 +22,20 @@ public class Counter extends Subsystem {
 		
 	}
 	
+	public void reset() {
+		this.counter = 0;
+	}
+	
 	public boolean getLightSensor() {
 		return lightSensor.get();
 	}
 	
 	public int getRPMCount() {
 		return counter;
+	}
+	
+	public void increment() {
+		counter++;
 	}
     
     // Put methods for controlling this subsystem

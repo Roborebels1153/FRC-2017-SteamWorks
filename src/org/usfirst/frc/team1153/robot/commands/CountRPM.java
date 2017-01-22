@@ -21,7 +21,7 @@ public class CountRPM extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.Counter.counter = 0;
+    	Robot.Counter.reset();
     	timer = 0;
     }
 
@@ -30,8 +30,9 @@ public class CountRPM extends Command {
     	timer++;
     	
     	if(Robot.Counter.getLightSensor() == true) {
-    		Robot.Counter.counter++; } 	
-    		}
+    		Robot.Counter.increment(); 
+    	} 	
+    }
     			
 
     // Make this return true when this Command no longer needs to run execute()
