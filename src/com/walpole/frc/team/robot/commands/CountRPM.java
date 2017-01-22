@@ -1,5 +1,5 @@
 
-package org.usfirst.frc.team1153.robot.commands;
+package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
 
@@ -14,7 +14,7 @@ public class CountRPM extends Command {
 	
 	private double timer;
 
-    public CountRPM() {
+    public CountRPM( double runCount) {
         requires(Robot.Counter);
         this.runCount = runCount * 50;
     }

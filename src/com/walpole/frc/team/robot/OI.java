@@ -1,7 +1,7 @@
 package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
-import com.walpole.frc.team.robot.commands.ExampleCommand;
+import com.walpole.frc.team.robot.commands.CountRPM;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
@@ -38,6 +38,7 @@ public class OI {
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
+	opTriggerR.whileHeld(new CountRPM(60));
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
 	opA.whenPressed(new ShooterSpeedCommand(0.25));

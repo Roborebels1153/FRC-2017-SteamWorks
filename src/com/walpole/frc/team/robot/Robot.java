@@ -1,12 +1,11 @@
 
 package com.walpole.frc.team.robot;
 
-import org.usfirst.frc.team1153.robot.commands.CountRPM;
-import org.usfirst.frc.team1153.robot.subsystems.Counter;
-
+import com.walpole.frc.team.robot.commands.CountRPM;
 import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Shooter;
+import com.walpole.frc.team.robot.subsystems.Counter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -41,7 +40,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new CountRPM());
+        chooser.addDefault("Default Auto", new CountRPM(60));
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
         
