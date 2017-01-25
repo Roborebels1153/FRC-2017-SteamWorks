@@ -1,6 +1,7 @@
 
 package com.walpole.frc.team.robot;
 
+import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
@@ -46,6 +47,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
 		//SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
     	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroCount());
+    	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
     }
 	
 	/**
@@ -71,7 +73,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = new DriveForwardWithEncoder();//(Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -93,6 +95,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateDashboard();
     }
 
     public void teleopInit() {

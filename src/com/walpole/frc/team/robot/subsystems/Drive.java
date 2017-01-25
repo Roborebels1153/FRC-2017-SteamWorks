@@ -4,6 +4,7 @@ package com.walpole.frc.team.robot.subsystems;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import com.walpole.frc.team.robot.lib.RebelDrive;
+import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -101,7 +102,40 @@ public class Drive extends Subsystem {
 	
 	//public int getRightEncoderCount () {   
 	    //return rightEncoder.get();        
+	//}
+
+	public void resetEncoders () {
+		leftEncoder.reset();
+		
 	}
+	
+	public double convertInchesToTicks(int inches) {     //used to find how many encoder ticks per inches
+		 return Constants.ticksPerInch * inches;
+		
+	}
+	
+	public void driveAtSpeed (double speed) {            //used to convert inches to encoder ticks  
+		robotDrive.drive(speed, 0);
+	}
+	
+//	public void goSetDistance () {
+//		if (leftEncoder.get() >= (ticksToDriveALength)) {
+//			leftFrontVictor.set(0);
+//			leftBackVictor.set(0);
+//			rightFrontVictor.set(0);
+//			rightBackVictor.set(0);
+//			
+//		}
+//	}
+	public void stopDrive () {         //used to make the robot stop
+		leftFrontVictor.set(0);		
+		leftBackVictor.set(0);
+		rightFrontVictor.set(0);
+		rightBackVictor.set(0);
+	
+	}
+	}
+
 	
 
 

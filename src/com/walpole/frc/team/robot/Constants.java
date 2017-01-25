@@ -1,4 +1,4 @@
-package com.walpole.frc.team.robot;
+package com.walpole.frc.team.robot;     
 
 public class Constants {
 	
@@ -9,6 +9,7 @@ public class Constants {
 	public static int TICKS_PER_ENCODER_REV = 128;
 	public static double inchesPerTick = WHEEL_DIAMETER * Math.PI / (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV);
     public static double ticksPerInch = (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV)/ (WHEEL_DIAMETER * Math.PI);
+    
 
 
 
