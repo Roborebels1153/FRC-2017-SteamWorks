@@ -7,7 +7,7 @@ package com.walpole.frc.team.robot;
  */
 public class RobotMap {
 	
-	public static int LIGHT_SENSOR = 3;
+	public static int LIGHT_SENSOR = 5;
 	
 	public static int LEFT_FRONT_MOTOR = 0;
 	public static int LEFT_BACK_MOTOR = 1;

@@ -18,8 +18,7 @@ public class Counter extends Subsystem {
 	public Counter() {
 
 		lightSensor = new DigitalInput(RobotMap.LIGHT_SENSOR);
-		this.counter = counter;
-
+		
 	}
 
 	public void reset() {

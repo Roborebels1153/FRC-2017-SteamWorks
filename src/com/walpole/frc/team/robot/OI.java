@@ -38,10 +38,10 @@ public class OI {
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
-	opTriggerR.whileHeld(new CountRPM(60));
+	opA.whileHeld(new CountRPM(60));
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-	opA.whenPressed(new ShooterSpeedCommand(0.25));
+//	opA.whenPressed(new ShooterSpeedCommand(0.25));
 	opB.whenPressed(new ShooterSpeedCommand(0.5));
 	opX.whenPressed(new ShooterSpeedCommand(0.75));
 	opY.whenPressed(new ShooterSpeedCommand(1));
