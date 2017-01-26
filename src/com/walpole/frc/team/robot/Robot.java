@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
 
     /**
-     * This function is run when the robot is first started up and should be
+     * This function is run when  the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = new DriveForwardWithEncoder();//(Command) chooser.getSelected();
+        autonomousCommand = new DriveForwardWithEncoder(10);//(Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {

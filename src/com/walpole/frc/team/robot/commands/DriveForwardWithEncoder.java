@@ -1,4 +1,3 @@
-
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Constants;
@@ -6,34 +5,29 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class DriveForwardWithEncoder extends Command {
 	
 	private double speed;
-	
 	private double inchesToDrive;
 	
-	
-
-    public DriveForwardWithEncoder() {
+    public DriveForwardWithEncoder(int inchesToDrive) {
     	requires (Robot.driveSubsystem);
-    	this.speed = 1;
-    	this.inchesToDrive = 10;
-    			
-        // Use requires() here to declare subsystem dependencies
+    	this.speed = 0.85;
+    	this.inchesToDrive = inchesToDrive;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.resetEncoders();
-    	
+    	Robot.driveSubsystem.enablePID();
+    	Robot.driveSubsystem.setMaxDrivePIDOutput(speed);
+    	Robot.driveSubsystem.setDriveEncoderSetPoint(Constants.ticksPerInch * inchesToDrive);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveSubsystem.driveAtSpeed(speed);
+    	Robot.driveSubsystem.driveAtSpeed(Robot.driveSubsystem.getLeftPIDOutput());
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

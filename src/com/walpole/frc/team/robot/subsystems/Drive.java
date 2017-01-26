@@ -1,9 +1,11 @@
-
 package com.walpole.frc.team.robot.subsystems;
 
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import com.walpole.frc.team.robot.lib.RebelDrive;
+import com.walpole.frc.team.robot.lib.DualPIDOutput;
+import com.walpole.frc.team.robot.lib.DummyPIDOutput;
+
 import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
 
@@ -12,6 +14,8 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -27,6 +31,12 @@ public class Drive extends Subsystem {
 	private SpeedController rightBackVictor;
 	private DoubleSolenoid transmission;
 	private AnalogGyro gyro;
+	private PIDController leftEncoderPID;
+	//private PIDController rightEncoderPID;
+	//private PIDController gyroPID;
+	private DualPIDOutput leftEncoderOutput;
+	//private DualPIDOutput rightEncoderOutput;
+	//private DummyPIDOutput gyroOutput;
 
 	public enum Shifter {
 		High, Low
@@ -44,6 +54,8 @@ public class Drive extends Subsystem {
 		leftBackVictor = new Victor(RobotMap.LEFT_BACK_MOTOR);
 		rightFrontVictor = new Victor(RobotMap.RIGHT_FRONT_MOTOR);
 		rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
+		
+		leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor);
 
 		transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 		
@@ -53,6 +65,14 @@ public class Drive extends Subsystem {
 		gyro = new AnalogGyro(RobotMap.GYRO);
 		
 		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
+		
+		leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
+		//rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+		//gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput); 
+
+		//rightEncoderOutput = new DummyPIDOutput();
+		//gyroOutput = new DummyPIDOutput();		
+		
 	}
 
 	// Put methods for controlling this subsystem
@@ -80,7 +100,6 @@ public class Drive extends Subsystem {
 //	}
 		transmission.set(DoubleSolenoid.Value.kForward);
 		currGear = Shifter.High;
-		
 	}
 
 	public void shiftLow() {
@@ -100,42 +119,61 @@ public class Drive extends Subsystem {
 		return gyro.getAngle();
 	}
 	
-	//public int getRightEncoderCount () {   
+	/*public int getRightEncoderCount () {   
 	    //return rightEncoder.get();        
-	//}
+	}*/
 
-	public void resetEncoders () {
+	public void resetEncoders() {
 		leftEncoder.reset();
-		
+		//rightEncoder.reset();
 	}
 	
 	public double convertInchesToTicks(int inches) {     //used to find how many encoder ticks per inches
-		 return Constants.ticksPerInch * inches;
-		
+		return Constants.ticksPerInch * inches;
 	}
 	
-	public void driveAtSpeed (double speed) {            //used to convert inches to encoder ticks  
+	public void driveAtSpeed(double speed) {            //used to convert inches to encoder ticks  
 		robotDrive.drive(speed, 0);
 	}
 	
-//	public void goSetDistance () {
+	public void enablePID() {
+		leftEncoderPID.enable();
+//		rightEncoderPID.enable() {
+//		gyroPID.enable();
+	}
+	
+	public void setDriveEncoderSetPoint(double setPoint) {
+		leftEncoderPID.setSetpoint(setPoint);
+//		rightEncoderPID.setSetpoint(setPoint);
+	}
+	
+	public double getLeftPIDOutput () {
+		return leftEncoderPID.get();
+	}
+	
+	/*public double getRightPIDOutput () {
+		return leftRightPID.get();
+		} */
+	
+	public void setMaxDrivePIDOutput(double speed) {
+		leftEncoderPID.setOutputRange(-speed, speed);
+		//rightEncoderPID.setOutputRange(-speed, speed);
+	}
+	
+	
+	
+//	public void goSetDistance() {
 //		if (leftEncoder.get() >= (ticksToDriveALength)) {
 //			leftFrontVictor.set(0);
 //			leftBackVictor.set(0);
 //			rightFrontVictor.set(0);
 //			rightBackVictor.set(0);
-//			
 //		}
 //	}
-	public void stopDrive () {         //used to make the robot stop
+	public void stopDrive() {         //used to make the robot stop
 		leftFrontVictor.set(0);		
 		leftBackVictor.set(0);
 		rightFrontVictor.set(0);
 		rightBackVictor.set(0);
-	
 	}
-	}
-
-	
-
-
+}
