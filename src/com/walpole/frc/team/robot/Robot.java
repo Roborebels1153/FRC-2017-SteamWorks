@@ -45,6 +45,8 @@ public class Robot extends IterativeRobot {
     public void updateDashboard() {
     	SmartDashboard.putBoolean("Limit Switch", climbSubsystem.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
     	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
+    	SmartDashboard.putNumber("Right Motor Power Value", driveSubsystem.getRightMotorPower());
+    	SmartDashboard.putNumber("Left Motor Power Value", driveSubsystem.getLeftMotorPower());
 		//SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
     	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroCount());
     	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
@@ -113,7 +115,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         driveSubsystem.drive(oi.getDriverJoystick());
-       updateDashboard();
+        updateDashboard();
     }
     
     /**

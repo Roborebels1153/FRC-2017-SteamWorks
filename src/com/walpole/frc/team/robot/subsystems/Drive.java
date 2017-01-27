@@ -4,7 +4,6 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 
 import com.walpole.frc.team.robot.lib.RebelDrive;
 import com.walpole.frc.team.robot.lib.DualPIDOutput;
-import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 
 import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
@@ -15,7 +14,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -54,8 +52,6 @@ public class Drive extends Subsystem {
 		leftBackVictor = new Victor(RobotMap.LEFT_BACK_MOTOR);
 		rightFrontVictor = new Victor(RobotMap.RIGHT_FRONT_MOTOR);
 		rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
-		
-		leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor);
 
 		transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 		
@@ -66,12 +62,13 @@ public class Drive extends Subsystem {
 		
 		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
 		
+		leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor);
 		leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
 		//rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
 		//gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput); 
 
 		//rightEncoderOutput = new DummyPIDOutput();
-		//gyroOutput = new DummyPIDOutput();		
+		//gyroOutput = new DummyPIDOutput();
 		
 	}
 
@@ -142,25 +139,21 @@ public class Drive extends Subsystem {
 //		gyroPID.enable();
 	}
 	
+	public void disablePID() {
+		leftEncoderPID.disable();
+//		rightEncoderPID.enable() {
+//		gyroPID.enable();
+	}
+	
 	public void setDriveEncoderSetPoint(double setPoint) {
 		leftEncoderPID.setSetpoint(setPoint);
 //		rightEncoderPID.setSetpoint(setPoint);
 	}
 	
-	public double getLeftPIDOutput () {
-		return leftEncoderPID.get();
-	}
-	
-	/*public double getRightPIDOutput () {
-		return leftRightPID.get();
-		} */
-	
 	public void setMaxDrivePIDOutput(double speed) {
 		leftEncoderPID.setOutputRange(-speed, speed);
 		//rightEncoderPID.setOutputRange(-speed, speed);
 	}
-	
-	
 	
 //	public void goSetDistance() {
 //		if (leftEncoder.get() >= (ticksToDriveALength)) {
@@ -175,5 +168,17 @@ public class Drive extends Subsystem {
 		leftBackVictor.set(0);
 		rightFrontVictor.set(0);
 		rightBackVictor.set(0);
+	}
+	
+	public double getLeftMotorPower() {
+		return -leftBackVictor.get(); 
+	}
+	
+	public double getRightMotorPower() {
+		return rightBackVictor.get();
+	}
+	
+	public double getLeftPIDError() {
+		return leftEncoderPID.getError();
 	}
 }
