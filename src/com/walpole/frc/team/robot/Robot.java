@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -23,8 +24,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	
+	static double p = 0.72;
+	static double i = 0;
+	static double d = 0;
+	
 	public static Collector collector = new Collector();
-	public static Shooter shooter = new Shooter();
+	public static Shooter shooter = new Shooter(p,i,d);
 	public static OI oi;
 
     Command autonomousCommand;
@@ -40,7 +45,8 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
     }
-    
+	
+	
     private void updateDashboard() {
 		SmartDashboard.putNumber("Shooter Power", shooter.getPower());
 		SmartDashboard.putNumber("Shooter Speed", shooter.getEncoder().getRate());
