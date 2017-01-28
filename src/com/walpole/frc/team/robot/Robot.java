@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	
-	static double p = 0.72;
+	static double p = 0.36;
 	static double i = 0;
 	static double d = 0;
 	
@@ -44,12 +44,16 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
+		shooter.getPIDController().enable();
+        shooter.getPIDController().setAbsoluteTolerance(0.2);
+        shooter.getPIDController().setSetpoint(250);
     }
 	
 	
-    private void updateDashboard() {
+    private void update() {
 		SmartDashboard.putNumber("Shooter Power", shooter.getPower());
 		SmartDashboard.putNumber("Shooter Speed", shooter.getEncoder().getRate());
+
     }
 	
 	/**
@@ -112,7 +116,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        updateDashboard();
+        update();
     }
     
     /**

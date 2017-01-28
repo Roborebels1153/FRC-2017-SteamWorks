@@ -1,5 +1,6 @@
 package com.walpole.frc.team.robot;
 
+import com.walpole.frc.team.robot.commands.AgitatorSetPower;
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
@@ -34,20 +35,23 @@ public class OI {
     Button opBumperL = new JoystickButton(opStick, 5);
     Button opBumperR = new JoystickButton(opStick, 6);
 
+    Button opBackL = new JoystickButton(opStick, 7);
+    Button opStartR = new JoystickButton(opStick, 8);
 
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-	opA.whenPressed(new ShooterPowerCommand(0.25));
-	opB.whenPressed(new ShooterPowerCommand(0.5));
-	opX.whenPressed(new ShooterPowerCommand(0.75));
-	opY.whenPressed(new ShooterPowerCommand(1));
+	opA.whenPressed(new ShooterPowerCommand(0.2));
+	opB.whenPressed(new ShooterPowerCommand(0.4));
+	opX.whenPressed(new ShooterPowerCommand(0.6));
+	opY.whenPressed(new ShooterPowerCommand(0.8));
 	
 	opBumperL.whenPressed(new ShooterPowerDecrement());
 	opBumperR.whenPressed(new ShooterPowerIncrement());
 
+	opBackL.whenPressed(new AgitatorSetPower(0.4));
 }
 
     //// CREATING BUTTONS
