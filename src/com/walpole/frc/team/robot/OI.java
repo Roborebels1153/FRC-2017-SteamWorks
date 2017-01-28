@@ -52,7 +52,7 @@ public OI() {
 	opY.whenPressed(new ShooterSpeedCommand(1));
 	
 	opStart.whileHeld(new TurnLightOnCommand());
-	opBack.whenPressed(new TurnLightOffCommand());
+	opBack.whileHeld(new TurnLightOffCommand());
 	
 	
 	opBumperL.whenPressed(new ShooterSpeedDecrement());

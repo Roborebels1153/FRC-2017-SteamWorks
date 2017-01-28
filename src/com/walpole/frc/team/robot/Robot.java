@@ -83,7 +83,7 @@ public class Robot extends IterativeRobot {
         	
         }
         
-        visionThread = new VisionThread(camera, new Pipeline(), pipeline -> {
+        visionThread = new VisionThread(camera, new Pipeline , pipeline -> {
         	if (!pipeline.filterContoursOutput().isEmpty()) {
         		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
         		synchronized (imgLock) {
@@ -94,15 +94,16 @@ public class Robot extends IterativeRobot {
         
      visionThread.start();
         
-     drivetest = new RobotDrive(1,2);
+
         
     }
+	
     
     public static void updateDashboard() {
 		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
 		SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
-		SmartDashboard.putBoolean("LightSensor", Robot.shooter.getLight);
+//		SmartDashboard.putBoolean("LightSensor", Robot.shooter.getLight);
     }
 	
 	/**
@@ -176,7 +177,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();    
         updateDashboard();
-        Robot.shooter.turnLightOn();
+//        Robot.shooter.turnLightOn();
        
     }
     
