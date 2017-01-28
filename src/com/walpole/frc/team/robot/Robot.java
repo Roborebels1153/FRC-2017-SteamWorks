@@ -7,12 +7,27 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 import com.walpole.frc.team.robot.subsystems.Counter;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc; 
+
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
+
+import com.walpole.frc.team.robot.vision.Pipeline;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,10 +43,20 @@ public class Robot extends IterativeRobot {
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static OI oi;
+	private static final int IMG_WIDTH = 320;
+	private static final int IMG_HEIGHT = 240; 
+	
+	private VisionThread visionThread;;
+	private double centerX = 0.0; 
+	private RobotDrive driveTest;
+	 
+	
+	private final Object imgLock = new Object();  
 
 
     Command autonomousCommand;
     SendableChooser chooser;
+    NetworkTable table;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -39,11 +64,37 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-        chooser = new SendableChooser();
-//        chooser.addDefault("Default Auto", new CountRPM(60));
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+
+		 UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
         
+        double[] defaultValue = new double[0];
+        
+        while (true) {
+        	double[] areas = table.getNumberArray("area", defaultValue);
+        	System.out.print("areas: ");
+        	for (double area : areas) {
+        		System.out.print(area + " ");
+        		
+        	}
+        	
+        	System.out.println();
+        	Timer.delay(1);
+        	
+        }
+        
+        visionThread = new VisionThread(camera, new Pipeline(), pipeline -> {
+        	if (!pipeline.filterContoursOutput().isEmpty()) {
+        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+        		synchronized (imgLock) {
+        			centerX = r.x + (r.width / 2);
+        		}
+        	}
+        });
+        
+     visionThread.start();
+        
+     drivetest = new RobotDrive(1,2);
         
     }
     
@@ -51,6 +102,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
 		SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+		SmartDashboard.putBoolean("LightSensor", Robot.shooter.getLight);
     }
 	
 	/**
@@ -99,6 +151,15 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+        	double centerX;
+        	synchronized (imgLock) {
+        		centerX = this.centerX;
+        	}
+        	
+        	double turn = centerX - (IMG_WIDTH / 2);
+        	driveTest.arcadeDrive(-0.6, turn * 0.005);
+        
     }
 
     public void teleopInit() {
