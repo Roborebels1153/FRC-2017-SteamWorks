@@ -5,7 +5,9 @@ package com.walpole.frc.team.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-public class RobotMap {  
+public class RobotMap {
+	
+	public static int LIGHT_SENSOR = 5;
 	
 	public static int LEFT_FRONT_MOTOR = 0;
 	public static int LEFT_BACK_MOTOR = 1;
@@ -18,7 +20,8 @@ public class RobotMap {
 	public static int SHOOTER_MOTOR = 4;
 	
 	public static int COLLECT_MOTOR = 5;
-
+	
+	public static int LIGHT = 0;
 
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.

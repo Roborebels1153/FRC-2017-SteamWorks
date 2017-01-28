@@ -1,11 +1,13 @@
 package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
-import com.walpole.frc.team.robot.commands.ExampleCommand;
+import com.walpole.frc.team.robot.commands.CountRPM;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
 import com.walpole.frc.team.robot.commands.ShooterSpeedIncrement;
+import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
+import com.walpole.frc.team.robot.commands.TurnLightOnCommand;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
@@ -33,17 +35,25 @@ public class OI {
     
     Button opBumperL = new JoystickButton(opStick, 5);
     Button opBumperR = new JoystickButton(opStick, 6);
+    
+    Button opStart = new JoystickButton(opStick, 8);
+    Button opBack = new JoystickButton(opStick, 9);
 
 
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
+//	opA.whileHeld(new CountRPM(60));
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
 	opA.whenPressed(new ShooterSpeedCommand(0.25));
 	opB.whenPressed(new ShooterSpeedCommand(0.5));
 	opX.whenPressed(new ShooterSpeedCommand(0.75));
 	opY.whenPressed(new ShooterSpeedCommand(1));
+	
+	opStart.whileHeld(new TurnLightOnCommand());
+	opBack.whenPressed(new TurnLightOffCommand());
+	
 	
 	opBumperL.whenPressed(new ShooterSpeedDecrement());
 	opBumperR.whenPressed(new ShooterSpeedIncrement());
