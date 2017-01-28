@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
 	static double d = 0;
 	
 	public static Collector collector = new Collector();
-	public static Shooter shooter = new Shooter(p,i,d);
+	public static Shooter shooter = new Shooter();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -46,12 +46,12 @@ public class Robot extends IterativeRobot {
         //chooser.addObject("My Auto", new MyAutoCommand());
 		shooter.getPIDController().enable();
         shooter.getPIDController().setAbsoluteTolerance(0.2);
-        shooter.getPIDController().setSetpoint(250);
+        shooter.getPIDController().setSetpoint(Constants.origninalWantedRPM);
     }
 	
 	
     private void update() {
-		SmartDashboard.putNumber("Shooter Power", shooter.getPower());
+		SmartDashboard.putNumber("Shooter Power", shooter.getNeededPower());
 		SmartDashboard.putNumber("Shooter Speed", shooter.getEncoder().getRate());
 
     }

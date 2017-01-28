@@ -43,15 +43,16 @@ public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-	opA.whenPressed(new ShooterPowerCommand(0.2));
-	opB.whenPressed(new ShooterPowerCommand(0.4));
-	opX.whenPressed(new ShooterPowerCommand(0.6));
-	opY.whenPressed(new ShooterPowerCommand(0.8));
+	opA.whenPressed(new ShooterPowerCommand(0.25));
+	opB.whenPressed(new ShooterPowerCommand(0.5));
+	opX.whenPressed(new ShooterPowerCommand(0.75));
+	opY.whenPressed(new ShooterPowerCommand(1));
 	
 	opBumperL.whenPressed(new ShooterPowerDecrement());
 	opBumperR.whenPressed(new ShooterPowerIncrement());
 
-	opBackL.whenPressed(new AgitatorSetPower(0.4));
+	opBackL.whenPressed(new AgitatorSetPower(-0.4));
+	opStartR.whenPressed(new AgitatorSetPower(-0.8));
 }
 
     //// CREATING BUTTONS

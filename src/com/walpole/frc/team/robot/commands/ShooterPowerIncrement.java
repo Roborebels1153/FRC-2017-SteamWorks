@@ -16,7 +16,7 @@ public class ShooterPowerIncrement extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.incrementPower();
+    	Robot.shooter.incrementWantedRPM();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShooterPowerCommand extends Command {
 	
-	private double shootPower;
-    public ShooterPowerCommand(double power) {
+	private double rpm;
+    public ShooterPowerCommand(double newRPM) {
         // Use requires() here to declare subsystem dependencies
-    	shootPower = power;
+    	rpm = newRPM;
     	requires(Robot.shooter);
     }
 
@@ -20,7 +20,7 @@ public class ShooterPowerCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		Robot.shooter.setPower(shootPower);
+		Robot.shooter.getPIDController().setSetpoint(rpm);
     	
     }
 

@@ -1,30 +1,27 @@
 package com.walpole.frc.team.robot.subsystems;
 
+import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
-public class Shooter extends PIDSubsystem{
+public class Shooter extends PIDSubsystem {
+	
 	private Victor shooterMotor;
 	private Victor shooterMotor2;
 	private Victor agitator;
-	private double power = 1;
+	private double powerPercent = 1;
 	private double agitatorPower = 1;
     private Encoder shooterEncoder;
-    private PIDController shooterPID;
+    private double neededPower;
     //private Encoder shooterEncoder2;
     //private PIDController shooterPID2;
-   	private double encoderP;
-	private double encoderI;
-	private double encoderD;
 	
-	public Shooter(double p, double i, double d) {
-		super(p, i, d);
-		encoderP = p;
-		encoderI = i;
-		encoderD = d;
+	public Shooter() {
+		super(Constants.encoderP, Constants.encoderI, Constants.encoderD);
+		
 	}
 	
     // Put methods for controlling this subsystem
@@ -38,44 +35,44 @@ public class Shooter extends PIDSubsystem{
 		agitator = new Victor(RobotMap.AGITATOR);
 
 		shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER1, RobotMap.SHOOTER_ENCODER2, false, Encoder.EncodingType.k4X);
-		
-		shooterPID = new PIDController(encoderP, encoderI, encoderD,shooterEncoder, shooterMotor);
-		shooterPID.setOutputRange(0, 0.8);
-		shooterPID.setInputRange(0, 400);
+		getPIDController().enable();
     }
 	
     public Encoder getEncoder() {
     	return shooterEncoder;
     }
     
-    public void incrementPower() {
-    	power += 0.1;
-    	if (power >= 0.75) {
-    		power = 8;
+    public void incrementWantedRPM() {
+    	powerPercent += 0.1;
+    	if (powerPercent >= 0.75) {
+    		powerPercent = 8;
     	}
     	
     }
-    public void decrementPower() {
-    	power -= 0.1;
-    	if (power <= 0) {
-    		power = 0.05;
+    public void decrementWantedRPM() {
+    	powerPercent -= 0.1;
+    	if (powerPercent <= 0) {
+    		powerPercent = 0.05;
     	}
+    	getPIDController().setSetpoint(powerPercent*neededPower);
     }
     public void setPower(double shootPower) {
-    	power = shootPower;
+    	powerPercent = shootPower;
+    	getPIDController().setSetpoint(powerPercent*neededPower);
     }  
     public void setAgitatorPower(double powerAgitator) {
     	agitatorPower = powerAgitator;
     }
-    public double getPower() {
-    	return power;
+    public double getNeededPower() {
+    	return neededPower;
     }
     public void shoot() {
-    	//shooterMotor2.set(power*-1);
+    	shooterMotor.set(neededPower);
+    	
     	agitator.set(agitatorPower);
     }
     public void stopShooting() {
-		agitatorPower = 0;
+    	agitatorPower = 0;
     	agitator.set(0);
     	shooterMotor.set(0);
     	shooterMotor2.set(0);
@@ -83,15 +80,11 @@ public class Shooter extends PIDSubsystem{
 
 	@Override
 	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return 0;
+		return shooterEncoder.getRate();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
-		
+		neededPower = output;
 	}
-	
-	
 }
