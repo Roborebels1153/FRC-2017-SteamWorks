@@ -6,3 +6,5 @@ public class Constants {
 	public static final double encoderI = 0;
 	public static final double encoderD = 0;
 	
+	public static final double origninalWantedRPM = 250;
+}
