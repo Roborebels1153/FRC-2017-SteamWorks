@@ -22,12 +22,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 
-import com.walpole.frc.team.robot.vision.Pipeline;
+import com.walpole.frc.team.robot.vision.GripPipeline;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
-
+import edu.wpi.first.wpilibj.vision.VisionRunner;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -70,20 +70,8 @@ public class Robot extends IterativeRobot {
         
         double[] defaultValue = new double[0];
         
-        while (true) {
-        	double[] areas = table.getNumberArray("area", defaultValue);
-        	System.out.print("areas: ");
-        	for (double area : areas) {
-        		System.out.print(area + " ");
-        		
-        	}
-        	
-        	System.out.println();
-        	Timer.delay(1);
-        	
-        }
-        
-        visionThread = new VisionThread(camera, new Pipeline , pipeline -> {
+       
+        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
         	if (!pipeline.filterContoursOutput().isEmpty()) {
         		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
         		synchronized (imgLock) {
@@ -94,7 +82,18 @@ public class Robot extends IterativeRobot {
         
      visionThread.start();
         
-
+     while (true) {
+     	double[] areas = table.getNumberArray("area", defaultValue);
+     	System.out.print("areas: ");
+     	for (double area : areas) {
+     		System.out.print(area + " ");
+     		
+     	}
+     	
+     	System.out.println();
+     	Timer.delay(1);
+     	
+     }
         
     }
 	
