@@ -21,28 +21,34 @@ public class DriveForwardWithEncoder extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.driveSubsystem.resetEncoders();
-    	Robot.driveSubsystem.enablePID();
-    	Robot.driveSubsystem.setMaxDrivePIDOutput(speed);
-    	Robot.driveSubsystem.setDriveEncoderSetPoint(setPoint);
+    	Robot.driveSubsystem.enableDrivePID();
+    	Robot.driveSubsystem.setMaxDrivePIDOutput(speed, speed);
+    	Robot.driveSubsystem.setDrivePIDSetPoint(setPoint);
+    	Robot.driveSubsystem.setTurnPID(Robot.driveSubsystem.getGyroAngle());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//Robot.driveSubsystem.driveAtSpeed(Robot.driveSubsystem.getLeftPIDOutput());
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	double leftMotorPower = Robot.driveSubsystem.getLeftMotorPower();
-    	double error = Robot.driveSubsystem.getLeftPIDError();
-    	return leftMotorPower <= 0.1 && error <= 50;   
-    	//if the encoder tick count is above the target tick count, the motors will stop
+    	double leftError = Robot.driveSubsystem.getLeftPIDError();
+    	boolean leftMotorFinished = leftMotorPower <= 0.1 && leftError <= 50;
+    	
+    	double rightMotorPower = Robot.driveSubsystem.getRightMotorPower();
+    	double rightError = Robot.driveSubsystem.getRightPIDError();
+    	boolean rightMotorFinished = rightMotorPower <= 0.1 && rightError <= 50;
+    	
+    	return leftMotorFinished && rightMotorFinished;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.driveSubsystem.stopDrive();
-    	Robot.driveSubsystem.disablePID();
+    	Robot.driveSubsystem.disableDrivePID();
     }
 
     // Called when another command which requires one or more of the same

@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Right Motor Power Value", driveSubsystem.getRightMotorPower());
     	SmartDashboard.putNumber("Left Motor Power Value", driveSubsystem.getLeftMotorPower());
 		//SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
-    	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroCount());
+    	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroAngle());
     	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
     }
 	
