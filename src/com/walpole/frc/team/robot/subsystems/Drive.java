@@ -73,7 +73,7 @@ public class Drive extends Subsystem {
 	gyro = new RebelGyro();
 	gyro.startThread();
 	gyroOutput = new DummyPIDOutput();
-	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput);
+	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gy ro, gyroOutput);
 
 	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
     }
@@ -148,7 +148,7 @@ public class Drive extends Subsystem {
     }
 
     public void setTurnSpeed(double speed) {
-	robotDrive.arcadeDrive(Constants.TURN_SPEED, speed);
+	robotDrive.arcadeDrive(0, speed);
     }
 
     /**
@@ -172,6 +172,9 @@ public class Drive extends Subsystem {
     public void disableDrivePID() {
 	leftEncoderPID.disable();
 	rightEncoderPID.disable();
+    }
+    
+    public void disableGyroPID() {
 	gyroPID.disable();
     }
 

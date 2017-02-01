@@ -62,6 +62,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroAngle());
 	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
 	SmartDashboard.putNumber("Gyro Error", driveSubsystem.getGyroPIDError());
+	SmartDashboard.putNumber("Gyro PID Output", driveSubsystem.getGyroPIDOutput());
     }
 
     /**

@@ -15,7 +15,7 @@ public class TurnWithGyroCommand extends Command {
     public TurnWithGyroCommand(double degreesToTurn) {
 	requires(Robot.driveSubsystem);
 	this.degreesToTurn = degreesToTurn;
-	this.speed = 0.8;
+	this.speed = 1;
 
 	// Use requires() here to declare subsystem dependencies
     }
@@ -31,7 +31,6 @@ public class TurnWithGyroCommand extends Command {
     protected void execute() {
 	double gyroOutput = Robot.driveSubsystem.getGyroPIDOutput();
 	Robot.driveSubsystem.setTurnSpeed(gyroOutput);
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -45,7 +44,7 @@ public class TurnWithGyroCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.driveSubsystem.disableDrivePID();
+	Robot.driveSubsystem.disableGyroPID();
     }
 
     // Called when another command which requires one or more of the same
