@@ -1,13 +1,16 @@
 package com.walpole.frc.team.robot.lib;
 
-import org.team2168.utils.BNO055;
-
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class RebelGyro extends SPIGyro implements PIDSource {
 
     private PIDSourceType pidSource;
+    
+    public RebelGyro() {
+	super();
+	pidSource = PIDSourceType.kDisplacement;
+    }
 
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {
@@ -22,6 +25,11 @@ public class RebelGyro extends SPIGyro implements PIDSource {
     @Override
     public double pidGet() {
 	return getAngle();
+    }
+    
+    @Override
+    public double getAngle() {
+	return super.getAngle() % 360;
     }
 
 }

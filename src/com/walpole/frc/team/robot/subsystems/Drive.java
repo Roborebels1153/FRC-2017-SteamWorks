@@ -70,12 +70,20 @@ public class Drive extends Subsystem {
 	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder,
 		rightEncoderOutput);
 
+	initGyro();
+
+	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
+    }
+    
+    private void initGyro() {
 	gyro = new RebelGyro();
 	gyro.startThread();
 	gyroOutput = new DummyPIDOutput();
-	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gy ro, gyroOutput);
-
-	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
+	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput);
+	
+	gyroPID.setOutputRange(-0.8, 0.8);
+	gyroPID.setInputRange(0, 360);
+	gyroPID.setContinuous();
     }
 
     // Put methods for controlling this subsystem
@@ -164,6 +172,10 @@ public class Drive extends Subsystem {
     public void enableGyroPID() {
 	gyroPID.enable();
     }
+    
+    public void resetGyro() {
+	gyro.reset();
+    }
 
     /**
      * Disables both the Left Encoder PID and the Right Encoder PID by calling
@@ -233,6 +245,7 @@ public class Drive extends Subsystem {
     }
 
     public double getGyroPIDOutput() {
+	//return gyroOutput.getOutput(); //
 	return gyroPID.get();
     }
 

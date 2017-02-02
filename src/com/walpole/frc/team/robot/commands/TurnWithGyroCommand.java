@@ -4,6 +4,7 @@ package com.walpole.frc.team.robot.commands;
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -22,15 +23,18 @@ public class TurnWithGyroCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.driveSubsystem.enableGyroPID();
-	Robot.driveSubsystem.setMaxGyroOutput(speed);
+	Robot.driveSubsystem.resetGyro();
 	Robot.driveSubsystem.setTurnPID(degreesToTurn);
+	Robot.driveSubsystem.enableGyroPID();
+	//Robot.driveSubsystem.setMaxGyroOutput(speed);
+	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 	double gyroOutput = Robot.driveSubsystem.getGyroPIDOutput();
 	Robot.driveSubsystem.setTurnSpeed(gyroOutput);
+	SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
 
     // Make this return true when this Command no longer needs to run execute()

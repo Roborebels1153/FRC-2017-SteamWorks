@@ -15,7 +15,7 @@ public class Constants {
     public static double encoderI = 0;
     public static double encoderD = 0;
 
-    public static double gyroP = 1;
+    public static double gyroP = .015;
     public static double gyroI = 0;
     public static double gyroD = 0; //0.015;
 
