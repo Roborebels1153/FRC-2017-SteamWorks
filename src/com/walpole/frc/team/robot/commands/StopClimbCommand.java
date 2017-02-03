@@ -8,36 +8,25 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CountRPM extends Command {
-	
-	private double runCount;
-	
-	private double timer;
+public class StopClimbCommand extends Command {
 
-    public CountRPM( double runCount) {
-        requires(Robot.Counter);
-        this.runCount = runCount * 50;
+    public StopClimbCommand() {
+    	requires (Robot.climb);     //for this command, we require the climb subsystem
+        // Use requires() here to declare subsystem dependencies
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.Counter.reset();
-    	timer = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	timer++;
-        	
-    	if(Robot.Counter.getLightSensor() == true) {
-    		Robot.Counter.increment(); 
-    	} 
+    	Robot.climb.stopClimb();     //to execute, we need the stopClimb method
     }
-    			
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timer > runCount;
+        return false;
     }
 
     // Called once after isFinished returns true
@@ -46,6 +35,7 @@ public class CountRPM extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    protected void interrupted() {       //no interruption because this is the state when no bumper is pressed
+    
     }
 }

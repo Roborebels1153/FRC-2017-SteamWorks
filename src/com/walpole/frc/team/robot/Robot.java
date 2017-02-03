@@ -1,5 +1,11 @@
-
 package com.walpole.frc.team.robot;
+
+
+import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
+import com.walpole.frc.team.robot.commands.ShiftHighCommand;
+import com.walpole.frc.team.robot.subsystems.Climb;
+import com.walpole.frc.team.robot.subsystems.Drive;
+
 
 import com.walpole.frc.team.robot.commands.CountRPM;
 import com.walpole.frc.team.robot.subsystems.Collector;
@@ -8,8 +14,9 @@ import com.walpole.frc.team.robot.subsystems.Shooter;
 import com.walpole.frc.team.robot.subsystems.Counter;
 
 import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc; 
+import org.opencv.imgproc.Imgproc;
 
+import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -37,63 +44,60 @@ import edu.wpi.first.wpilibj.vision.VisionRunner;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
-	public static OI oi;
-	private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240; 
-	
-	private VisionThread visionThread;;
-	private double centerX = 0.0; 
-	private RobotDrive driveTest;
-	 
-	
-	private final Object imgLock = new Object();  
-
-
-    Command autonomousCommand;
+	public static final Climb climb = new Climb();
+	public static OI oi = new OI();
+//	private static final int IMG_WIDTH = 320;
+//	private static final int IMG_HEIGHT = 240; 
+//	
+//	private VisionThread visionThread;;
+//	private double centerX = 0.0; 
+//	 
+//	
+//	private final Object imgLock = new Object();  
+//
+    private Command autonomousCommand;
     SendableChooser chooser;
-    NetworkTable table;
+//    NetworkTable table;
 
     /**
-     * This function is run when the robot is first started up and should be
+     * This function is run when  the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
 
-		 UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-        
-        double[] defaultValue = new double[0];
-        
-       
-        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-        	if (!pipeline.filterContoursOutput().isEmpty()) {
-        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-        		synchronized (imgLock) {
-        			centerX = r.x + (r.width / 2);
-        		}
-        	}
-        });
-        
-     visionThread.start();
-        
-     while (true) {
-     	double[] areas = table.getNumberArray("area", defaultValue);
-     	System.out.print("areas: ");
-     	for (double area : areas) {
-     		System.out.print(area + " ");
-     		
-     	}
-     	
-     	System.out.println();
-     	Timer.delay(1);
-     	
-     }
+//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision", "169.254.203.5");
+//	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+//        
+//        double[] defaultValue = new double[0];
+//        
+//       
+//        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+//        	if (!pipeline.filterContoursOutput().isEmpty()) {
+//        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+//        		synchronized (imgLock) {
+//        			centerX = r.x + (r.width / 2);
+//        		}
+//        	}
+//        });
+//        
+//     visionThread.start();
+//        
+//     while (true) {
+//     	double[] areas = table.getNumberArray("area", defaultValue);
+//     	System.out.print("areas: ");
+//     	for (double area : areas) {
+//     		System.out.print(area + " ");
+//     		
+//     	}
+//     	
+//     	System.out.println();
+//     	Timer.delay(1);
+//     	
+//     }
         
     }
 	
@@ -103,6 +107,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
 		SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 //		SmartDashboard.putBoolean("LightSensor", Robot.shooter.getLight);
+    	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
+    	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
+    	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
+    	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
+//		SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
+    	SmartDashboard.putNumber("Gyro Angle", drive.getGyroCount());
+    	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
     }
 	
 	/**
@@ -129,7 +140,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+//        autonomousCommand = new DriveForwardWithEncoder(10);//(Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -152,14 +163,15 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         
-        	double centerX;
-        	synchronized (imgLock) {
-        		centerX = this.centerX;
-        	}
-        	
-        	double turn = centerX - (IMG_WIDTH / 2);
-        	driveTest.arcadeDrive(-0.6, turn * 0.005);
-        
+//        	double centerX;
+//        	synchronized (imgLock) {
+//        		centerX = this.centerX;
+//        	}
+//        	
+//        	double turn = centerX - (IMG_WIDTH / 2);
+//        
+        updateDashboard();
+
     }
 
     public void teleopInit() {
@@ -168,6 +180,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
     }
 
     /**
@@ -176,8 +189,10 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();    
         updateDashboard();
-//        Robot.shooter.turnLightOn();
-       
+        Robot.shooter.turnLightOn();
+        Scheduler.getInstance().run();
+        drive.drive(oi.getDriverJoystick());
+        updateDashboard();
     }
     
     /**
@@ -186,4 +201,5 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
 }
