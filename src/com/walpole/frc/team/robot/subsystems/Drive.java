@@ -72,6 +72,24 @@ public class Drive extends Subsystem {
 
 		transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 
+		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
+		leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
+		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
+		rightEncoderOutput = new DualPIDOutput(rightFrontVictor, rightBackVictor, false);
+
+		gyro = new RebelGyro();
+		gyro.startThread();
+		gyroOutput = new DummyPIDOutput();
+		
+		initPIDControllers();
+
+		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
+	}
+	
+	/**
+	 * Re-initialize the PID controllers to update the proportional, integral, and derivative values
+	 */
+	public void initPIDControllers() {
 		encoderP = prefs.getDouble("encoderP", Constants.encoderP);
 		encoderI = prefs.getDouble("encoderI", Constants.encoderI);
 		encoderD = prefs.getDouble("encoderD", Constants.encoderD);
@@ -79,25 +97,11 @@ public class Drive extends Subsystem {
 		gyroP = prefs.getDouble("gyroP", Constants.gyroP);
 		gyroI = prefs.getDouble("gyroI", Constants.gyroI);
 		gyroD = prefs.getDouble("gyroD", Constants.gyroD);
-
-		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
-		leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
+		
 		leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
-		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
-		rightEncoderOutput = new DualPIDOutput(rightFrontVictor, rightBackVictor, false);
 		rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
-
-		initGyro();
-
-		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
-	}
-
-	private void initGyro() {
-		gyro = new RebelGyro();
-		gyro.startThread();
-		gyroOutput = new DummyPIDOutput();
+		
 		gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
-
 		gyroPID.setOutputRange(-0.8, 0.8);
 		gyroPID.setInputRange(0, 360);
 		gyroPID.setContinuous();
