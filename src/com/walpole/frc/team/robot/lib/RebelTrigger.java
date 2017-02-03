@@ -12,12 +12,9 @@ public class RebelTrigger extends Button {
 		this.joystick = joystick;
 		this.trigger = trigger;
 	}
-
-
+	
 	@Override
 	public boolean get() {
-		
 		return joystick.getRawAxis(trigger) > 0.5;
-		
 	}
 }
