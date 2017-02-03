@@ -92,7 +92,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// autonomousCommand = new DriveForwardWithEncoder(10);//(Command)
 		// chooser.getSelected();
-		driveSubsystem.initPIDControllers();
+		driveSubsystem.updatePIDControllers();
 		autonomousCommand = new TurnWithGyroCommand(90);
 
 		/*
