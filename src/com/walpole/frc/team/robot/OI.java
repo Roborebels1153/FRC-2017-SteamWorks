@@ -2,14 +2,19 @@ package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.AgitatorSetPower;
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
+import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterPowerCommand;
 import com.walpole.frc.team.robot.commands.ShooterPowerDecrement;
 import com.walpole.frc.team.robot.commands.ShooterPowerIncrement;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
+import com.walpole.frc.team.robot.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator

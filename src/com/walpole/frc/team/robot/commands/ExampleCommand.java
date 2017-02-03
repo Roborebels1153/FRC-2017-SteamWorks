@@ -1,6 +1,8 @@
 
 package com.walpole.frc.team.robot.commands;
 
+import com.walpole.frc.team.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

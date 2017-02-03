@@ -24,6 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	
+	static double p = 0.36;
+	static double i = 0;
+	static double d = 0;
+	
 	public static Collector collector = new Collector();
 	public static Shooter shooter = new Shooter();
 	public static OI oi;
@@ -40,17 +44,16 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
+		shooter.getPIDController().enable();
+        shooter.getPIDController().setAbsoluteTolerance(0.2);
+        shooter.getPIDController().setSetpoint(Constants.origninalWantedRPM);
     }
 	
 	
     private void update() {
 		SmartDashboard.putNumber("Shooter Power", shooter.getNeededPower());
 		SmartDashboard.putNumber("Shooter Speed", shooter.getEncoder().getRate());
-		SmartDashboard.putNumber("Light Sensor Count", shooter.getLightCount());
-		
-		if (shooter.getLightSensor()) {
-			shooter.lightSensorCount();
-		}
+
     }
 	
 	/**
