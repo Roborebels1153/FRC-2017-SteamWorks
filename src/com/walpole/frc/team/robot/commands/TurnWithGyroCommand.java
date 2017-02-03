@@ -43,7 +43,7 @@ public class TurnWithGyroCommand extends Command {
 	// boolean gyroFinished = currentGyroAngle <=2 && currentGyroAngle >=
 	// -2;
 	boolean gyroFinished = Robot.driveSubsystem.getGyroPIDError() < 2;
-	return gyroFinished;
+	return false;
     }
 
     // Called once after isFinished returns true
