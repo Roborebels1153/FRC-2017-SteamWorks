@@ -72,14 +72,12 @@ public class Drive extends Subsystem {
 
 	transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 
-	loadPIDValues();
-	
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
-	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
+	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoderOutput = new DualPIDOutput(rightFrontVictor, rightBackVictor, false);
-	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder, rightEncoderOutput);
 
 	gyro = new RebelGyro();
 	gyro.startThread();
@@ -91,7 +89,7 @@ public class Drive extends Subsystem {
 
 	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
     }
-    
+
     /**
      * Load PID values from preferences and write them to variables
      */
@@ -110,7 +108,7 @@ public class Drive extends Subsystem {
      */
     public void updatePIDControllers() {
 	loadPIDValues();
-	
+
 	leftEncoderPID.setPID(encoderP, encoderI, encoderD);
 	rightEncoderPID.setPID(encoderP, encoderI, encoderD);
 	gyroPID.setPID(gyroP, gyroI, gyroD);

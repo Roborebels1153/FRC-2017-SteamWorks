@@ -26,8 +26,8 @@ public class TurnWithGyroCommand extends Command {
 	Robot.driveSubsystem.resetGyro();
 	Robot.driveSubsystem.setTurnPID(degreesToTurn);
 	Robot.driveSubsystem.enableGyroPID();
-	//Robot.driveSubsystem.setMaxGyroOutput(speed);
-	
+	// Robot.driveSubsystem.setMaxGyroOutput(speed);
+
     }
 
     // Called repeatedly when this Command is scheduled to run

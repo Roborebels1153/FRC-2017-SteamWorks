@@ -17,7 +17,7 @@ public class Constants {
 
     public static double gyroP = .015;
     public static double gyroI = 0;
-    public static double gyroD = 0; //0.015;
+    public static double gyroD = 0; // 0.015;
 
     public static double TURN_SPEED = 0.25;
 }
