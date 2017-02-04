@@ -72,6 +72,8 @@ public class Drive extends Subsystem {
 
 	transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 
+	loadPIDValues();
+	
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
 	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
@@ -89,11 +91,11 @@ public class Drive extends Subsystem {
 
 	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
     }
-
+    
     /**
-     * Update the proportional, integral, and derivative values
+     * Load PID values from preferences and write them to variables
      */
-    public void updatePIDControllers() {
+    private void loadPIDValues() {
 	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
 	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
 	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
@@ -101,6 +103,13 @@ public class Drive extends Subsystem {
 	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
 	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
 	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
+    }
+
+    /**
+     * Update the proportional, integral, and derivative values
+     */
+    public void updatePIDControllers() {
+	loadPIDValues();
 	
 	leftEncoderPID.setPID(encoderP, encoderI, encoderD);
 	rightEncoderPID.setPID(encoderP, encoderI, encoderD);
