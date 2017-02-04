@@ -3,6 +3,8 @@ package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
 import com.walpole.frc.team.robot.commands.CountRPM;
+import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
+import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
@@ -65,8 +67,8 @@ public OI() {
 //	opA.whileHeld(new CountRPM(60));
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-	opA.whenPressed(new ShooterSpeedCommand(0.25));
-	opB.whenPressed(new ShooterSpeedCommand(0.5));
+	opA.whenPressed(new ShooterSpeedDecrement());
+	opB.whenPressed(new ShooterSpeedIncrement());
 	opX.whenPressed(new ShooterSpeedCommand(0.75));
 	opY.whenPressed(new ShooterSpeedCommand(1));
 	
@@ -74,8 +76,8 @@ public OI() {
 	opBack.whileHeld(new TurnLightOffCommand());
 	
 	
-	opBumperL.whenPressed(new ShooterSpeedDecrement());
-	opBumperR.whenPressed(new ShooterSpeedIncrement());
+	opBumperL.whileHeld(new RetainGearCommand());
+	opBumperL.whenReleased(new ReleaseGearCommand());
 
 
 		drLT.whenPressed(new ShiftHighCommand());

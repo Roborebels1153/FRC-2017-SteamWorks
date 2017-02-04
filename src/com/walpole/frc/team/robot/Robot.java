@@ -5,13 +5,14 @@ import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
-
-
+import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.commands.CountRPM;
 import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 import com.walpole.frc.team.robot.subsystems.Counter;
+
+import java.awt.Image;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
@@ -49,31 +50,32 @@ public class Robot extends IterativeRobot {
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
+	public static final Gear gear = new Gear();
 	public static OI oi = new OI();
 //	private static final int IMG_WIDTH = 320;
 //	private static final int IMG_HEIGHT = 240; 
-//	
+	
 //	private VisionThread visionThread;;
 //	private double centerX = 0.0; 
-//	 
-//	
-//	private final Object imgLock = new Object();  
-//
+	
+	
+	private final Object imgLock = new Object();  
+
     private Command autonomousCommand;
     SendableChooser chooser;
-//    NetworkTable table;
+//  NetworkTable table;
+    
+   
 
     /**
      * This function is run when  the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-
-//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision", "169.254.203.5");
+    	
+//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.71");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//        
-//        double[] defaultValue = new double[0];
-//        
+//	       
 //       
 //        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 //        	if (!pipeline.filterContoursOutput().isEmpty()) {
@@ -86,19 +88,7 @@ public class Robot extends IterativeRobot {
 //        
 //     visionThread.start();
 //        
-//     while (true) {
-//     	double[] areas = table.getNumberArray("area", defaultValue);
-//     	System.out.print("areas: ");
-//     	for (double area : areas) {
-//     		System.out.print(area + " ");
-//     		
-//     	}
-//     	
-//     	System.out.println();
-//     	Timer.delay(1);
-//     	
-//     }
-        
+//        
     }
 	
     
@@ -169,7 +159,7 @@ public class Robot extends IterativeRobot {
 //        	}
 //        	
 //        	double turn = centerX - (IMG_WIDTH / 2);
-//        
+        
         updateDashboard();
 
     }
@@ -193,6 +183,14 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         drive.drive(oi.getDriverJoystick());
         updateDashboard();
+        
+//        double[] defaultValue = new double[0];
+//        double[] areas = table.getNumberArray("area", defaultValue);
+//     	System.out.print("areas: ");
+//     	for (double area : areas) {
+//     		System.out.print(area + " ");
+//     		
+//     	}
     }
     
     /**

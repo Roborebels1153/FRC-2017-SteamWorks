@@ -48,6 +48,13 @@ public class RobotMap {
 	public static int CLIMB_MOTOR = 6;
 	
 	public static int CLIMB_LIMIT_SWITCH = 6;
+	
+	/**GEAR RELATED**/
+	
+	public static int GEAR_SOLENOID_A = 2;
+	public static int GEAR_SOLENOID_B = 3;
+	public static int GEAR_PUSHER_SOLENOID_A = 4;
+	public static int GEAR_PUSHER_SOLENOID_B = 5;
 
 	
 }
