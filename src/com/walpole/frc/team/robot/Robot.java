@@ -45,15 +45,15 @@ public class Robot extends IterativeRobot {
 
     public void updateDashboard() {
 	SmartDashboard.putBoolean("Limit Switch", climbSubsystem.getLimitSwitch().get()); // Write
-											  // the
-											  // state
-											  // of
-											  // the
-											  // limit
-											  // switch
-											  // to
-											  // the
-											  // SmartDashboard
+	// the
+	// state
+	// of
+	// the
+	// limit
+	// switch
+	// to
+	// the
+	// SmartDashboard
 	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
 	SmartDashboard.putNumber("Right Motor Power Value", driveSubsystem.getRightMotorPower());
 	SmartDashboard.putNumber("Left Motor Power Value", driveSubsystem.getLeftMotorPower());
@@ -92,6 +92,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
 	// autonomousCommand = new DriveForwardWithEncoder(10);//(Command)
 	// chooser.getSelected();
+	driveSubsystem.updatePIDControllers();
 	autonomousCommand = new TurnWithGyroCommand(90);
 
 	/*

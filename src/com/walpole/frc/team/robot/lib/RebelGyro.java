@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 public class RebelGyro extends SPIGyro implements PIDSource {
 
     private PIDSourceType pidSource;
-    
+
     public RebelGyro() {
 	super();
 	pidSource = PIDSourceType.kDisplacement;
@@ -26,7 +26,7 @@ public class RebelGyro extends SPIGyro implements PIDSource {
     public double pidGet() {
 	return getAngle();
     }
-    
+
     @Override
     public double getAngle() {
 	return super.getAngle() % 360;

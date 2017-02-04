@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,12 +25,22 @@ public class Drive extends Subsystem {
 
     private RebelDrive robotDrive;
 
+    private Preferences prefs;
+
     private SpeedController leftFrontVictor;
     private SpeedController leftBackVictor;
     private SpeedController rightFrontVictor;
     private SpeedController rightBackVictor;
 
     private DoubleSolenoid transmission;
+
+    private double encoderP;
+    private double encoderI;
+    private double encoderD;
+
+    private double gyroP;
+    private double gyroI;
+    private double gyroD;
 
     private Encoder leftEncoder;
     private DualPIDOutput leftEncoderOutput;
@@ -63,27 +74,44 @@ public class Drive extends Subsystem {
 
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
-	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder,
-		leftEncoderOutput);
+	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoderOutput = new DualPIDOutput(rightFrontVictor, rightBackVictor, false);
-	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder,
-		rightEncoderOutput);
+	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder, rightEncoderOutput);
 
-	initGyro();
-
-	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
-    }
-    
-    private void initGyro() {
 	gyro = new RebelGyro();
 	gyro.startThread();
 	gyroOutput = new DummyPIDOutput();
-	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput);
-	
+	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
 	gyroPID.setOutputRange(-0.8, 0.8);
 	gyroPID.setInputRange(0, 360);
 	gyroPID.setContinuous();
+
+	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
+    }
+
+    /**
+     * Load PID values from preferences and write them to variables
+     */
+    private void loadPIDValues() {
+	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
+	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
+	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
+
+	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
+	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
+	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
+    }
+
+    /**
+     * Update the proportional, integral, and derivative values
+     */
+    public void updatePIDControllers() {
+	loadPIDValues();
+
+	leftEncoderPID.setPID(encoderP, encoderI, encoderD);
+	rightEncoderPID.setPID(encoderP, encoderI, encoderD);
+	gyroPID.setPID(gyroP, gyroI, gyroD);
     }
 
     // Put methods for controlling this subsystem
@@ -92,6 +120,7 @@ public class Drive extends Subsystem {
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
+	prefs = Preferences.getInstance();
     }
 
     public void drive(Joystick joystick) {
@@ -172,7 +201,7 @@ public class Drive extends Subsystem {
     public void enableGyroPID() {
 	gyroPID.enable();
     }
-    
+
     public void resetGyro() {
 	gyro.reset();
     }
@@ -185,7 +214,7 @@ public class Drive extends Subsystem {
 	leftEncoderPID.disable();
 	rightEncoderPID.disable();
     }
-    
+
     public void disableGyroPID() {
 	gyroPID.disable();
     }
@@ -245,7 +274,7 @@ public class Drive extends Subsystem {
     }
 
     public double getGyroPIDOutput() {
-	//return gyroOutput.getOutput(); //
+	// return gyroOutput.getOutput(); //
 	return gyroPID.get();
     }
 
