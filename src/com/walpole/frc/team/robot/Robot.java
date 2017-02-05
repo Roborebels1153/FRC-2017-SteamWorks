@@ -2,13 +2,16 @@
 package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
+import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
+import Autonomous.DriveAndTurn;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -30,6 +33,7 @@ public class Robot extends IterativeRobot {
 
     private Command autonomousCommand;
     SendableChooser chooser;
+    private Preferences prefs = Preferences.getInstance();
 
     /**
      * This function is run when the robot is first started up and should be
@@ -76,6 +80,7 @@ public class Robot extends IterativeRobot {
 
     public void disabledPeriodic() {
 	Scheduler.getInstance().run();
+	updateDashboard();
     }
 
     /**
@@ -93,8 +98,13 @@ public class Robot extends IterativeRobot {
 	// autonomousCommand = new DriveForwardWithEncoder(10);//(Command)
 	// chooser.getSelected();
 	driveSubsystem.updatePIDControllers();
-	autonomousCommand = new TurnWithGyroCommand(90);
-
+	double desiredRotationDegrees = prefs.getDouble("degrees", 90); 
+	//autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees); 
+	//autonomousCommand = new DriveForwardWithSeconds(desiredRotationDegrees);
+	double desiredSeconds = prefs.getDouble("seconds", 1); 
+	//autonomousCommand = new DriveAndTurn(desiredSeconds, desiredRotationDegrees);
+	
+	autonomousCommand = new DriveForwardWithEncoder(2);  
 	/*
 	 * String autoSelected = SmartDashboard.getString("Auto Selector",
 	 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

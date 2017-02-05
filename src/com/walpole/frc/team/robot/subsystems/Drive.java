@@ -64,6 +64,8 @@ public class Drive extends Subsystem {
     private Shifter currGear = Shifter.Low;
     private Speed currSpeed = Speed.Normal;
 
+    private double desiredRotationDegrees;
+
     public Drive() {
 	leftFrontVictor = new Victor(RobotMap.LEFT_FRONT_MOTOR);
 	leftBackVictor = new Victor(RobotMap.LEFT_BACK_MOTOR);
@@ -83,7 +85,7 @@ public class Drive extends Subsystem {
 	gyro.startThread();
 	gyroOutput = new DummyPIDOutput();
 	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
-	gyroPID.setOutputRange(-0.8, 0.8);
+	gyroPID.setOutputRange(-1, 1);
 	gyroPID.setInputRange(0, 360);
 	gyroPID.setContinuous();
 
@@ -100,7 +102,7 @@ public class Drive extends Subsystem {
 
 	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
 	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
-	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
+	gyroD = prefs.getDouble("gyroD", Constants.gyroD); 
     }
 
     /**

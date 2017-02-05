@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TurnWithGyroCommand extends Command {
     private double degreesToTurn;
     private double speed;
+    private long startTimeMillis;
 
     public TurnWithGyroCommand(double degreesToTurn) {
 	requires(Robot.driveSubsystem);
@@ -26,6 +27,8 @@ public class TurnWithGyroCommand extends Command {
 	Robot.driveSubsystem.resetGyro();
 	Robot.driveSubsystem.setTurnPID(degreesToTurn);
 	Robot.driveSubsystem.enableGyroPID();
+	Robot.driveSubsystem.disableDrivePID();
+	startTimeMillis = System.currentTimeMillis(); 
 	// Robot.driveSubsystem.setMaxGyroOutput(speed);
 
     }
@@ -34,16 +37,17 @@ public class TurnWithGyroCommand extends Command {
     protected void execute() {
 	double gyroOutput = Robot.driveSubsystem.getGyroPIDOutput();
 	Robot.driveSubsystem.setTurnSpeed(gyroOutput);
-	SmartDashboard.putNumber("Turn Speed", gyroOutput);
+	//SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	double currentGyroAngle = Robot.driveSubsystem.getGyroAngle();
+	//double currentGyroAngle = Robot.driveSubsystem.getGyroAngle();
 	// boolean gyroFinished = currentGyroAngle <=2 && currentGyroAngle >=
 	// -2;
-	boolean gyroFinished = Robot.driveSubsystem.getGyroPIDError() < 2;
-	return false;
+	//boolean gyroFinished = Robot.driveSubsystem.getGyroPIDError() < 3;
+	//return gyroFinished; 
+	return System.currentTimeMillis() - startTimeMillis >= 2 * 1000; 
     }
 
     // Called once after isFinished returns true
