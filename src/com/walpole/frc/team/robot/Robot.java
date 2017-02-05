@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
 	SmartDashboard.putNumber("Gyro Error", driveSubsystem.getGyroPIDError());
 	SmartDashboard.putNumber("Gyro PID Output", driveSubsystem.getGyroPIDOutput());
+	SmartDashboard.putBoolean("Gyro Is Finished",driveSubsystem.turnIsFinished());
     }
 
     /**
@@ -99,12 +100,11 @@ public class Robot extends IterativeRobot {
 	// chooser.getSelected();
 	driveSubsystem.updatePIDControllers();
 	double desiredRotationDegrees = prefs.getDouble("degrees", 90); 
-	//autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees); 
+	autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees); 
 	//autonomousCommand = new DriveForwardWithSeconds(desiredRotationDegrees);
-	double desiredSeconds = prefs.getDouble("seconds", 1); 
+	//double desiredSeconds = prefs.getDouble("seconds", 1); 
 	//autonomousCommand = new DriveAndTurn(desiredSeconds, desiredRotationDegrees);
 	
-	autonomousCommand = new DriveForwardWithEncoder(2);  
 	/*
 	 * String autoSelected = SmartDashboard.getString("Auto Selector",
 	 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

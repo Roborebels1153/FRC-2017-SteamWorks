@@ -52,6 +52,7 @@ public class Drive extends Subsystem {
     private RebelGyro gyro;
     private PIDController gyroPID;
     private DummyPIDOutput gyroOutput;
+    private boolean turnIsFinished;
 
     public enum Shifter {
 	High, Low
@@ -282,6 +283,15 @@ public class Drive extends Subsystem {
 
     public double getGyroPIDError() {
 	return gyroPID.getError();
+    }
+    public boolean turnIsFinished() {
+	return this.turnIsFinished;
+    }
+    public void setNotFinished() {
+	this.turnIsFinished = false;
+    }
+    public void setIsFinished() {
+	this.turnIsFinished = true;
     }
 
 }

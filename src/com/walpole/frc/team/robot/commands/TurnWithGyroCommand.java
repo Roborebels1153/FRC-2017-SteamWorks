@@ -18,6 +18,7 @@ public class TurnWithGyroCommand extends Command {
 	requires(Robot.driveSubsystem);
 	this.degreesToTurn = degreesToTurn;
 	this.speed = 1;
+	Robot.driveSubsystem.setNotFinished();
 
 	// Use requires() here to declare subsystem dependencies
     }
@@ -28,7 +29,7 @@ public class TurnWithGyroCommand extends Command {
 	Robot.driveSubsystem.setTurnPID(degreesToTurn);
 	Robot.driveSubsystem.enableGyroPID();
 	Robot.driveSubsystem.disableDrivePID();
-	startTimeMillis = System.currentTimeMillis(); 
+	//startTimeMillis = System.currentTimeMillis(); 
 	// Robot.driveSubsystem.setMaxGyroOutput(speed);
 
     }
@@ -39,15 +40,29 @@ public class TurnWithGyroCommand extends Command {
 	Robot.driveSubsystem.setTurnSpeed(gyroOutput);
 	//SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
+    
+    public boolean withinTargetValue(double targetValue, double errorTolerance, double actualValue) {
+	if ((actualValue >=  targetValue - errorTolerance) && (actualValue <= targetValue + errorTolerance)){
+	    return true;
+	} else { 
+	    return false;
+	}
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 	//double currentGyroAngle = Robot.driveSubsystem.getGyroAngle();
-	// boolean gyroFinished = currentGyroAngle <=2 && currentGyroAngle >=
-	// -2;
-	//boolean gyroFinished = Robot.driveSubsystem.getGyroPIDError() < 3;
-	//return gyroFinished; 
-	return System.currentTimeMillis() - startTimeMillis >= 2 * 1000; 
+	// boolean gyroFinished = currentGyroAngle <=92 && currentGyroAngle >=
+	// 88;
+	//boolean gyroFinished = Robot.driveSubsystem.getGyroPIDError() < 2;
+	if ((Math.abs(Robot.driveSubsystem.getGyroPIDError())) < 2 && (Math.abs(Robot.driveSubsystem.getGyroPIDOutput()) <= 0.25)) {
+	    Robot.driveSubsystem.setIsFinished();
+	    //return true; 
+	    return false;
+	} else {
+	    return false; 
+	}
+	//return System.currentTimeMillis() - startTimeMillis >= 2 * 1000; 
     }
 
     // Called once after isFinished returns true
