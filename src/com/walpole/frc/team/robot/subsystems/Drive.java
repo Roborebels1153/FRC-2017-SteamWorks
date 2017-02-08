@@ -8,6 +8,7 @@ import com.walpole.frc.team.robot.lib.SPIGyro;
 import com.walpole.frc.team.robot.lib.DualPIDOutput;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 import com.walpole.frc.team.robot.Constants;
+import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -53,6 +54,8 @@ public class Drive extends Subsystem {
     private PIDController gyroPID;
     private DummyPIDOutput gyroOutput;
     private boolean turnIsFinished;
+    private double driveTolerance = 15;
+    
 
     public enum Shifter {
 	High, Low
@@ -186,6 +189,11 @@ public class Drive extends Subsystem {
     public void driveAtSpeed(double speed) {
 	robotDrive.arcadeDrive(speed, 0);
     }
+    
+    public boolean isOnTarget () {
+	 return Math.abs(leftEncoderPID.getError()) < driveTolerance ||
+			Math.abs(rightEncoderPID.getError()) < driveTolerance;
+    }
 
     public void setTurnSpeed(double speed) {
 	robotDrive.arcadeDrive(0, speed);
@@ -280,6 +288,14 @@ public class Drive extends Subsystem {
 	// return gyroOutput.getOutput(); //
 	return gyroPID.get();
     }
+    
+    public double getLeftPIDOutput() {
+	return leftEncoderPID.get();
+    }
+    
+    public double getRightPIDOutput() {
+   	return rightEncoderPID.get();
+       }
 
     public double getGyroPIDError() {
 	return gyroPID.getError();

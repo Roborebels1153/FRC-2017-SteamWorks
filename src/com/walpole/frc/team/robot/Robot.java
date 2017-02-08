@@ -1,6 +1,7 @@
 
 package com.walpole.frc.team.robot;
 
+import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
@@ -9,6 +10,7 @@ import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
+import Autonomous.DeliverAGear;
 import Autonomous.DriveAndTurn;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -96,14 +98,17 @@ public class Robot extends IterativeRobot {
      * to the switch structure below with additional strings & commands.
      */
     public void autonomousInit() {
-	// autonomousCommand = new DriveForwardWithEncoder(10);//(Command)
+        //autonomousCommand = new DriveForwardWithEncoder(95);//(Command)
 	// chooser.getSelected();
 	driveSubsystem.updatePIDControllers();
 	double desiredRotationDegrees = prefs.getDouble("degrees", 90); 
-	autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees); 
-	//autonomousCommand = new DriveForwardWithSeconds(desiredRotationDegrees);
-	//double desiredSeconds = prefs.getDouble("seconds", 1); 
+	//autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees); 
+	double desiredSeconds = prefs.getDouble("seconds", 1); 
+	//autonomousCommand = new DriveForwardWithSeconds(desiredSeconds);
+	//autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees); 
 	//autonomousCommand = new DriveAndTurn(desiredSeconds, desiredRotationDegrees);
+	//autonomousCommand = new DriveBackwardsWithEncoder(42);
+	autonomousCommand = new DeliverAGear();  
 	
 	/*
 	 * String autoSelected = SmartDashboard.getString("Auto Selector",

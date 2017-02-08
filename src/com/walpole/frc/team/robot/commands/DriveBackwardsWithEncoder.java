@@ -5,13 +5,13 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveForwardWithEncoder extends Command {
+public class DriveBackwardsWithEncoder extends Command {
 
     private double speed;
     private double inchesToDrive; 
     private double setPoint;
 
-    public DriveForwardWithEncoder(int inchesToDrive) {
+    public DriveBackwardsWithEncoder(int inchesToDrive) {
 	requires(Robot.driveSubsystem);
 	this.speed = 0.85;
 	this.inchesToDrive = inchesToDrive;
@@ -36,7 +36,7 @@ public class DriveForwardWithEncoder extends Command {
 	double leftOutput = Robot.driveSubsystem.getLeftPIDOutput();
 	double rightOutput = Robot.driveSubsystem.getRightPIDOutput();
 	
-	Robot.driveSubsystem.driveAtSpeed (speed);
+	Robot.driveSubsystem.driveAtSpeed (-speed);
 
     }
 
@@ -52,7 +52,6 @@ public class DriveForwardWithEncoder extends Command {
 //	
 //	 return leftMotorFinished && rightMotorFinished;
 	return Robot.driveSubsystem.isOnTarget();
-	//This is a new command that finishes DriveForwardWithEncoder when the robot is on target
 	
     }
 
