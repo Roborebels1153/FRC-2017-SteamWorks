@@ -2,15 +2,14 @@ package com.walpole.frc.team.robot;
 
 
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
-import com.walpole.frc.team.robot.commands.CountRPM;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
 import com.walpole.frc.team.robot.commands.ShooterSpeedIncrement;
-import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
-import com.walpole.frc.team.robot.commands.TurnLightOnCommand;
+//import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
+//import com.walpole.frc.team.robot.commands.TurnLightOnCommand;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
@@ -59,12 +58,13 @@ public class OI {
 	private Button drRB = new JoystickButton(driverJoystick, 6);     //the drLb and drRb are the left and rught bumpers on the XBOX controller
 	private Button drLB = new JoystickButton(driverJoystick, 5 );
 	
+	
 
 
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
-//	opA.whileHeld(new CountRPM(60));
+//	drA.whileHeld(new CountRPM(60));
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
 	opA.whenPressed(new ShooterSpeedDecrement());
@@ -72,8 +72,8 @@ public OI() {
 	opX.whenPressed(new ShooterSpeedCommand(0.75));
 	opY.whenPressed(new ShooterSpeedCommand(1));
 	
-	opStart.whileHeld(new TurnLightOnCommand());
-	opBack.whileHeld(new TurnLightOffCommand());
+//	opStart.whileHeld(new TurnLightOnCommand());
+//	opBack.whileHeld(new TurnLightOffCommand());
 	
 	
 	opBumperL.whileHeld(new RetainGearCommand());

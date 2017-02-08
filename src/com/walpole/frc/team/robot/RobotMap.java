@@ -36,7 +36,7 @@ public class RobotMap {
 	
 	public static int SHOOTER_MOTOR = 4;
 	
-	public static int LIGHT = 0;
+	public static int LIGHT = 9;
 	
 	public static int SHOOTER_ENCODER1 = 4;
 	public static int SHOOTER_ENCODER2 = 5;
@@ -53,8 +53,8 @@ public class RobotMap {
 	
 	public static int GEAR_SOLENOID_A = 2;
 	public static int GEAR_SOLENOID_B = 3;
-	public static int GEAR_PUSHER_SOLENOID_A = 4;
-	public static int GEAR_PUSHER_SOLENOID_B = 5;
+//	public static int GEAR_PUSHER_SOLENOID_A = 4;
+//	public static int GEAR_PUSHER_SOLENOID_B = 5;
 
 	
 }

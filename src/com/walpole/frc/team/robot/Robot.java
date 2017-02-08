@@ -1,41 +1,22 @@
 package com.walpole.frc.team.robot;
 
 
-import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
+
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
-import com.walpole.frc.team.robot.commands.CountRPM;
 import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Shooter;
-import com.walpole.frc.team.robot.subsystems.Counter;
+import java.util.ArrayList;
 
-import java.awt.Image;
-
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.cscore.AxisCamera;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
-
-import com.walpole.frc.team.robot.vision.GripPipeline;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionThread;
-import edu.wpi.first.wpilibj.vision.VisionRunner;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,13 +26,14 @@ import edu.wpi.first.wpilibj.vision.VisionRunner;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
 	public static OI oi = new OI();
+	public static CountRPM countRPM = new CountRPM();
+	public ArrayList<Long> rotationTimeList = new ArrayList<Long>();
 //	private static final int IMG_WIDTH = 320;
 //	private static final int IMG_HEIGHT = 240; 
 	
@@ -94,9 +76,9 @@ public class Robot extends IterativeRobot {
     
     public static void updateDashboard() {
 		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
-		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
-		SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
-//		SmartDashboard.putBoolean("LightSensor", Robot.shooter.getLight);
+//		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
+		SmartDashboard.putNumber("RPS", Robot.countRPM.getRPS());
+//		SmartDashboard.putBoolean("Light Sensor", Robot.countRPM.getLightSensor());
     	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
     	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
     	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
@@ -104,6 +86,12 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
     	SmartDashboard.putNumber("Gyro Angle", drive.getGyroCount());
     	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
+    	
+    }
+    
+    
+    public void countRotations() {
+    	countRPM.check();
     }
 	
 	/**
@@ -112,7 +100,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
     }
 	
 	public void disabledPeriodic() {
@@ -179,11 +166,11 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();    
         updateDashboard();
-        Robot.shooter.turnLightOn();
+//        Robot.shooter.turnLightOn();
         Scheduler.getInstance().run();
         drive.drive(oi.getDriverJoystick());
         updateDashboard();
-        
+        countRotations();      
 //        double[] defaultValue = new double[0];
 //        double[] areas = table.getNumberArray("area", defaultValue);
 //     	System.out.print("areas: ");
