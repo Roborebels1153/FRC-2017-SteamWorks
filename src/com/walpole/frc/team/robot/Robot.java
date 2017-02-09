@@ -11,6 +11,7 @@ import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import Autonomous.DeliverAGear;
+import Autonomous.DeliverAGearLeft;
 import Autonomous.DriveAndTurn;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -47,19 +48,15 @@ public class Robot extends IterativeRobot {
 	chooser.addDefault("Default Auto", new ExampleCommand());
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
+	
+	chooser.addObject("Deliver a Gear", new DeliverAGear());
+	chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
+	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
     }
 
     public void updateDashboard() {
 	SmartDashboard.putBoolean("Limit Switch", climbSubsystem.getLimitSwitch().get()); // Write
-	// the
-	// state
-	// of
-	// the
-	// limit
-	// switch
-	// to
-	// the
-	// SmartDashboard
+	// the state of the limit switch to the Smart Dashboard
 	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
 	SmartDashboard.putNumber("Right Motor Power Value", driveSubsystem.getRightMotorPower());
 	SmartDashboard.putNumber("Left Motor Power Value", driveSubsystem.getLeftMotorPower());
@@ -109,6 +106,8 @@ public class Robot extends IterativeRobot {
 	//autonomousCommand = new DriveAndTurn(desiredSeconds, desiredRotationDegrees);
 	//autonomousCommand = new DriveBackwardsWithEncoder(42);
 	autonomousCommand = new DeliverAGear();  
+	
+	
 	
 	/*
 	 * String autoSelected = SmartDashboard.getString("Auto Selector",
