@@ -5,8 +5,8 @@ import com.walpole.frc.team.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveForwardWithSeconds extends Command {
-    
-    private long startTimeMillis; 
+
+    private long startTimeMillis;
     private double speed;
     private double secondsToDrive;
 
@@ -18,7 +18,7 @@ public class DriveForwardWithSeconds extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	startTimeMillis = System.currentTimeMillis(); 
+	startTimeMillis = System.currentTimeMillis();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,7 +28,7 @@ public class DriveForwardWithSeconds extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	return System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000;  
+	return System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000;
     }
 
     // Called once after isFinished returns true
@@ -41,5 +41,4 @@ public class DriveForwardWithSeconds extends Command {
     protected void interrupted() {
 
     }
-}   
-
+}

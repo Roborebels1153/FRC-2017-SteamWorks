@@ -12,9 +12,9 @@ public class DriveAndTurn extends CommandGroup {
     public DriveAndTurn(double seconds, double degrees) {
 	super();
 	// TODO Auto-generated constructor stub
-	
-	addSequential(new TurnWithGyroCommand(degrees)); 
-	addSequential(new DriveForwardWithSeconds(seconds));  
+
+	addSequential(new TurnWithGyroCommand(degrees));
+	addSequential(new DriveForwardWithSeconds(seconds));
     }
 
     /**
@@ -24,7 +24,5 @@ public class DriveAndTurn extends CommandGroup {
 	super(name);
 	// TODO Auto-generated constructor stub
     }
-    
-    
 
 }

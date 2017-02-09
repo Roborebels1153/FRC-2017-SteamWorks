@@ -55,7 +55,6 @@ public class Drive extends Subsystem {
     private DummyPIDOutput gyroOutput;
     private boolean turnIsFinished;
     private double driveTolerance = 15;
-    
 
     public enum Shifter {
 	High, Low
@@ -80,10 +79,12 @@ public class Drive extends Subsystem {
 
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
-	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
+	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder,
+		leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoderOutput = new DualPIDOutput(rightFrontVictor, rightBackVictor, false);
-	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder, rightEncoderOutput);
+	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder,
+		rightEncoderOutput);
 
 	gyro = new RebelGyro();
 	gyro.startThread();
@@ -106,7 +107,7 @@ public class Drive extends Subsystem {
 
 	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
 	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
-	gyroD = prefs.getDouble("gyroD", Constants.gyroD); 
+	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
     }
 
     /**
@@ -189,10 +190,10 @@ public class Drive extends Subsystem {
     public void driveAtSpeed(double speed) {
 	robotDrive.arcadeDrive(speed, 0);
     }
-    
-    public boolean isOnTarget () {
-	 return Math.abs(leftEncoderPID.getError()) < driveTolerance ||
-			Math.abs(rightEncoderPID.getError()) < driveTolerance;
+
+    public boolean isOnTarget() {
+	return Math.abs(leftEncoderPID.getError()) < driveTolerance
+		|| Math.abs(rightEncoderPID.getError()) < driveTolerance;
     }
 
     public void setTurnSpeed(double speed) {
@@ -288,24 +289,27 @@ public class Drive extends Subsystem {
 	// return gyroOutput.getOutput(); //
 	return gyroPID.get();
     }
-    
+
     public double getLeftPIDOutput() {
 	return leftEncoderPID.get();
     }
-    
+
     public double getRightPIDOutput() {
-   	return rightEncoderPID.get();
-       }
+	return rightEncoderPID.get();
+    }
 
     public double getGyroPIDError() {
 	return gyroPID.getError();
     }
+
     public boolean turnIsFinished() {
 	return this.turnIsFinished;
     }
+
     public void setNotFinished() {
 	this.turnIsFinished = false;
     }
+
     public void setIsFinished() {
 	this.turnIsFinished = true;
     }

@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DeliverAGearRight extends CommandGroup {
     int inchesToAirShip = 5;
     int degreesToTurn = -30;
-    
-    
+
     public DeliverAGearRight() {
-   	super();
-   	// TODO Auto-generated constructor stub
-   	
-   	addSequential (new DriveForwardWithEncoder(inchesToAirShip));
-   	addSequential (new TurnWithGyroCommand (degreesToTurn));
-    	}
+	super();
+	// TODO Auto-generated constructor stub
+
+	addSequential(new DriveForwardWithEncoder(inchesToAirShip));
+	addSequential(new TurnWithGyroCommand(degreesToTurn));
+    }
 }
