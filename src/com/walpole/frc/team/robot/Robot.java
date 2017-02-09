@@ -77,7 +77,8 @@ public class Robot extends IterativeRobot {
     public static void updateDashboard() {
 		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 //		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
-		SmartDashboard.putNumber("RPS", Robot.countRPM.getRPS());
+		SmartDashboard.putNumber("RPS", Robot.countRPM.getShooterRate());
+		SmartDashboard.putNumber("RPM", Robot.countRPM.getShooterRate()*60);
 //		SmartDashboard.putBoolean("Light Sensor", Robot.countRPM.getLightSensor());
     	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
     	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
@@ -87,11 +88,6 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Gyro Angle", drive.getGyroCount());
     	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
     	
-    }
-    
-    
-    public void countRotations() {
-    	countRPM.check();
     }
 	
 	/**
@@ -170,7 +166,6 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         drive.drive(oi.getDriverJoystick());
         updateDashboard();
-        countRotations();      
 //        double[] defaultValue = new double[0];
 //        double[] areas = table.getNumberArray("area", defaultValue);
 //     	System.out.print("areas: ");
