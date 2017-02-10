@@ -13,9 +13,13 @@ public class Constants {
     // PID Constants
     public static double encoderP = 0.78;
     public static double encoderI = 0;
-    public static double encoderD = 0;
+    public static double encoderD = 0.02;
     
+    
+     
     public static double gyroP = 0.35;
     public static double gyroI = 0;
     public static double gyroD = 0.015;
+    
+	public static double originalWantedRPM = 3000;
 }

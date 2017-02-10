@@ -75,7 +75,6 @@ public class Robot extends IterativeRobot {
 	
     
     public static void updateDashboard() {
-		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 //		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
 		SmartDashboard.putNumber("RPS", Robot.countRPM.getShooterRate());
 		SmartDashboard.putNumber("RPM", Robot.countRPM.getShooterRate()*60);
