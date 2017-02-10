@@ -24,6 +24,12 @@ public class Shooter extends Subsystem{
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public Shooter() {
+		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
+		shooterMotor2 = new Victor(RobotMap.SHOOTER_MOTOR_TWO);
+
+		shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER1, RobotMap.SHOOTER_ENCODER2, false, Encoder.EncodingType.k4X);
+		
+		light = new Relay(RobotMap.LIGHT);
 		
 	}
 
@@ -31,12 +37,7 @@ public class Shooter extends Subsystem{
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	
-		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
-		shooterMotor2 = new Victor(RobotMap.COLLECT_MOTOR);
-
-		shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER1, RobotMap.SHOOTER_ENCODER2, false, Encoder.EncodingType.k4X);
 		
-		light = new Relay(RobotMap.LIGHT);
     }
     
     

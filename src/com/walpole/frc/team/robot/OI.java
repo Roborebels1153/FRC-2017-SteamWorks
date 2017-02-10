@@ -3,8 +3,10 @@ package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
 import com.walpole.frc.team.robot.commands.CountRPM;
+import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
+import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
@@ -78,12 +80,17 @@ public OI() {
 	
 	opBumperL.whileHeld(new RetainGearCommand());
 	opBumperL.whenReleased(new ReleaseGearCommand());
+	
+	opBumperR.whenReleased(new ExtendGearPusherCommand());
+	opBumperR.whileHeld(new RetractGearPusherCommand());
 
 
 		drLT.whenPressed(new ShiftHighCommand());
 		drLT.whenReleased(new ShiftLowCommand());
+		
 		drRB.whenPressed(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
 		drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning
+		
 		drLB.whenPressed(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
 		drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
 	}

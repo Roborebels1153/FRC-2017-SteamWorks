@@ -1,41 +1,31 @@
 package com.walpole.frc.team.robot;
 
 
-import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
-import com.walpole.frc.team.robot.subsystems.Climb;
-import com.walpole.frc.team.robot.subsystems.Drive;
-import com.walpole.frc.team.robot.subsystems.Gear;
-import com.walpole.frc.team.robot.commands.CountRPM;
-import com.walpole.frc.team.robot.subsystems.Collector;
-import com.walpole.frc.team.robot.subsystems.Drive;
-import com.walpole.frc.team.robot.subsystems.Shooter;
-import com.walpole.frc.team.robot.subsystems.Counter;
-
-import java.awt.Image;
+import java.util.ArrayList;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
+import com.walpole.frc.team.robot.Vision.GripPipeline;
+import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
+import com.walpole.frc.team.robot.subsystems.Climb;
+import com.walpole.frc.team.robot.subsystems.Collector;
+import com.walpole.frc.team.robot.subsystems.Counter;
+import com.walpole.frc.team.robot.subsystems.Drive;
+import com.walpole.frc.team.robot.subsystems.Gear;
+import com.walpole.frc.team.robot.subsystems.Shooter;
+
 import edu.wpi.cscore.AxisCamera;
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
-
-import com.walpole.frc.team.robot.vision.GripPipeline;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
-import edu.wpi.first.wpilibj.vision.VisionRunner;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -52,18 +42,20 @@ public class Robot extends IterativeRobot {
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
 	public static OI oi = new OI();
-//	private static final int IMG_WIDTH = 320;
-//	private static final int IMG_HEIGHT = 240; 
+	private static final int IMG_WIDTH = 640;
+	private static final int IMG_HEIGHT = 480; 
 	
-//	private VisionThread visionThread;;
-//	private double centerX = 0.0; 
+	private VisionThread visionThread;;
+	private double centerX = 0.0; 
+	private static double[] defaultValue = new double[0];
+	private static double[] areas = new double[0];
 	
 	
 	private final Object imgLock = new Object();  
 
     private Command autonomousCommand;
     SendableChooser chooser;
-//  NetworkTable table;
+    static NetworkTable table;
     
    
 
@@ -73,10 +65,16 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	
-//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.71");
+    	
+    	
+//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//	       
-//       
+	        
+	     AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera" , "10.11.54.63");
+	        cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	        
+	       
+       
 //        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
 //        	if (!pipeline.filterContoursOutput().isEmpty()) {
 //        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
@@ -87,9 +85,19 @@ public class Robot extends IterativeRobot {
 //        });
 //        
 //     visionThread.start();
-//        
-//        
+//     
+//     table = NetworkTable.getTable("GRIP/myCoutoursReport");
+        
+        
     }
+//    public static void displayAreasOnDashboard(double[] areas) {
+//    	
+//    	for (int i = 0; i < areas.length; i++ ) {
+//    		SmartDashboard.putNumber("Table " + i, areas[i]);
+//    	}
+//    }
+    
+
 	
     
     public static void updateDashboard() {
@@ -104,6 +112,14 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
     	SmartDashboard.putNumber("Gyro Angle", drive.getGyroCount());
     	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
+    	//displayAreasOnDashboard(table.getNumberArray("areas", defaultValue));
+    	
+//    	areas = table.getNumberArray("areas", defaultValue);
+//    	for (int i = 0; i < areas.length; i++ ) {
+//    		SmartDashboard.putNumber("Table " + i, areas[i]);
+//    	}
+    	
+    	
     }
 	
 	/**
@@ -111,12 +127,17 @@ public class Robot extends IterativeRobot {
      * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
      */
+    
+    
     public void disabledInit(){
+    	
+    	new RetractGearPusherCommand();
 
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		new RetractGearPusherCommand();
 		updateDashboard();
 	}
 
@@ -130,6 +151,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	new ExtendGearPusherCommand();
+    	
 //        autonomousCommand = new DriveForwardWithEncoder(10);//(Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -152,7 +175,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        
+        new ExtendGearPusherCommand();
+//        
 //        	double centerX;
 //        	synchronized (imgLock) {
 //        		centerX = this.centerX;
@@ -165,6 +189,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	
+    	new ExtendGearPusherCommand();
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
@@ -182,10 +208,12 @@ public class Robot extends IterativeRobot {
         Robot.shooter.turnLightOn();
         Scheduler.getInstance().run();
         drive.drive(oi.getDriverJoystick());
+        new ExtendGearPusherCommand();
         updateDashboard();
+//        new ArrayTableViewer();
         
-//        double[] defaultValue = new double[0];
-//        double[] areas = table.getNumberArray("area", defaultValue);
+        
+//        areas = table.getNumberArray("areas", defaultValue);
 //     	System.out.print("areas: ");
 //     	for (double area : areas) {
 //     		System.out.print(area + " ");

@@ -15,14 +15,16 @@ public class Gear extends Subsystem {
 		gearSolenoidRetainer = new DoubleSolenoid(RobotMap.GEAR_SOLENOID_A, RobotMap.GEAR_SOLENOID_B);
 		
 		
-		//gearPusherSolenoid = new DoubleSolenoid(RobotMap.GEAR_PUSHER_SOLENOID_A, RobotMap.GEAR_PUSHER_SOLENOID_B);
+		gearPusherSolenoid = new DoubleSolenoid(RobotMap.GEAR_PUSHER_SOLENOID_A, RobotMap.GEAR_PUSHER_SOLENOID_B);
 		
-		init();
+		//init();
 	}
 	
 	private void init() {
 		
-		gearSolenoidRetainer.set(DoubleSolenoid.Value.kForward);
+//		gearSolenoidRetainer.set(DoubleSolenoid.Value.kForward);
+//		gearPusherSolenoid.set(DoubleSolenoid.Value.kForward);
+		
 		
 	}
 	
@@ -39,16 +41,16 @@ public class Gear extends Subsystem {
 		
 	}
 	
-//	public void fireGearPusher() {
-//		
-//		gearPusherSolenoid.set(DoubleSolenoid.Value.kForward);
-//		
-//	}
-//	
-//	public void retractGearPusher() {
-//		
-//		gearPusherSolenoid.set(DoubleSolenoid.Value.kReverse);
-//	}
+	public void retractGearPusher() {
+		
+		gearPusherSolenoid.set(DoubleSolenoid.Value.kForward);
+		
+	}
+	
+	public void fireGearPusher() {
+		
+		gearPusherSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
 
 	@Override
 	protected void initDefaultCommand() {
