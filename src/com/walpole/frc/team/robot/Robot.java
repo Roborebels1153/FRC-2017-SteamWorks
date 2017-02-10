@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 
-import com.walpole.frc.team.robot.Vision.GripPipeline;
+import com.walpole.frc.team.robot.vision.GripPipeline;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;

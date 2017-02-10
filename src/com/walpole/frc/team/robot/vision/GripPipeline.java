@@ -1,4 +1,4 @@
-package com.walpole.frc.team.robot.Vision;
+package com.walpole.frc.team.robot.vision;
 
 import java.io.File;
 import java.io.FileWriter;
