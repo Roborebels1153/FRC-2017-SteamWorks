@@ -8,9 +8,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Collector extends Subsystem{
 	private Victor collectMotor;
 	
+	public Collector () {
+		collectMotor = new Victor(RobotMap.COLLECT_MOTOR);
+	}
+	
 	
     public void initDefaultCommand() {
-    	collectMotor = new Victor(RobotMap.COLLECT_MOTOR);
+    	
     }
     public void collect() {
     	collectMotor.set(1);

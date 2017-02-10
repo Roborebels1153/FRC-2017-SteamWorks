@@ -1,14 +1,20 @@
 package com.walpole.frc.team.robot.subsystems;
 
 import com.walpole.frc.team.robot.Constants;
+
 import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
-
+import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
 	
@@ -24,6 +30,9 @@ public class Shooter extends Subsystem {
     public static double shooterD = 0;
     
 	private PIDController shooterPID;
+	private double speed = 1;
+    private Relay light;
+
 
     
     //private Encoder shooterEncoder2;
@@ -34,7 +43,13 @@ public class Shooter extends Subsystem {
 		shooterPID.setContinuous(false);
     	shooterPID.disable();
     	
-    	shooterPID = new PIDController(shooterP, shooterI, shooterD, Robot.countRPM. , agitator);
+//    	shooterPID = new PIDController(shooterP, shooterI, shooterD, robot. , agitator);
+		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
+		shooterMotor2 = new Victor(RobotMap.SHOOTER_MOTOR_TWO);
+
+		shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER1, RobotMap.SHOOTER_ENCODER2, false, Encoder.EncodingType.k4X);
+		
+		light = new Relay(RobotMap.LIGHT);
 	}
 	
     // Put methods for controlling this subsystem
@@ -74,6 +89,15 @@ public class Shooter extends Subsystem {
 	}  
     public double getNeededPower() {
     	return neededPower;
+
+    }
+    
+    public void setSpeed(double shootSpeed) {
+    	speed = shootSpeed;
+    }
+    
+    public double getSpeed() {
+    	return speed;
     }
     public void shoot() {
     	shooterMotor.set(neededPower);
@@ -83,10 +107,28 @@ public class Shooter extends Subsystem {
     	//} else {
     	//	agitator.set(0);
     	//}
+    	shooterMotor.set(speed);
+    	shooterMotor2.set(speed*-1);
     }
     public void stopShooting() {
-    	shooterPID.disable();
+//    	shooterPID.disable();
 //    	agitator.set(0);
-    	shooterMotor.set(0);
+//    	shooterMotor.set(0);
+//<<<<<<< HEAD
 //    	shooterMotor2.set(0);
     }
+
+    
+    public Value getLight() {
+    	return light.get();
+    }
+    
+    public void turnLightOn() {
+    	 light.set(Value.kForward);
+    }
+    
+    public void turnLightOff() {
+    	light.set(Value.kReverse);
+    }
+}
+
