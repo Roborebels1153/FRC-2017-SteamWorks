@@ -13,29 +13,25 @@ public class DriveForwardWithEncoder extends Command {
 
     public DriveForwardWithEncoder(int inchesToDrive) {
 	requires(Robot.driveSubsystem);
-	this.speed = 0.85;
+	this.speed = 0.5;
 	this.inchesToDrive = inchesToDrive;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+	Robot.driveSubsystem.disableGyroPID();
 	Robot.driveSubsystem.resetEncoders();
-	Robot.driveSubsystem.enableDrivePID();
+	
 	Robot.driveSubsystem.setMaxDrivePIDOutput(speed, speed);
 	Robot.driveSubsystem.setDrivePIDSetPoint(setPoint);
-	Robot.driveSubsystem.setTurnPID(Robot.driveSubsystem.getGyroAngle());
+	Robot.driveSubsystem.enableDrivePID();
 
 	// Robot.driveSubsystem.convertInchesToTicks(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	double leftOutput = Robot.driveSubsystem.getLeftPIDOutput();
-	double rightOutput = Robot.driveSubsystem.getRightPIDOutput();
-
-	Robot.driveSubsystem.driveAtSpeed(speed);
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -50,7 +46,8 @@ public class DriveForwardWithEncoder extends Command {
 	// 50;
 	//
 	// return leftMotorFinished && rightMotorFinished;
-	return Robot.driveSubsystem.isOnTarget();
+	//return Robot.driveSubsystem.isOnTarget();
+	return false;
 	// This is a new command that finishes DriveForwardWithEncoder when the
 	// robot is on target
 
@@ -58,13 +55,14 @@ public class DriveForwardWithEncoder extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.driveSubsystem.stopDrive();
+	//Robot.driveSubsystem.stopDrive();
 	Robot.driveSubsystem.disableDrivePID();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-
+	//Robot.driveSubsystem.stopDrive();
+	Robot.driveSubsystem.disableDrivePID();
     }
 }
