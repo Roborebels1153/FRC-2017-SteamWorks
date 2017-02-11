@@ -2,6 +2,7 @@ package Autonomous;
 
 import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
+import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.commands.WaitInbetweenCommandsCommand;
 
@@ -20,6 +21,7 @@ public class DeliverAGear extends CommandGroup {
 	// TODO Auto-generated constructor stub
 
 	addSequential(new DriveForwardWithEncoder(inchesToAirShip));
+	addSequential(new ReleaseGearCommand());
 	addSequential(new WaitInbetweenCommandsCommand(secondsToDrive));
 	addSequential(new DriveBackwardsWithEncoder(inchesBack));
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
