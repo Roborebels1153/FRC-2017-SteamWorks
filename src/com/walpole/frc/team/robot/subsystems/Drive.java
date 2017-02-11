@@ -191,6 +191,10 @@ public class Drive extends Subsystem {
     public void driveAtSpeed(double speed) {
 	robotDrive.arcadeDrive(speed, 0);
     }
+    
+    public void arcadeDrive(double driveSpeed, double turnSpeed) {
+	robotDrive.arcadeDrive(driveSpeed, turnSpeed);
+    }
 
     public boolean isOnTarget() {
 	return Math.abs(leftEncoderPID.getError()) < driveTolerance

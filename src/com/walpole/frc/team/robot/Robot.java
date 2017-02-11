@@ -4,6 +4,7 @@ package com.walpole.frc.team.robot;
 import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
+import com.walpole.frc.team.robot.commands.DriveStraightWithGyroCommand;
 import com.walpole.frc.team.robot.commands.ExampleCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
@@ -100,11 +101,12 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
 	driveSubsystem.updatePIDControllers();
-	autonomousCommand = new DriveForwardWithEncoder(120);//(Command)
+	//autonomousCommand = new DriveForwardWithEncoder(120);//(Command)
+	autonomousCommand = new DriveStraightWithGyroCommand();
 	// chooser.getSelected();
-	double desiredRotationDegrees = prefs.getDouble("degrees", 90);
+	//double desiredRotationDegrees = prefs.getDouble("degrees", 90);
 	// autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees);
-	double desiredSeconds = prefs.getDouble("seconds", 1);
+	//double desiredSeconds = prefs.getDouble("seconds", 1);
 	 //autonomousCommand = new DriveForwardWithSeconds(desiredSeconds);
 	 //autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees);
 	// autonomousCommand = new DriveAndTurn(desiredSeconds,
