@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
+	public static final CountRPM countRPM = new CountRPM();
 	public static OI oi = new OI();
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480; 
