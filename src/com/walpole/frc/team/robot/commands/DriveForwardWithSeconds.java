@@ -11,7 +11,7 @@ public class DriveForwardWithSeconds extends Command {
     private double secondsToDrive;
 
     public DriveForwardWithSeconds(double secondsToDrive) {
-	requires(Robot.driveSubsystem);
+	requires(Robot.drive);
 	this.speed = 0.6;
 	this.secondsToDrive = secondsToDrive;
     }
@@ -23,7 +23,7 @@ public class DriveForwardWithSeconds extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	Robot.driveSubsystem.driveAtSpeed(speed);
+	Robot.drive.driveAtSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,7 +33,7 @@ public class DriveForwardWithSeconds extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.driveSubsystem.stopDrive();
+	Robot.drive.stopDrive();
     }
 
     // Called when another command which requires one or more of the same

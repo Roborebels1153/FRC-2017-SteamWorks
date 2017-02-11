@@ -12,7 +12,7 @@ public class DriveBackwardsWithEncoder extends Command {
     private double setPoint;
 
     public DriveBackwardsWithEncoder(int inchesToDrive) {
-	requires(Robot.driveSubsystem);
+	requires(Robot.drive);
 	this.speed = 0.85;
 	this.inchesToDrive = inchesToDrive;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
@@ -20,44 +20,44 @@ public class DriveBackwardsWithEncoder extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.driveSubsystem.resetEncoders();
-	Robot.driveSubsystem.enableDrivePID();
-	Robot.driveSubsystem.setMaxDrivePIDOutput(speed, speed);
-	Robot.driveSubsystem.setDrivePIDSetPoint(setPoint);
-	Robot.driveSubsystem.setTurnPID(Robot.driveSubsystem.getGyroAngle());
+	Robot.drive.resetEncoders();
+	Robot.drive.enableDrivePID();
+	Robot.drive.setMaxDrivePIDOutput(speed, speed);
+	Robot.drive.setDrivePIDSetPoint(setPoint);
+	Robot.drive.setTurnPID(Robot.drive.getGyroAngle());
 
-	// Robot.driveSubsystem.convertInchesToTicks(2);
+	// Robot.drive.convertInchesToTicks(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	double leftOutput = Robot.driveSubsystem.getLeftPIDOutput();
-	double rightOutput = Robot.driveSubsystem.getRightPIDOutput();
+	double leftOutput = Robot.drive.getLeftPIDOutput();
+	double rightOutput = Robot.drive.getRightPIDOutput();
 
-	Robot.driveSubsystem.driveAtSpeed(-speed);
+	Robot.drive.driveAtSpeed(-speed);
 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	// double leftMotorPower = Robot.driveSubsystem.getLeftMotorPower();
-	// double leftError = Robot.driveSubsystem.getLeftPIDError();
+	// double leftMotorPower = Robot.drive.getLeftMotorPower();
+	// double leftError = Robot.drive.getLeftPIDError();
 	// boolean leftMotorFinished = leftMotorPower <= 0.1 && leftError <= 50;
 	//
-	// double rightMotorPower = Robot.driveSubsystem.getRightMotorPower();
-	// double rightError = Robot.driveSubsystem.getRightPIDError();
+	// double rightMotorPower = Robot.drive.getRightMotorPower();
+	// double rightError = Robot.drive.getRightPIDError();
 	// boolean rightMotorFinished = rightMotorPower <= 0.1 && rightError <=
 	// 50;
 	//
 	// return leftMotorFinished && rightMotorFinished;
-	return Robot.driveSubsystem.isOnTarget();
+	return Robot.drive.isOnTarget();
 
     }
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.driveSubsystem.stopDrive();
-	Robot.driveSubsystem.disableDrivePID();
+	Robot.drive.stopDrive();
+	Robot.drive.disableDrivePID();
     }
 
     // Called when another command which requires one or more of the same

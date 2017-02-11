@@ -8,3 +8,5 @@
 	<classpathentry exported="true" kind="var" path="cscore" sourcepath="cscore.sources"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
+
+

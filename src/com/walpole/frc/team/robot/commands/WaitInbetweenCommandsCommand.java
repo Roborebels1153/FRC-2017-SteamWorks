@@ -26,7 +26,7 @@ public class WaitInbetweenCommandsCommand extends Command {
     protected void execute() {
 	// TODO Auto-generated method stub
 	timer++;
-	Robot.driveSubsystem.driveAtSpeed(0);
+	Robot.drive.driveAtSpeed(0);
 
     }
 

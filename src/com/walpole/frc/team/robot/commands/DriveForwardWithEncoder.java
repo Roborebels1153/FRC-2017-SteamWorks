@@ -12,22 +12,20 @@ public class DriveForwardWithEncoder extends Command {
     private double setPoint;
 
     public DriveForwardWithEncoder(int inchesToDrive) {
-	requires(Robot.driveSubsystem);
+	requires(Robot.drive);
 	this.speed = 0.5;
 	this.inchesToDrive = inchesToDrive;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
+
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.driveSubsystem.disableGyroPID();
-	Robot.driveSubsystem.resetEncoders();
-	
-	Robot.driveSubsystem.setMaxDrivePIDOutput(speed, speed);
-	Robot.driveSubsystem.setDrivePIDSetPoint(setPoint);
-	Robot.driveSubsystem.enableDrivePID();
-
-	// Robot.driveSubsystem.convertInchesToTicks(2);
+	Robot.drive.disableGyroPID();
+	Robot.drive.resetEncoders();	
+	Robot.drive.setMaxDrivePIDOutput(speed, speed);
+	Robot.drive.setDrivePIDSetPoint(setPoint);
+	Robot.drive.enableDrivePID();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -47,22 +45,26 @@ public class DriveForwardWithEncoder extends Command {
 	//
 	// return leftMotorFinished && rightMotorFinished;
 	//return Robot.driveSubsystem.isOnTarget();
-	return false;
 	// This is a new command that finishes DriveForwardWithEncoder when the
 	// robot is on target
+    	double leftMotorPower = Robot.drive.getLeftMotorPower();
+    	double error = Robot.drive.getLeftPIDError();
+    	return leftMotorPower <= 0.1 && error <= 50;   
+    	//if the encoder tick count is above the target tick count, the motors will stop
 
     }
 
     // Called once after isFinished returns true
     protected void end() {
+
 	//Robot.driveSubsystem.stopDrive();
-	Robot.driveSubsystem.disableDrivePID();
+	Robot.drive.disableDrivePID();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
 	//Robot.driveSubsystem.stopDrive();
-	Robot.driveSubsystem.disableDrivePID();
+	Robot.drive.disableDrivePID();
     }
 }

@@ -14,26 +14,26 @@ public class DriveStraightWithGyroCommand extends Command {
     private double speed;
 
     public DriveStraightWithGyroCommand() {
-	requires(Robot.driveSubsystem);
+	requires(Robot.drive);
 	this.speed = 0.6;
-	Robot.driveSubsystem.setNotFinished();
+	Robot.drive.setNotFinished();
 
 	// Use requires() here to declare subsystem dependencies
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.driveSubsystem.resetGyro();
-	double gyroStartingAngle = Robot.driveSubsystem.getGyroAngle();
-	Robot.driveSubsystem.setTurnPID(gyroStartingAngle);
-	Robot.driveSubsystem.enableGyroPID();
-	Robot.driveSubsystem.disableDrivePID();
+	Robot.drive.resetGyro();
+	double gyroStartingAngle = Robot.drive.getGyroAngle();
+	Robot.drive.setTurnPID(gyroStartingAngle);
+	Robot.drive.enableGyroPID();
+	Robot.drive.disableDrivePID();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	double gyroOutput = Robot.driveSubsystem.getGyroPIDOutput();
-	Robot.driveSubsystem.arcadeDrive(0.7, gyroOutput);
+	double gyroOutput = Robot.drive.getGyroPIDOutput();
+	Robot.drive.arcadeDrive(0.7, gyroOutput);
 	// SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
 
@@ -65,12 +65,12 @@ public class DriveStraightWithGyroCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.driveSubsystem.disableGyroPID();
+	Robot.drive.disableGyroPID();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-	Robot.driveSubsystem.disableGyroPID();
+	Robot.drive.disableGyroPID();
     }
 }
