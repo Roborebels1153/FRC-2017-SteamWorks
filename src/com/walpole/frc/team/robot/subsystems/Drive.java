@@ -79,12 +79,11 @@ public class Drive extends Subsystem {
 
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
-	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder,
+	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder,
 		leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
-	rightEncoder.setReverseDirection(true);
 	rightEncoderOutput = new DualPIDOutput(rightFrontVictor, rightBackVictor, false);
-	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder,
+	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder,
 		rightEncoderOutput);
 
 	gyro = new RebelGyro();

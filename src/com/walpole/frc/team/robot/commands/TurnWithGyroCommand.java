@@ -17,7 +17,7 @@ public class TurnWithGyroCommand extends Command {
     public TurnWithGyroCommand(double degreesToTurn) {
 	requires(Robot.driveSubsystem);
 	this.degreesToTurn = degreesToTurn;
-	this.speed = 0.6;
+	this.speed = 1;
 	Robot.driveSubsystem.setNotFinished();
 
 	// Use requires() here to declare subsystem dependencies
@@ -74,6 +74,5 @@ public class TurnWithGyroCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-	Robot.driveSubsystem.disableGyroPID();
     }
 }
