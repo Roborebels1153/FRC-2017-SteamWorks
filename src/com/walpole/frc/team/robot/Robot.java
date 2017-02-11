@@ -61,13 +61,16 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
 	SmartDashboard.putNumber("Right Motor Power Value", driveSubsystem.getRightMotorPower());
 	SmartDashboard.putNumber("Left Motor Power Value", driveSubsystem.getLeftMotorPower());
-	// SmartDashboard.putNumber("Right Encoder Value",
-	// driveSubsystem.getRightEncoderCount());
+	SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
 	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroAngle());
-	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
+	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
 	SmartDashboard.putNumber("Gyro Error", driveSubsystem.getGyroPIDError());
 	SmartDashboard.putNumber("Gyro PID Output", driveSubsystem.getGyroPIDOutput());
 	SmartDashboard.putBoolean("Gyro Is Finished", driveSubsystem.turnIsFinished());
+	SmartDashboard.putNumber("Left Encoder PID Error", driveSubsystem.getLeftPIDError());
+	SmartDashboard.putNumber("Left Encoder PID Output", driveSubsystem.getLeftPIDOutput());
+	SmartDashboard.putNumber("Right Encoder PID Error", driveSubsystem.getRightPIDError());
+	SmartDashboard.putNumber("Right Encoder PID Output", driveSubsystem.getRightPIDOutput());
     }
 
     /**
@@ -96,18 +99,18 @@ public class Robot extends IterativeRobot {
      * to the switch structure below with additional strings & commands.
      */
     public void autonomousInit() {
-	// autonomousCommand = new DriveForwardWithEncoder(95);//(Command)
-	// chooser.getSelected();
 	driveSubsystem.updatePIDControllers();
+	autonomousCommand = new DriveForwardWithEncoder(120);//(Command)
+	// chooser.getSelected();
 	double desiredRotationDegrees = prefs.getDouble("degrees", 90);
 	// autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees);
 	double desiredSeconds = prefs.getDouble("seconds", 1);
-	// autonomousCommand = new DriveForwardWithSeconds(desiredSeconds);
-	// autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees);
+	 //autonomousCommand = new DriveForwardWithSeconds(desiredSeconds);
+	 //autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees);
 	// autonomousCommand = new DriveAndTurn(desiredSeconds,
 	// desiredRotationDegrees);
 	// autonomousCommand = new DriveBackwardsWithEncoder(42);
-	autonomousCommand = new DeliverAGear();
+	//autonomousCommand = new DeliverAGear();
 
 	/*
 	 * String autoSelected = SmartDashboard.getString("Auto Selector",
