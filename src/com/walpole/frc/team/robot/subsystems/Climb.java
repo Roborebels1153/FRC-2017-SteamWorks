@@ -1,13 +1,8 @@
 package com.walpole.frc.team.robot.subsystems;
 
-import com.walpole.frc.team.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climb extends Subsystem {
 	
@@ -15,8 +10,8 @@ public class Climb extends Subsystem {
 	private DigitalInput limitSwitch;
 	
 	public Climb () {
-		climberVictor = new Victor(RobotMap.CLIMB_MOTOR);   //we only need one motor to climb (as of now, we might have to add things)
-		limitSwitch = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH);
+		//climberVictor = new Victor(RobotMap.CLIMB_MOTOR);   //we only need one motor to climb (as of now, we might have to add things)
+		//limitSwitch = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH);
 	}
 	
 	@Override

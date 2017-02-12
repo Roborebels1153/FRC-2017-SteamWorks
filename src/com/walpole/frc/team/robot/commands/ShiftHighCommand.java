@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShiftHighCommand extends Command {
 
     public ShiftHighCommand() {
-    	requires(Robot.drive);
+    	//requires(Robot.drive);
         // Use requires() here to declare subsystem dependencies
     }
 
@@ -20,7 +20,7 @@ public class ShiftHighCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.shiftHigh();    
+    	//Robot.drive.shiftHigh();    
     }
 
     // Make this return true when this Command no longer needs to run execute()

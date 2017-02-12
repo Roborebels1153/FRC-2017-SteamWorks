@@ -12,7 +12,7 @@ public class DriveForwardWithEncoder extends Command {
 	private double setPoint;
 	
     public DriveForwardWithEncoder(int inchesToDrive) {
-    	requires(Robot.drive);
+    	//requires(Robot.drive);
     	this.speed = 0.85;
     	this.inchesToDrive = inchesToDrive;
     	this.setPoint = Constants.ticksPerInch * inchesToDrive;
@@ -20,10 +20,10 @@ public class DriveForwardWithEncoder extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.resetEncoders();
-    	Robot.drive.enablePID();
-    	Robot.drive.setMaxDrivePIDOutput(speed);
-    	Robot.drive.setDriveEncoderSetPoint(setPoint);
+    	//Robot.drive.resetEncoders();
+    	//Robot.drive.enablePID();
+    //	Robot.drive.setMaxDrivePIDOutput(speed);
+    	//Robot.drive.setDriveEncoderSetPoint(setPoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,16 +33,17 @@ public class DriveForwardWithEncoder extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double leftMotorPower = Robot.drive.getLeftMotorPower();
-    	double error = Robot.drive.getLeftPIDError();
-    	return leftMotorPower <= 0.1 && error <= 50;   
+    	//double leftMotorPower = Robot.drive.getLeftMotorPower();
+    	//double error = Robot.drive.getLeftPIDError();
+    	//return leftMotorPower <= 0.1 && error <= 50;   
+    	return false;
     	//if the encoder tick count is above the target tick count, the motors will stop
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.stopDrive();
-    	Robot.drive.disablePID();
+    	//Robot.drive.stopDrive();
+    	//Robot.drive.disablePID();
     }
 
     // Called when another command which requires one or more of the same

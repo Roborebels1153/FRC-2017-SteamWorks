@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class StopClimbCommand extends Command {
 
     public StopClimbCommand() {
-    	requires (Robot.climb);     //for this command, we require the climb subsystem
+    	//requires (Robot.climb);     //for this command, we require the climb subsystem
         // Use requires() here to declare subsystem dependencies
     }
 
@@ -21,7 +21,7 @@ public class StopClimbCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.climb.stopClimb();     //to execute, we need the stopClimb method
+    	//Robot.climb.stopClimb();     //to execute, we need the stopClimb method
     }
 
     // Make this return true when this Command no longer needs to run execute()

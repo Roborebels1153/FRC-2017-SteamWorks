@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReleaseGearCommand extends Command {
 	
 	public ReleaseGearCommand() {
-		requires(Robot.gear);
+		//requires(Robot.gear);
 	}
 
 		protected void initialize() {
 			
-			Robot.gear.keepGear();	
+			//Robot.gear.keepGear();	
 		}
 
     	// Called repeatedly when this Command is scheduled to run

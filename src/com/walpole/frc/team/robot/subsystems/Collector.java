@@ -9,7 +9,7 @@ public class Collector extends Subsystem{
 	private Victor collectMotor;
 	
 	public Collector () {
-		collectMotor = new Victor(RobotMap.COLLECT_MOTOR);
+		//collectMotor = new Victor(RobotMap.COLLECT_MOTOR);
 	}
 	
 	

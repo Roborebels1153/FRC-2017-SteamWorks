@@ -49,17 +49,17 @@ public class Drive extends Subsystem {
 	private Speed currSpeed = Speed.Normal;
 
 	public Drive() {
-		leftFrontVictor = new Victor(RobotMap.LEFT_FRONT_MOTOR);
-		leftBackVictor = new Victor(RobotMap.LEFT_BACK_MOTOR);
-		rightFrontVictor = new Victor(RobotMap.RIGHT_FRONT_MOTOR);
-		rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
+		//leftFrontVictor = new Victor(RobotMap.LEFT_FRONT_MOTOR);
+		//leftBackVictor = new Victor(RobotMap.LEFT_BACK_MOTOR);
+		//rightFrontVictor = new Victor(RobotMap.RIGHT_FRONT_MOTOR);
+		//rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
 
-		transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
+		//transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 		
-		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
+	//	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 		//rightEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);  
 
-		gyro = new AnalogGyro(RobotMap.GYRO);
+	//	gyro = new AnalogGyro(RobotMap.GYRO);
 		
 		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
 		

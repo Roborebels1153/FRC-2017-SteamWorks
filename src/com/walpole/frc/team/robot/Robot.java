@@ -1,23 +1,11 @@
 package com.walpole.frc.team.robot;
 
 
-import java.util.ArrayList;
-
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
-
-import com.walpole.frc.team.robot.vision.GripPipeline;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
-import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
-import com.walpole.frc.team.robot.subsystems.Counter;
-import com.walpole.frc.team.robot.subsystems.Drive;
-import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
-import edu.wpi.cscore.AxisCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -25,7 +13,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,24 +22,23 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
-	public static final Shooter shooter = new Shooter();
-	public static final Drive drive = new Drive();
-	public static final Climb climb = new Climb();
-	public static final Gear gear = new Gear();
 	public static final CountRPM countRPM = new CountRPM();
+	public static final Shooter shooter = new Shooter();
+	//public static final Drive drive = new Drive();
+	//public static final Climb climb = new Climb();
+	//public static final Gear gear = new Gear();
 	public static OI oi = new OI();
-	private static final int IMG_WIDTH = 640;
-	private static final int IMG_HEIGHT = 480; 
+	//private static final int IMG_WIDTH = 640;
+	//private static final int IMG_HEIGHT = 480; 
 	
-	private VisionThread visionThread;;
-	private double centerX = 0.0; 
-	private static double[] defaultValue = new double[0];
-	private static double[] areas = new double[0];
+	//private VisionThread visionThread;
+	//private double centerX = 0.0; 
+	//private static double[] defaultValue = new double[0];
+	//private static double[] areas = new double[0];
 	
 	
-	private final Object imgLock = new Object();  
+	//private final Object imgLock = new Object();  
 
     private Command autonomousCommand;
     SendableChooser chooser;
@@ -64,15 +50,14 @@ public class Robot extends IterativeRobot {
      * This function is run when  the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
-    	
-    	
+    public void robotInit() {    	
     	
 //		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+    	
 	        
-	     AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera" , "10.11.54.63");
-	        cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	    // AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera" , "10.11.54.63");
+	    //    cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	        
 	       
        
@@ -102,21 +87,17 @@ public class Robot extends IterativeRobot {
 	
     
     public static void updateDashboard() {
-//		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
-//		SmartDashboard.putNumber("RPS", Robot.countRPM.getShooterRate());
-//		SmartDashboard.putNumber("RPM", Robot.countRPM.getShooterRate()*60);
-//		SmartDashboard.putBoolean("Light Sensor", Robot.countRPM.getLightSensor());
-		SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
-//		SmartDashboard.putNumber("Shooter Speed", shooter.shooterEncoder.get());
-		SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
-//		SmartDashboard.putBoolean("LightSensor", Robot.shooter.getLight);
-    	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
-    	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
-    	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
-    	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
+		SmartDashboard.putNumber("RPS", countRPM.getRate()/60);
+		SmartDashboard.putNumber("RPM", countRPM.getRate());
+		SmartDashboard.putNumber("PID Error", shooter.getShooterPIDError());
+		SmartDashboard.putBoolean("Light Sensor", countRPM.getLightSensor());
+    	//SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get()); // Write the state of the limit switch to the SmartDashboard
+    	//SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
+    	//SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
+    	//SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
 //		SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
-    	SmartDashboard.putNumber("Gyro Angle", drive.getGyroCount());
-    	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
+    	//SmartDashboard.putNumber("Gyro Angle", drive.getGyroCount());
+    	//SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 10);
     	//displayAreasOnDashboard(table.getNumberArray("areas", defaultValue));
     	
 //    	areas = table.getNumberArray("areas", defaultValue);
@@ -210,11 +191,9 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();    
         updateDashboard();
-        Robot.shooter.turnLightOn();
-        Scheduler.getInstance().run();
-        drive.drive(oi.getDriverJoystick());
+        //Robot.shooter.turnLightOn();
+        //drive.drive(oi.getDriverJoystick());
         new ExtendGearPusherCommand();
-        updateDashboard();
 //        new ArrayTableViewer();
         
         

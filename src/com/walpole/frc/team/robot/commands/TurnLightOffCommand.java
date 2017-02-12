@@ -18,7 +18,7 @@ public class TurnLightOffCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.turnLightOff();
+    	//Robot.shooter.turnLightOff();
 		
     }
 
@@ -34,7 +34,7 @@ public class TurnLightOffCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.shooter.turnLightOn();
+    	//Robot.shooter.turnLightOn();
     }
 
 }

@@ -34,15 +34,15 @@ public class RebelDrive extends RobotDrive {
 	}
 	
 	public void arcadeDrive(double driveSpeed, double turnSpeed) {
-		if(Speed.Slow.equals(Robot.drive.getCurrSpeed())) {
-			arcadeDrive(driveSpeed * SLOW,
-					turnSpeed,
-					true);
-		} else {
-			arcadeDrive(driveSpeed * STRAIGHT_THROTTLE,
-					lowSpeedNic.calculate(turnSpeed * TURN_THROTTLE),
-					true);
-		}
+	//	if(Speed.Slow.equals(Robot.drive.getCurrSpeed())) {
+			//arcadeDrive(driveSpeed * SLOW,
+				//	turnSpeed,
+				//	true);
+		//} else {
+			//arcadeDrive(driveSpeed * STRAIGHT_THROTTLE,
+			//		lowSpeedNic.calculate(turnSpeed * TURN_THROTTLE),
+					//true);
+		//}
 	}
 
 }
