@@ -36,7 +36,7 @@ public class TurnWithGyroCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	double gyroOutput = Robot.drive.getGyroPIDOutput();
+	double gyroOutput = Robot.drive.getGyroPIDOutput();   
 	Robot.drive.setTurnSpeed(gyroOutput);
 	// SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }

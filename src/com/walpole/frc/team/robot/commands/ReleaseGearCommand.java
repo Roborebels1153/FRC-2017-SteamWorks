@@ -10,10 +10,10 @@ public class ReleaseGearCommand extends Command {
 		requires(Robot.gear);
 	}
 
-		protected void initialize() {
+	protected void initialize() {
 			
-			Robot.gear.keepGear();	
-		}
+		Robot.gear.keepGear();	
+	}
 
     	// Called repeatedly when this Command is scheduled to run
     	protected void execute() {

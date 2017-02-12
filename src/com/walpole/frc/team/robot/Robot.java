@@ -74,6 +74,8 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Deliver a Gear", new DeliverAGear());
 	chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
 	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
+	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
+	
     
 
     	
@@ -138,7 +140,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-//        autonomousCommand = new DriveForwardWithEncoder(10);//(Command) chooser.getSelected();
+        autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {

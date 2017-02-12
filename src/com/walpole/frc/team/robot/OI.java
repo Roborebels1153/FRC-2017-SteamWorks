@@ -55,7 +55,7 @@ public class OI {
 	
 	private Button drLT = new RebelTrigger(driverJoystick, 2);
 	private Button drRT = new RebelTrigger(driverJoystick, 3);
-	private Button drRB = new JoystickButton(driverJoystick, 6);     //the drLb and drRb are the left and rught bumpers on the XBOX controller
+	private Button drRB = new JoystickButton(driverJoystick, 6);     //the drLb and drRb are the left and right bumpers on the XBOX controller
 	private Button drLB = new JoystickButton(driverJoystick, 5 );
 
 	
@@ -81,6 +81,7 @@ public OI() {
 	
 	opBumperL.whileHeld(new RetainGearCommand());
 	opBumperL.whenReleased(new ReleaseGearCommand());
+	
 		
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());

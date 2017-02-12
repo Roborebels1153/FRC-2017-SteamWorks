@@ -13,7 +13,7 @@ public class DeliverAGearRight extends CommandGroup {
 	super();
 	// TODO Auto-generated constructor stub
 
-	addSequential(new DriveForwardWithEncoder(inchesToAirShip));
+	addSequential(new DriveForwardWithEncoder(inchesToAirShip));    //the speed for this command is set in the command itself
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
     }
 }

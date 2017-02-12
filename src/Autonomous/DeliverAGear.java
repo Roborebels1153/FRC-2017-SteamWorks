@@ -12,7 +12,7 @@ public class DeliverAGear extends CommandGroup {
     int inchesToAirShip = 95;
     int inchesBack = 42;
     int degreesToTurn = 60;
-    int secondsToDrive = 3;
+    int secondsToWait = 3;
     int inchesToAirShipTwo = 5;
     int degreesToTurnTwo = 85;
 
@@ -20,12 +20,12 @@ public class DeliverAGear extends CommandGroup {
 	super();
 	// TODO Auto-generated constructor stub
 
-	addSequential(new DriveForwardWithEncoder(inchesToAirShip));
+	addSequential(new DriveForwardWithEncoder(inchesToAirShip));  //the speed for this command is set in the command itself
 	addSequential(new ReleaseGearCommand());
-	addSequential(new WaitInbetweenCommandsCommand(secondsToDrive));
-	addSequential(new DriveBackwardsWithEncoder(inchesBack));
+	addSequential(new WaitInbetweenCommandsCommand(secondsToWait));
+	addSequential(new DriveBackwardsWithEncoder(inchesBack));     //the speed for this command is set in the command itself
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
-	addSequential(new DriveForwardWithEncoder(inchesToAirShipTwo));
+	addSequential(new DriveForwardWithEncoder(inchesToAirShipTwo));     //the speed for this command is set in the command itself
 	addSequential(new TurnWithGyroCommand(degreesToTurnTwo));
     }
 
