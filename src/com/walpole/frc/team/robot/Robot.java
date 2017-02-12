@@ -5,7 +5,6 @@ import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
-import com.walpole.frc.team.robot.subsystems.Counter;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
@@ -34,13 +33,13 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  */
 public class Robot extends IterativeRobot {
     	private Preferences prefs = Preferences.getInstance();
-	public static final Counter Counter = new Counter();
+//	public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
-	public static final CountRPM countRPM = new CountRPM();
+//	public static final CountRPM countRPM = new CountRPM();
 	public static OI oi = new OI();
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480; 
@@ -101,8 +100,8 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
 	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
 	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
-	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
-	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+//	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
+//	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 
 
     }
@@ -114,7 +113,7 @@ public class Robot extends IterativeRobot {
      */
     public void disabledInit(){
     	
-    	new RetractGearPusherCommand();
+//    	new RetractGearPusherCommand();
 
     }
 	
@@ -164,6 +163,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	Robot.gear.fireGearPusher();
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
@@ -178,13 +178,7 @@ public class Robot extends IterativeRobot {
 	Scheduler.getInstance().run();
 	drive.drive(oi.getDriverJoystick());
 	updateDashboard();
-        Scheduler.getInstance().run();    
-        updateDashboard();
-        Robot.shooter.turnLightOn();
-        Scheduler.getInstance().run();
-        drive.drive(oi.getDriverJoystick());
-        new ExtendGearPusherCommand();
-        updateDashboard();
+  //      Robot.shooter.turnLightOn();
     }
 
     /**

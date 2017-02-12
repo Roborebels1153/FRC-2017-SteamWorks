@@ -17,7 +17,7 @@ public class Gear extends Subsystem {
 		
 		gearPusherSolenoid = new DoubleSolenoid(RobotMap.GEAR_PUSHER_SOLENOID_A, RobotMap.GEAR_PUSHER_SOLENOID_B);
 		
-		//init();
+//		init();
 	}
 	
 	private void init() {
@@ -42,13 +42,13 @@ public class Gear extends Subsystem {
 
 	public void retractGearPusher() {
 		
-		gearPusherSolenoid.set(DoubleSolenoid.Value.kForward);
+		gearPusherSolenoid.set(DoubleSolenoid.Value.kReverse);
 		
 	}
 	
 	public void fireGearPusher() {
 		
-		gearPusherSolenoid.set(DoubleSolenoid.Value.kReverse);
+		gearPusherSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 
 	@Override

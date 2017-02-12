@@ -44,6 +44,8 @@ public class RobotMap {
 
 	public static int COLLECT_MOTOR = 6;
 	
+//	public static int AGITATOR = 8;
+	
 	/**CLIMBER RELATED**/
 	
 	public static int CLIMB_MOTOR = 7;

@@ -1,34 +1,20 @@
 package com.walpole.frc.team.robot;
 
 
-import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
-import com.walpole.frc.team.robot.commands.CountRPM;
+import com.walpole.frc.team.robot.commands.ClimbDownCommand;
+import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
-import com.walpole.frc.team.robot.commands.ShooterShootCommand;
-import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
-import com.walpole.frc.team.robot.commands.ShooterSpeedDecrement;
-import com.walpole.frc.team.robot.commands.ShooterSpeedIncrement;
-import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
-import com.walpole.frc.team.robot.commands.TurnLightOnCommand;
-import com.walpole.frc.team.robot.lib.RebelTrigger;
-import com.walpole.frc.team.robot.subsystems.Shooter;
-
-import com.walpole.frc.team.robot.commands.ClimbDownCommand;
-import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
-
+import com.walpole.frc.team.robot.lib.RebelTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import edu.wpi.first.wpilibj.buttons.Trigger;
-import edu.wpi.first.wpilibj.command.Command;
 
 
 
@@ -70,16 +56,16 @@ public OI() {
     
 	
     
-	opTriggerR.whileHeld(new ShooterShootCommand());
-//	opA.whileHeld(new CountRPM(60));
-	opTriggerL.whileHeld(new CollecterCollectCommand());
-	
-	opA.whenPressed(new ShooterSpeedDecrement());
-	opX.whenPressed(new ShooterSpeedCommand(0.75));
-	opY.whenPressed(new ShooterSpeedCommand(1));
-	
-	opStart.whileHeld(new TurnLightOnCommand());
-	opBack.whileHeld(new TurnLightOffCommand());
+//	opTriggerR.whileHeld(new ShooterShootCommand());
+////	opA.whileHeld(new CountRPM(60));
+//	opTriggerL.whileHeld(new CollecterCollectCommand());
+//	
+//	opA.whenPressed(new ShooterSpeedDecrement());
+//	opX.whenPressed(new ShooterSpeedCommand(0.75));
+//	opY.whenPressed(new ShooterSpeedCommand(1));
+//	
+//	opStart.whileHeld(new TurnLightOnCommand());
+//	opBack.whileHeld(new TurnLightOffCommand());
 	
 	
 	opBumperL.whileHeld(new RetainGearCommand());
