@@ -1,4 +1,4 @@
-package Autonomous;
+package com.walpole.frc.team.robot.autonomous;
 
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
@@ -6,11 +6,11 @@ import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class DeliverAGearRight extends CommandGroup {
+public class DeliverAGearLeft extends CommandGroup {
     int inchesToAirShip = 5;
-    int degreesToTurn = -30;
+    int degreesToTurn = 30;
 
-    public DeliverAGearRight() {
+    public DeliverAGearLeft() {
 	super();
 	// TODO Auto-generated constructor stub
 	

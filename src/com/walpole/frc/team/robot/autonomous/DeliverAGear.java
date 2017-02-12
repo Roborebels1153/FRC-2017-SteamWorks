@@ -1,4 +1,4 @@
-package Autonomous;
+package com.walpole.frc.team.robot.autonomous;
 
 import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;

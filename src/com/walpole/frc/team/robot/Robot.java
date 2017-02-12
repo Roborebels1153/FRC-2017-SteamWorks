@@ -1,5 +1,8 @@
 package com.walpole.frc.team.robot;
 
+import com.walpole.frc.team.robot.autonomous.DeliverAGear;
+import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
+import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
@@ -9,9 +12,6 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
-import Autonomous.DeliverAGear;
-import Autonomous.DeliverAGearLeft;
-import Autonomous.DeliverAGearRight;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,7 +32,7 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    	private Preferences prefs = Preferences.getInstance();
+    	//private Preferences prefs = Preferences.getInstance();  the prefs are not working so this is commented (Sunday 2/12)
 //	public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
@@ -134,7 +134,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        
+        //drive.updatePIDControllers();  the prefs are not working so this is commented (Sunday 2/12)
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
 		case "My Auto":
@@ -147,7 +147,7 @@ public class Robot extends IterativeRobot {
 		} */
     	
     	// schedule the autonomous command (example)
-        if (autonomousCommand != null);
+        if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
