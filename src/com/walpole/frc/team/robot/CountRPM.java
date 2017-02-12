@@ -51,4 +51,7 @@ public class CountRPM {
 	public boolean getLightSensor() {
 		return !lightSensor.get();
 	}			
+	public Counter getCounter() {
+		return shooterCounter;
+	}
 }

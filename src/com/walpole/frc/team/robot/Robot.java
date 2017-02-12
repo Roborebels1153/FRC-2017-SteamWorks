@@ -1,32 +1,29 @@
 package com.walpole.frc.team.robot;
 
-
-import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
-import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
-import com.walpole.frc.team.robot.commands.DriveStraightWithGyroCommand;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
-import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
+import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
+import com.walpole.frc.team.robot.subsystems.Collector;
+import com.walpole.frc.team.robot.subsystems.Counter;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
-import com.walpole.frc.team.robot.subsystems.Collector;
-import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Shooter;
-import java.util.ArrayList;
 
 import Autonomous.DeliverAGear;
 import Autonomous.DeliverAGearLeft;
 import Autonomous.DeliverAGearRight;
-import Autonomous.DriveAndTurn;
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,30 +33,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
     	private Preferences prefs = Preferences.getInstance();
+	public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
+	public static final CountRPM countRPM = new CountRPM();
 	public static OI oi = new OI();
-	public static CountRPM countRPM = new CountRPM();
-	public ArrayList<Long> rotationTimeList = new ArrayList<Long>();
-//	private static final int IMG_WIDTH = 320;
-//	private static final int IMG_HEIGHT = 240; 
+	private static final int IMG_WIDTH = 640;
+	private static final int IMG_HEIGHT = 480; 
 	
-//	private VisionThread visionThread;;
-//	private double centerX = 0.0; 
+	private VisionThread visionThread;;
+	private double centerX = 0.0; 
+	private static double[] defaultValue = new double[0];
+	private static double[] areas = new double[0];
 	
 	
 	private final Object imgLock = new Object();  
 
     private Command autonomousCommand;
     SendableChooser chooser;
-//  NetworkTable table;
-
-
+    static NetworkTable table;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -79,41 +75,36 @@ public class Robot extends IterativeRobot {
     
 
     	
-//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.71");
+    	
+    	
+//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//	       
-//       
-//        visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-//        	if (!pipeline.filterContoursOutput().isEmpty()) {
-//        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-//        		synchronized (imgLock) {
-//        			centerX = r.x + (r.width / 2);
-//        		}
-//        	}
-//        });
-//        
-//     visionThread.start();
-//        
-//        
+	        
+	     AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera" , "10.11.54.63");
+	        cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
+    
     }    
 	
     
     public static void updateDashboard() {
-		SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get()); // Write
-		// the state of the limit switch to the Smart Dashboard
-		SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
-		SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
-		SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
-		SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
-		SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
-		SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
-		SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
-		SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
-		SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
-		SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
-		SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
-		SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
-		SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
+	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get());
+	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
+	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
+	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
+	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
+	SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
+	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
+	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
+	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
+	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
+	SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
+	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
+	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
+	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
+	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
+	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+
+
     }
 
     /**
@@ -121,12 +112,15 @@ public class Robot extends IterativeRobot {
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
      */
-   
     public void disabledInit(){
+    	
+    	new RetractGearPusherCommand();
+
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		new RetractGearPusherCommand();
 		updateDashboard();
 	}
 
@@ -164,25 +158,17 @@ public class Robot extends IterativeRobot {
 	Scheduler.getInstance().run();
 	updateDashboard();
         Scheduler.getInstance().run();
-        
-//        	double centerX;
-//        	synchronized (imgLock) {
-//        		centerX = this.centerX;
-//        	}
-//        	
-//        	double turn = centerX - (IMG_WIDTH / 2);
+        new ExtendGearPusherCommand();
         
         updateDashboard();
     }
 
     public void teleopInit() {
 	// This makes sure that the autonomous stops running when
-	// teleop starts running. If you want the autonomous to
-	// continue until interrupted by another command, remove
-	// this line or comment it out.
-	if (autonomousCommand != null)
-	    autonomousCommand.cancel();
-
+        // teleop starts running. If you want the autonomous to 
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+        if (autonomousCommand != null) autonomousCommand.cancel();
     }
 
     /**
@@ -194,17 +180,11 @@ public class Robot extends IterativeRobot {
 	updateDashboard();
         Scheduler.getInstance().run();    
         updateDashboard();
-//        Robot.shooter.turnLightOn();
+        Robot.shooter.turnLightOn();
         Scheduler.getInstance().run();
         drive.drive(oi.getDriverJoystick());
+        new ExtendGearPusherCommand();
         updateDashboard();
-//        double[] defaultValue = new double[0];
-//        double[] areas = table.getNumberArray("area", defaultValue);
-//     	System.out.print("areas: ");
-//     	for (double area : areas) {
-//     		System.out.print(area + " ");
-//     		
-//     	}
     }
 
     /**

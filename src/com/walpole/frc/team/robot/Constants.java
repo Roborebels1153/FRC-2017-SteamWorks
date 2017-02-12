@@ -20,4 +20,15 @@ public class Constants {
     public static double gyroD = -0.16; // These Values Work!
 
     public static double TURN_SPEED = 0.25;
+    public static double originalWantedRPM = 3000;
 }
+//    public static double encoderD = 0.02;
+//    
+//    
+//     
+//    public static double gyroP = 0.35;
+//    public static double gyroI = 0;
+//    public static double gyroD = 0.015;
+//    
+//	
+//}
