@@ -34,8 +34,8 @@ public class RobotMap {
 	
 	/** SHOOTER/COLLECTOR RELATED**/
 	
-	public static int SHOOTER_MOTOR = 4;
-	public static int SHOOTER_MOTOR_TWO = 5;
+	public static int SHOOTER_MOTOR = 4;	
+	public static int AGITATOR_MOTOR = 5;
 	
 	//public static int LIGHT = 0;
 	

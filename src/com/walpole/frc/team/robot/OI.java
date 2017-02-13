@@ -60,10 +60,10 @@ public OI() {
 //	opA.whileHeld(new CountRPM(60));
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-//	opA.whenPressed(new ShooterSpeedDecrement());
-//	opB.whenPressed(new ShooterSpeedIncrement());
-//	opX.whenPressed(new ShooterSpeedCommand(0.75));
-//	opY.whenPressed(new ShooterSpeedCommand(1));
+//	opA.whenReleased(new ShooterRPMChange(1000));
+//	opB.whenPressed(new ShooterRPMChange(2000));
+//	opX.whenReleased(new ShooterRPMChange(3000));
+//	opY.whenPressed(new ShooterRPMChange(4000));
 	
 	opStart.whileHeld(new TurnLightOnCommand());
 	opBack.whileHeld(new TurnLightOffCommand());

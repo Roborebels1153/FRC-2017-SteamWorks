@@ -15,30 +15,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
 	
 	private Victor shooterMotor;
-	//private Victor shooterMotor2;
-	//private Victor agitator;
+	private Victor agitatorMotor;
     private Encoder shooterEncoder;
     
-    public static double shooterP = 0.0001;
-    public static double shooterI = 0.0001;
-    public static double shooterD = 0.0015;
-    public static double shooterF = 0;
+    static double shooterP = 0.0001;
+    static double shooterI = 0.00001;
+    static double shooterD = 0.0015;
+    static double shooterF = 0;
     
 	private PIDController shooterPID;
-	private double speed = 1;
-    //private Relay light;
-    
-    //private Encoder shooterEncoder2;
-    //
 	
 	public Shooter() {
 		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
-//		shooterMotor2 = new Victor(RobotMap.SHOOTER_MOTOR_2);
-//		agitator = new Victor(RobotMap.AGITATOR);
+		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
+
 		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, Robot.countRPM, shooterMotor);
 		shooterPID.setSetpoint(Constants.originalWantedRPM);
 		shooterPID.setContinuous(false);
-    	shooterPID.setOutputRange(0, 5000);
+    	shooterPID.setOutputRange(0, Constants.originalWantedRPM*1.5);
     	shooterPID.disable();
 
 	}
@@ -54,20 +48,20 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         
     }
-   
-	
     public Encoder getEncoder() {
     	return shooterEncoder;
     }
-    public double getSpeed() {
-    	return speed;
-    }
     public void shoot() {
     	shooterPID.enable();
+    	if (shooterPID.getError() < 20 && -shooterPID.getError() < 20) {
+    		agitatorMotor.set(1);
+    	} else {
+    		agitatorMotor.set(0);
+    	}
     }
     public void stopShooting() {
     	shooterPID.disable();
-    	//shooterMotor.set(0);
+		agitatorMotor.set(0);
     }
 
     
