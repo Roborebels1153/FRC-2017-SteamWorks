@@ -10,7 +10,7 @@ public class Constants {
     public static double inchesPerTick = WHEEL_DIAMETER * Math.PI / (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV);
     public static double ticksPerInch = (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV) / (WHEEL_DIAMETER * Math.PI);
 
-    // PID Constants
+    // PID Constants for 1156
     public static double encoderP = 0.2025;
     public static double encoderI = 0;
     public static double encoderD = 0.5075;

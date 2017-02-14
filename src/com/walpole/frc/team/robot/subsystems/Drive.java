@@ -1,4 +1,3 @@
-
 package com.walpole.frc.team.robot.subsystems;
 
 import com.walpole.frc.team.robot.subsystems.Drive;
@@ -27,7 +26,7 @@ public class Drive extends Subsystem {
 
     private RebelDrive robotDrive;
 
-    //private Preferences prefs;
+    private Preferences prefs;
 
     private SpeedController leftFrontVictor;
     private SpeedController leftBackVictor;
@@ -36,6 +35,10 @@ public class Drive extends Subsystem {
 
     private DoubleSolenoid transmission;
 
+    private double encoderP;
+    private double encoderI;
+    private double encoderD;
+    
     private double gyroP;
     private double gyroI;
     private double gyroD;
@@ -98,26 +101,26 @@ public class Drive extends Subsystem {
     /**
      * Load PID values from preferences and write them to variables
      */
-    //private void loadPIDValues() {
-	//encoderP = prefs.getDouble("encoderP", Constants.encoderP);
-	//encoderI = prefs.getDouble("encoderI", Constants.encoderI); the prefs are not working so this is commented (Sunday 2/12)
-	//encoderD = prefs.getDouble("encoderD", Constants.encoderD);
+    private void loadPIDValues() {
+	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
+	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
+	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
 
-	//gyroP = prefs.getDouble("gyroP", Constants.gyroP);
-	//gyroI = prefs.getDouble("gyroI", Constants.gyroI); the prefs are not working so this is commented  (Sunday 2/12)
-	//gyroD = prefs.getDouble("gyroD", Constants.gyroD);
-    //}
+	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
+	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
+	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
+    }
 
     /**
      * Update the proportional, integral, and derivative values
      */
-    /*public void updatePIDControllers() {
+    public void updatePIDControllers() {
 	loadPIDValues();
 
 	leftEncoderPID.setPID(encoderP, encoderI, encoderD);
 	rightEncoderPID.setPID(encoderP, encoderI, encoderD);
 	gyroPID.setPID(gyroP, gyroI, gyroD);
-    }*/
+    }
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -125,7 +128,7 @@ public class Drive extends Subsystem {
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// setDefaultCommand(new MySpecialCommand());
-	//prefs = Preferences.getInstance();
+	prefs = Preferences.getInstance();
     }
 
     public void drive(Joystick joystick) {

@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TurnWithGyroCommand extends Command {
     private double degreesToTurn;
     private double speed;
-    private long startTimeMillis;
 
     public TurnWithGyroCommand(double degreesToTurn) {
 	requires(Robot.drive);
