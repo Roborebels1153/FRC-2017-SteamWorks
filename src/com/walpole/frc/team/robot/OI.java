@@ -15,7 +15,7 @@ import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
-
+import com.walpole.frc.team.robot.commands.ToggleInternalMotors;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -45,7 +45,6 @@ public class OI {
     Button opStart = new JoystickButton(opStick, 8);
     Button opBack = new JoystickButton(opStick, 9);
     
-
 	
 	private Button drLT = new RebelTrigger(driverJoystick, 2);
 	private Button drRT = new RebelTrigger(driverJoystick, 3);
@@ -57,10 +56,9 @@ public class OI {
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
-//	opA.whileHeld(new CountRPM(60));
 	opTriggerL.whileHeld(new CollecterCollectCommand());
 	
-//	opA.whenReleased(new ShooterRPMChange(1000));
+	opA.toggleWhenPressed(new ToggleInternalMotors());
 //	opB.whenPressed(new ShooterRPMChange(2000));
 //	opX.whenReleased(new ShooterRPMChange(3000));
 //	opY.whenPressed(new ShooterRPMChange(4000));

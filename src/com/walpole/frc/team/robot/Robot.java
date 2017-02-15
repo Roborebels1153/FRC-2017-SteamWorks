@@ -7,6 +7,7 @@ import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -51,7 +52,6 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {    	
-    	
 //		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     	
@@ -131,7 +131,7 @@ public class Robot extends IterativeRobot {
 	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
 	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
 	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
-	 * below the Gyro
+	 * below the Gyroscope
 	 *
 	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
 	 * or additional comparisons to the switch structure below with additional strings & commands.
