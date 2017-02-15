@@ -10,7 +10,7 @@ import com.walpole.frc.team.robot.commands.WaitInbetweenCommandsCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class DeliverAGear extends CommandGroup {
-    int inchesToAirShip = 95;
+    int inchesToAirShip = 81;
     int inchesBack = 42;
     int degreesToTurn = 60;
     int secondsToWait = 3;
