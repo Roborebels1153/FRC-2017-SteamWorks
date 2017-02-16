@@ -11,11 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveStraightWithGyroCommand extends Command {
 
-    private double speed;
 
     public DriveStraightWithGyroCommand() {
 	requires(Robot.drive);
-	this.speed = 0.6;
 	Robot.drive.setNotFinished();
 
 	// Use requires() here to declare subsystem dependencies
@@ -33,7 +31,7 @@ public class DriveStraightWithGyroCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 	double gyroOutput = Robot.drive.getGyroPIDOutput();
-	Robot.drive.arcadeDrive(0.7, gyroOutput);
+	Robot.drive.arcadeDrive(-0.6, gyroOutput);
 	// SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
 

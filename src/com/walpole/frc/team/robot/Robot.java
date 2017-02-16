@@ -1,6 +1,8 @@
 package com.walpole.frc.team.robot;
 
-import com.walpole.frc.team.robot.autonomous.DeliverAGear;
+import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
@@ -56,7 +58,7 @@ public class Robot extends IterativeRobot {
 	private final Object imgLock = new Object();  
 
     private Command autonomousCommand;
-    SendableChooser chooser;
+    private SendableChooser<Command> chooser;
     static NetworkTable table;
 
     /**
@@ -65,11 +67,12 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 	oi = new OI();
-	chooser = new SendableChooser();
+	chooser = new SendableChooser<Command>();
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 
-	chooser.addObject("Deliver a Gear", new DeliverAGear());
+	chooser.addObject("Blue Center Deliver A Gear", new BlueCenterScoreAGear());
+	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
 	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
 	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
