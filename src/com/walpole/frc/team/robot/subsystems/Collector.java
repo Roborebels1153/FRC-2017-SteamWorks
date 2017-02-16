@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Collector extends Subsystem{
 	private Victor collectMotor = new Victor(RobotMap.COLLECT_MOTOR);
-	private Victor internalMotor = new Victor(RobotMap.AGITATOR_MOTOR);
+	private Victor internalMotor = new Victor(RobotMap.INTERNAL_MOTOR);
 	private boolean internalOn = false;
 	
 	public Collector () {

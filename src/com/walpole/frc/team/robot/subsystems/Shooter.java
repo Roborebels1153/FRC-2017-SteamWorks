@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
 	
 	private Victor shooterMotor;
-	//private Victor agitatorMotor;
+	private Victor agitatorMotor;
     private Encoder shooterEncoder;
     
     static double shooterP = 0.0001;
@@ -27,7 +27,7 @@ public class Shooter extends Subsystem {
 	
 	public Shooter() {
 		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
-		///agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
+		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
 
 		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, Robot.countRPM, shooterMotor);
 		shooterPID.setSetpoint(Constants.originalWantedRPM);
@@ -54,9 +54,9 @@ public class Shooter extends Subsystem {
     public void shoot() {
     	shooterPID.enable();
     	if (shooterPID.getError() < 20 && -shooterPID.getError() < 20) {
-    		//agitatorMotor.set(1);
+    		agitatorMotor.set(1);
     	} else {
-    		//agitatorMotor.set(0);
+    		agitatorMotor.set(0);
     	}
     }
     public void stopShooting() {
