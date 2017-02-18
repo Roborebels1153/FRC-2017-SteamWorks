@@ -22,9 +22,9 @@ public class DriveBackwardsWithEncoder extends Command {
     protected void initialize() {
 	Robot.drive.resetEncoders();
 	Robot.drive.enableDrivePID();
-	Robot.drive.setMaxDrivePIDOutput(speed, speed);
+	Robot.drive.setMaxDrivePIDOutput(speed);
 	Robot.drive.setDrivePIDSetPoint(setPoint);
-	Robot.drive.setTurnPID(Robot.drive.getGyroAngle());
+	Robot.drive.setTurnPIDSetpoint(Robot.drive.getGyroAngle());
 
 	// Robot.drive.convertInchesToTicks(2);
     }

@@ -1,13 +1,12 @@
 package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
-import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
+import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
-import com.walpole.frc.team.robot.commands.DriveStraightWithGyroCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
@@ -49,8 +48,8 @@ public class Robot extends IterativeRobot {
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480; 
 	
-	private VisionThread visionThread;;
-	private double centerX = 0.0; 
+	private VisionThread visionThread;
+	private double centerX = 0.0;
 	private static double[] defaultValue = new double[0];
 	private static double[] areas = new double[0];
 	
@@ -75,20 +74,15 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
 	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
-	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
+	chooser.addObject("Drive 2 Feet", new DriveForwardWithEncoder(24));
 	chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(90));
-	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));  
-	chooser.addObject("Drive Straight With Gyro", new DriveStraightWithGyroCommand());
-	   
-    
-
-    	
-    	
+	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
+	chooser.addObject("Drive And Turn", new DriveAndTurn());
     	
 //		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	        
-	     AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera" , "10.11.54.63");
+	     AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.71");
 	        cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
     
     }    
@@ -101,7 +95,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
 	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
-	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
+	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 24);
 	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
 	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
 	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
@@ -111,8 +105,6 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
 	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 //	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
-
-
     }
 
     /**
@@ -173,6 +165,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	Robot.gear.fireGearPusher();
+    	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove

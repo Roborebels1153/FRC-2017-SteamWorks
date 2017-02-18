@@ -5,9 +5,9 @@ import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
-import com.walpole.frc.team.robot.commands.WaitInbetweenCommandsCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueLeftScoreAGear extends CommandGroup {
     int inchesToTurn = 72;
@@ -18,15 +18,13 @@ public class BlueLeftScoreAGear extends CommandGroup {
     
     public BlueLeftScoreAGear() {
 	super();
-	// TODO Auto-generated constructor stub
 	
-	addSequential (new ExtendGearPusherCommand());
-	addSequential (new DriveForwardWithEncoder (inchesToTurn));
-	addSequential (new TurnWithGyroCommand (degreesToTurn));
-	addSequential (new DriveForwardWithEncoder (inchesToAirship));  
-	addSequential (new ReleaseGearCommand ()); 
-	addSequential (new WaitInbetweenCommandsCommand (secondsToWait)); 
-	addSequential (new DriveBackwardsWithEncoder (inchesBack));     
-	
+	addSequential(new ExtendGearPusherCommand());
+	addSequential(new DriveForwardWithEncoder(inchesToTurn));
+	addSequential(new TurnWithGyroCommand(degreesToTurn));
+	addSequential(new DriveForwardWithEncoder(inchesToAirship));  
+	addSequential(new ReleaseGearCommand()); 
+	addSequential(new WaitCommand(secondsToWait)); 
+	addSequential(new DriveBackwardsWithEncoder(inchesBack));     
     }
 }
