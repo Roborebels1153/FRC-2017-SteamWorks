@@ -13,7 +13,7 @@ public class DriveForwardWithEncoder extends Command {
     public DriveForwardWithEncoder(int inchesToDrive) {
 	requires(Robot.drive);
 	this.speed = 0.5;
-	this.setPoint = -(Constants.ticksPerInch * inchesToDrive);
+	this.setPoint = (Constants.ticksPerInch * inchesToDrive);
     }
 
     protected void initialize() {
@@ -31,7 +31,8 @@ public class DriveForwardWithEncoder extends Command {
 	double leftOutput = Robot.drive.getLeftPIDOutput();
 	double rightOutput = Robot.drive.getRightPIDOutput();
 	
-	Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
+	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
+	Robot.drive.tankDrive(leftOutput, rightOutput);
     }
 
     protected boolean isFinished() {

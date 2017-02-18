@@ -1,7 +1,9 @@
 package com.walpole.frc.team.robot;
 
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
+import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
 import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
@@ -74,11 +76,12 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
 	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
-	chooser.addObject("Drive 2 Feet", new DriveForwardWithEncoder(24));
+	chooser.addObject("Drive 2 Feet", new DriveForwardWithEncoder(120));
 	chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(90));
 	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	chooser.addObject("Drive And Turn", new DriveAndTurn());
-    	
+	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
+	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 //		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	        
@@ -95,7 +98,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
 	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
-	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 24);
+	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
 	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
 	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
 	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
@@ -104,6 +107,8 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
 	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
 	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
+	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
+	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
 //	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
     }
 

@@ -243,6 +243,14 @@ public class Drive extends Subsystem {
 	leftEncoderPID.setSetpoint(setPoint);
 	rightEncoderPID.setSetpoint(setPoint);
     }
+    
+    public double getRightEncoderSetpoint () {
+	return rightEncoderPID.getSetpoint();
+    }
+    
+    public double getLeftEncoderSetpoint () {
+	return leftEncoderPID.getSetpoint();
+    }
 
     public void setTurnPIDSetpoint(double setPoint) {
 	gyroPID.setSetpoint(setPoint);
