@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShiftLowCommand extends Command {
 
     public ShiftLowCommand() {
-	requires(Robot.driveSubsystem);
+	requires(Robot.drive);
 	// Use requires() here to declare subsystem dependencies
     }
 
@@ -19,7 +19,9 @@ public class ShiftLowCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	Robot.driveSubsystem.shiftLow();
+
+	Robot.drive.shiftLow();
+
     }
 
     // Make this return true when this Command no longer needs to run execute()

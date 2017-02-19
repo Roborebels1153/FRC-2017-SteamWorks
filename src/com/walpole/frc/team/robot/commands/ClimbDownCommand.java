@@ -11,14 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ClimbDownCommand extends Command {
 
     public ClimbDownCommand() {
-	requires(Robot.climbSubsystem); // for this command, we require the
+	requires(Robot.climb); // for this command, we require the
 					// climb subsystem
 	// Use requires() here to declare subsystem dependencies
+    	requires (Robot.climb);    //for this command, we require the climb subsystem
+        // Use requires() here to declare subsystem dependencies
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.climbSubsystem.climbDown();
+	Robot.climb.climbDown();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,7 +34,7 @@ public class ClimbDownCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.climbSubsystem.stopClimb(); // calling the stopClimb method
+	Robot.climb.stopClimb(); // calling the stopClimb method
 
     }
 

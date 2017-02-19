@@ -1,43 +1,30 @@
-
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class TurnWithGyroCommand extends Command {
+    
     private double degreesToTurn;
-    private double speed;
-    private long startTimeMillis;
 
     public TurnWithGyroCommand(double degreesToTurn) {
-	requires(Robot.driveSubsystem);
+	requires(Robot.drive);
 	this.degreesToTurn = degreesToTurn;
-	this.speed = 0.6;
-	Robot.driveSubsystem.setNotFinished();
-
-	// Use requires() here to declare subsystem dependencies
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.driveSubsystem.resetGyro();
-	Robot.driveSubsystem.setTurnPID(degreesToTurn);
-	Robot.driveSubsystem.enableGyroPID();
-	Robot.driveSubsystem.disableDrivePID();
+	Robot.drive.resetGyro();
+	Robot.drive.setTurnPIDSetpoint(degreesToTurn);
+	Robot.drive.enableGyroPID();
+	Robot.drive.disableDrivePID();
 	// startTimeMillis = System.currentTimeMillis();
 	// Robot.driveSubsystem.setMaxGyroOutput(speed);
-
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	double gyroOutput = Robot.driveSubsystem.getGyroPIDOutput();
-	Robot.driveSubsystem.setTurnSpeed(gyroOutput);
+	double gyroOutput = Robot.drive.getGyroPIDOutput();   
+	Robot.drive.setTurnSpeed(gyroOutput);
 	// SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
 
@@ -49,31 +36,18 @@ public class TurnWithGyroCommand extends Command {
 	}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	// double currentGyroAngle = Robot.driveSubsystem.getGyroAngle();
-	// boolean gyroFinished = currentGyroAngle <=92 && currentGyroAngle >=
-	// 88;
-	// boolean gyroFinished = Robot.driveSubsystem.getGyroPIDError() < 2;
-	if ((Math.abs(Robot.driveSubsystem.getGyroPIDError())) < 2
-		&& (Math.abs(Robot.driveSubsystem.getGyroPIDOutput()) <= 0.25)) {
-	    Robot.driveSubsystem.setIsFinished();
-	    // return true;
-	    return false;
-	} else {
-	    return false;
-	}
-	// return System.currentTimeMillis() - startTimeMillis >= 2 * 1000;
+	double error = Math.abs(Robot.drive.getGyroPIDError());
+	double output = Math.abs(Robot.drive.getGyroPIDOutput());
+	
+	return error <= 2 && output <= 1;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
-	Robot.driveSubsystem.disableGyroPID();
+	Robot.drive.disableGyroPID();
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
-	Robot.driveSubsystem.disableGyroPID();
+	Robot.drive.disableGyroPID();
     }
 }

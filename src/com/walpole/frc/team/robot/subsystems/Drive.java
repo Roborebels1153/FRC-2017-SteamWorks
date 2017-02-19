@@ -3,12 +3,8 @@ package com.walpole.frc.team.robot.subsystems;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import com.walpole.frc.team.robot.lib.RebelDrive;
-import com.walpole.frc.team.robot.lib.RebelGyro;
-import com.walpole.frc.team.robot.lib.SPIGyro;
-import com.walpole.frc.team.robot.lib.DualPIDOutput;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 import com.walpole.frc.team.robot.Constants;
-import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -38,19 +34,20 @@ public class Drive extends Subsystem {
     private double encoderP;
     private double encoderI;
     private double encoderD;
-
+    
     private double gyroP;
     private double gyroI;
     private double gyroD;
 
     private Encoder leftEncoder;
-    private DualPIDOutput leftEncoderOutput;
+    private DummyPIDOutput leftEncoderOutput;
     private PIDController leftEncoderPID;
     private Encoder rightEncoder;
-    private DualPIDOutput rightEncoderOutput;
+    private DummyPIDOutput rightEncoderOutput;
     private PIDController rightEncoderPID;
 
-    private RebelGyro gyro;
+    //private RebelGyro gyro;
+    private AnalogGyro gyro;
     private PIDController gyroPID;
     private DummyPIDOutput gyroOutput;
     private boolean turnIsFinished;
@@ -78,17 +75,16 @@ public class Drive extends Subsystem {
 	transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
-	leftEncoderOutput = new DualPIDOutput(leftFrontVictor, leftBackVictor, true);
-	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder,
-		leftEncoderOutput);
+	leftEncoderOutput = new DummyPIDOutput();
+	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
-	rightEncoderOutput = new DualPIDOutput(rightFrontVictor, rightBackVictor, false);
-	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder,
-		rightEncoderOutput);
+	rightEncoderOutput = new DummyPIDOutput();
+	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
 
-	gyro = new RebelGyro();
-	gyro.startThread();
+	/*gyro = new RebelGyro();
+	gyro.startThread();*/
+	gyro = new AnalogGyro(RobotMap.GYRO);
 	gyroOutput = new DummyPIDOutput();
 	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
 	gyroPID.setOutputRange(-1, 1);
@@ -191,6 +187,18 @@ public class Drive extends Subsystem {
     public void driveAtSpeed(double speed) {
 	robotDrive.arcadeDrive(speed, 0);
     }
+    
+    public void arcadeDrive(double driveSpeed, double turnSpeed) {
+	robotDrive.arcadeDrive(driveSpeed, turnSpeed);
+    }
+    
+    public void tankDrive(double leftDrive, double rightDrive) {
+	robotDrive.tankDrive(leftDrive, rightDrive);
+    }
+    
+    public void arcadeTankDrive(double leftOutput, double rightOutput, double gyroOutput) {
+	robotDrive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
+    }
 
     public boolean isOnTarget() {
 	return Math.abs(leftEncoderPID.getError()) < driveTolerance
@@ -208,7 +216,6 @@ public class Drive extends Subsystem {
     public void enableDrivePID() {
 	leftEncoderPID.enable();
 	rightEncoderPID.enable();
-
     }
 
     public void enableGyroPID() {
@@ -236,15 +243,22 @@ public class Drive extends Subsystem {
 	leftEncoderPID.setSetpoint(setPoint);
 	rightEncoderPID.setSetpoint(setPoint);
     }
+    
+    public double getRightEncoderSetpoint () {
+	return rightEncoderPID.getSetpoint();
+    }
+    
+    public double getLeftEncoderSetpoint () {
+	return leftEncoderPID.getSetpoint();
+    }
 
-    public void setTurnPID(double setPoint) {
+    public void setTurnPIDSetpoint(double setPoint) {
 	gyroPID.setSetpoint(setPoint);
     }
 
-    public void setMaxDrivePIDOutput(double drivingSpeed, double turningSpeed) {
+    public void setMaxDrivePIDOutput(double drivingSpeed) {
 	leftEncoderPID.setOutputRange(-drivingSpeed, drivingSpeed);
 	rightEncoderPID.setOutputRange(-drivingSpeed, drivingSpeed);
-
     }
 
     public void setMaxGyroOutput(double turningSpeed) {
@@ -306,13 +320,4 @@ public class Drive extends Subsystem {
     public boolean turnIsFinished() {
 	return this.turnIsFinished;
     }
-
-    public void setNotFinished() {
-	this.turnIsFinished = false;
-    }
-
-    public void setIsFinished() {
-	this.turnIsFinished = true;
-    }
-
 }

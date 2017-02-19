@@ -1,26 +1,34 @@
-
 package com.walpole.frc.team.robot;
 
-import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
+import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
+import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
+import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
+import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
+import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
+import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
-import com.walpole.frc.team.robot.commands.ExampleCommand;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
+import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
+import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
+import com.walpole.frc.team.robot.subsystems.Gear;
+import com.walpole.frc.team.robot.subsystems.Shooter;
 
-import Autonomous.DeliverAGear;
-import Autonomous.DeliverAGearLeft;
-import Autonomous.DeliverAGearRight;
-import Autonomous.DriveAndTurn;
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,14 +38,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-    public static final Drive driveSubsystem = new Drive();
-    public static OI oi;
-    public static final Climb climbSubsystem = new Climb();
+    	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
+//	public static final Counter Counter = new Counter();
+	public static final Collector collector = new Collector();
+	public static final Shooter shooter = new Shooter();
+	public static final Drive drive = new Drive();
+	public static final Climb climb = new Climb();
+	public static final Gear gear = new Gear();
+//	public static final CountRPM countRPM = new CountRPM();
+	public static OI oi = new OI();
+	private static final int IMG_WIDTH = 640;
+	private static final int IMG_HEIGHT = 480; 
+	
+	private VisionThread visionThread;
+	private double centerX = 0.0;
+	private static double[] defaultValue = new double[0];
+	private static double[] areas = new double[0];
+	
+	
+	private final Object imgLock = new Object();  
 
     private Command autonomousCommand;
-    SendableChooser chooser;
-    private Preferences prefs = Preferences.getInstance();
+    private SendableChooser<Command> chooser;
+    static NetworkTable table;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -45,32 +68,48 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 	oi = new OI();
-	chooser = new SendableChooser();
-	chooser.addDefault("Default Auto", new ExampleCommand());
+	chooser = new SendableChooser<Command>();
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 
-	chooser.addObject("Deliver a Gear", new DeliverAGear());
+	chooser.addObject("Blue Center Deliver A Gear", new BlueCenterScoreAGear());
+	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
 	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
-    }
-
-    public void updateDashboard() {
-	SmartDashboard.putBoolean("Limit Switch", climbSubsystem.getLimitSwitch().get()); // Write
-	// the state of the limit switch to the Smart Dashboard
-	SmartDashboard.putNumber("Left Encoder Value", driveSubsystem.getLeftEncoderCount());
-	SmartDashboard.putNumber("Right Motor Power Value", driveSubsystem.getRightMotorPower());
-	SmartDashboard.putNumber("Left Motor Power Value", driveSubsystem.getLeftMotorPower());
-	SmartDashboard.putNumber("Right Encoder Value", driveSubsystem.getRightEncoderCount());
-	SmartDashboard.putNumber("Gyro Angle", driveSubsystem.getGyroAngle());
+	chooser.addObject("Drive 2 Feet", new DriveForwardWithEncoder(120));
+	chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(90));
+	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
+	chooser.addObject("Drive And Turn", new DriveAndTurn());
+	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
+	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
+//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
+//	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	        
+	     AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.71");
+	        cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
+    
+    }    
+	
+    
+    public static void updateDashboard() {
+	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitch().get());
+	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
+	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
+	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
+	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
+	SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
 	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
-	SmartDashboard.putNumber("Gyro Error", driveSubsystem.getGyroPIDError());
-	SmartDashboard.putNumber("Gyro PID Output", driveSubsystem.getGyroPIDOutput());
-	SmartDashboard.putBoolean("Gyro Is Finished", driveSubsystem.turnIsFinished());
-	SmartDashboard.putNumber("Left Encoder PID Error", driveSubsystem.getLeftPIDError());
-	SmartDashboard.putNumber("Left Encoder PID Output", driveSubsystem.getLeftPIDOutput());
-	SmartDashboard.putNumber("Right Encoder PID Error", driveSubsystem.getRightPIDError());
-	SmartDashboard.putNumber("Right Encoder PID Output", driveSubsystem.getRightPIDOutput());
+	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
+	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
+	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
+	SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
+	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
+	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
+	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
+	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
+	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
+	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
+//	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
     }
 
     /**
@@ -78,50 +117,43 @@ public class Robot extends IterativeRobot {
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.
      */
-    public void disabledInit() {
+    public void disabledInit(){
+    	
+//    	new RetractGearPusherCommand();
 
     }
+	
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
+		new RetractGearPusherCommand();
+		updateDashboard();
+	}
 
-    public void disabledPeriodic() {
-	Scheduler.getInstance().run();
-	updateDashboard();
-    }
-
-    /**
-     * This autonomous (along with the chooser code above) shows how to select
-     * between different autonomous modes using the dashboard. The sendable
-     * chooser code works with the Java SmartDashboard. If you prefer the
-     * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-     * getString code to get the auto name from the text box below the Gyro
-     *
-     * You can add additional auto modes by adding additional commands to the
-     * chooser code above (like the commented example) or additional comparisons
-     * to the switch structure below with additional strings & commands.
-     */
-    public void autonomousInit() {
-	driveSubsystem.updatePIDControllers();
-	autonomousCommand = new DriveForwardWithEncoder(120);//(Command)
-	// chooser.getSelected();
-	double desiredRotationDegrees = prefs.getDouble("degrees", 90);
-	// autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees);
-	double desiredSeconds = prefs.getDouble("seconds", 1);
-	 //autonomousCommand = new DriveForwardWithSeconds(desiredSeconds);
-	 //autonomousCommand = new TurnWithGyroCommand(desiredRotationDegrees);
-	// autonomousCommand = new DriveAndTurn(desiredSeconds,
-	// desiredRotationDegrees);
-	// autonomousCommand = new DriveBackwardsWithEncoder(42);
-	//autonomousCommand = new DeliverAGear();
-
-	/*
-	 * String autoSelected = SmartDashboard.getString("Auto Selector",
-	 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-	 * = new MyAutoCommand(); break; case "Default Auto": default:
-	 * autonomousCommand = new ExampleCommand(); break; }
+	/**
+	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
+	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
+	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
+	 * below the Gyro
+	 *
+	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
+	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
-
-	// schedule the autonomous command (example)
-	if (autonomousCommand != null)
-	    autonomousCommand.start();
+    public void autonomousInit() {
+        autonomousCommand = (Command) chooser.getSelected();
+        drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
+		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+		switch(autoSelected) {
+		case "My Auto":
+			autonomousCommand = new MyAutoCommand();
+			break;
+		case "Default Auto":
+		default:
+			autonomousCommand = new ExampleCommand();
+			break;
+		} */
+    	
+    	// schedule the autonomous command (example)
+        if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
@@ -130,16 +162,20 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
 	Scheduler.getInstance().run();
 	updateDashboard();
+        Scheduler.getInstance().run();
+        new ExtendGearPusherCommand();
+        
+        updateDashboard();
     }
 
     public void teleopInit() {
+    	Robot.gear.fireGearPusher();
+    	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when
-	// teleop starts running. If you want the autonomous to
-	// continue until interrupted by another command, remove
-	// this line or comment it out.
-	if (autonomousCommand != null)
-	    autonomousCommand.cancel();
-
+        // teleop starts running. If you want the autonomous to 
+        // continue until interrupted by another command, remove
+        // this line or comment it out.
+        if (autonomousCommand != null) autonomousCommand.cancel();
     }
 
     /**
@@ -147,8 +183,9 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 	Scheduler.getInstance().run();
-	driveSubsystem.drive(oi.getDriverJoystick());
+	drive.drive(oi.getDriverJoystick());
 	updateDashboard();
+  //      Robot.shooter.turnLightOn();
     }
 
     /**
