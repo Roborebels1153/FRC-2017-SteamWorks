@@ -78,8 +78,8 @@ public class Drive extends Subsystem {
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DummyPIDOutput();
 	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
-	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
-	rightEncoder.setReverseDirection(true);
+	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, true, EncodingType.k4X);
+	//rightEncoder.setReverseDirection(true);
 	rightEncoderOutput = new DummyPIDOutput();
 	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder, rightEncoderOutput);
 
@@ -87,7 +87,7 @@ public class Drive extends Subsystem {
 	gyro.startThread();*/
 	gyro = new AnalogGyro(RobotMap.GYRO);
 	gyroOutput = new DummyPIDOutput();
-	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput);
+	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);  //100: Add Constants if you want to load encoder PID values from Constants 
 	gyroPID.setOutputRange(-1, 1);
 	gyroPID.setInputRange(0, 360);
 	gyroPID.setContinuous();
@@ -99,13 +99,13 @@ public class Drive extends Subsystem {
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
-	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
-	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
-
-	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
-	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
-	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
+	encoderP = prefs.getDouble("encoderP", Constants.encoderP); //100: Add Constants if you want to load encoder PID values from Constants 
+	encoderI = prefs.getDouble("encoderI", Constants.encoderI); //100: Add Constants if you want to load encoder PID values from Constants 
+	encoderD = prefs.getDouble("encoderD", Constants.encoderD); //100: Add Constants if you want to load encoder PID values from Constants 
+ 
+	gyroP = prefs.getDouble("gyroP", gyroP); //100: Add Constants if you want to load gyro PID values from Constants 
+	gyroI = prefs.getDouble("gyroI", gyroI); //100: Add Constants if you want to load gyro PID values from Constants 
+	gyroD = prefs.getDouble("gyroD", gyroD); //100: Add Constants if you want to load gyro PID values from Constants 
     }
 
     /**
@@ -114,9 +114,9 @@ public class Drive extends Subsystem {
     public void updatePIDControllers() {
 	loadPIDValues();
 
-	//leftEncoderPID.setPID(encoderP, encoderI, encoderD);
-	//rightEncoderPID.setPID(encoderP, encoderI, encoderD);
-	//gyroPID.setPID(gyroP, gyroI, gyroD);
+	//leftEncoderPID.setPID(encoderP, encoderI, encoderD); //100:Uncomment if using dashboard to load PID values for Encoders(2/19/17)
+	//rightEncoderPID.setPID(encoderP, encoderI, encoderD); //100:Uncomment if using dashboard to load PID values for Encoders(2/9/17)
+	gyroPID.setPID(gyroP, gyroI, gyroD); //100:Uncomment if using dashboard to load PID values for Gyro(2/9/17)
     }
 
     // Put methods for controlling this subsystem

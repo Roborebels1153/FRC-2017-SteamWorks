@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
 	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
-	chooser.addObject("Drive 2 Feet", new DriveForwardWithEncoder(120));
+	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
 	chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(90));
 	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	chooser.addObject("Drive And Turn Left Gear", new DriveAndTurnLeftGear());
@@ -142,7 +142,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
+        drive.updatePIDControllers();  
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
 		case "My Auto":

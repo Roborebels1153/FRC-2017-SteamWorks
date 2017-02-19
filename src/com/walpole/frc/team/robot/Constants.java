@@ -10,6 +10,7 @@ public class Constants {
     public static double inchesPerTick = WHEEL_DIAMETER * Math.PI / (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV);
     public static double ticksPerInch = (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV) / (WHEEL_DIAMETER * Math.PI);
     
+    //Constants for 2016 robot (1153)
     /*public static int WHEEL_DIAMETER = 10;
     public static double ENCODER_COUNTS_PER_REV = 8.5;
     public static int TICKS_PER_ENCODER_REV = 128;
@@ -22,12 +23,12 @@ public class Constants {
     public static double encoderI = 0;
     public static double encoderD = 0.5075;
     
-    // PID Constants for 1153
+    // PID Constants for 1153 (2016 robot)
     /*public static double encoderP = 0.01;
     public static double encoderI = 0;
     public static double encoderD = 0;*/
     
-    // PID Constants for 1153
+    // PID Constants for 1153 (2016 robot)
    // public static double encoderP = 0.0015;
    // public static double encoderI = 0;
    // public static double encoderD = 0;
@@ -37,8 +38,8 @@ public class Constants {
     public static double gyroI = 0;
     public static double gyroD = -0.16; // These Values Work!*/
     
-    // PID Constants for 1153 (SPI Gyro)
-   /* public static double gyroP = 0.14;
+    /*// PID Constants for 1153 (SPI Gyro) (2016 robot)
+    public static double gyroP = 0.14;
     public static double gyroI = 0;
     public static double gyroD = 0.1;*/
     
