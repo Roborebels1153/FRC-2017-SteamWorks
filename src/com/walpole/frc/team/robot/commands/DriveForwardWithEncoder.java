@@ -13,7 +13,7 @@ public class DriveForwardWithEncoder extends Command {
     public DriveForwardWithEncoder(int inchesToDrive) {
 	requires(Robot.drive);
 	this.speed = 0.5;
-	this.setPoint = (Constants.ticksPerInch * inchesToDrive);
+	this.setPoint = -(Constants.ticksPerInch * inchesToDrive);
     }
 
     protected void initialize() {
@@ -23,7 +23,7 @@ public class DriveForwardWithEncoder extends Command {
 	Robot.drive.setMaxDrivePIDOutput(speed);
 	Robot.drive.setDrivePIDSetPoint(setPoint);
 	Robot.drive.enableDrivePID();
-	Robot.drive.enableGyroPID();
+	Robot.drive.enableGyroPID(); 
     }
 
     protected void execute() {
@@ -31,15 +31,13 @@ public class DriveForwardWithEncoder extends Command {
 	double leftOutput = Robot.drive.getLeftPIDOutput();
 	double rightOutput = Robot.drive.getRightPIDOutput();
 	
-	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
-	Robot.drive.tankDrive(leftOutput, rightOutput);
+	Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
     }
 
     protected boolean isFinished() {
-    	double leftMotorPower = Robot.drive.getLeftMotorPower();
+    	double leftMotorPower = Math.abs(Robot.drive.getLeftMotorPower());
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	//return leftMotorPower < 0.1 && error <= 280;
-    	return false;
+    	return leftMotorPower < 0.1 && error <= 50;
     }
 
     protected void end() {

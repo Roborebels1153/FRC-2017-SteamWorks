@@ -37,8 +37,11 @@ public class RebelDrive extends RobotDrive {
 	    arcadeDrive(driveSpeed * SLOW, turnSpeed, true);
 	} else {
 	    arcadeDrive(driveSpeed * STRAIGHT_THROTTLE, lowSpeedNic.calculate(turnSpeed * TURN_THROTTLE), true);
-
 	}
+    }
+    
+    public void avgDrive(double driveLeftSpeed, double driveRightSpeed, double turnSpeed) {
+	super.arcadeDrive(avg(driveLeftSpeed, driveRightSpeed), turnSpeed, false);
     }
    
     public void arcadeTankDrive(double driveLeftSpeed, double driveRightSpeed, double turnSpeed) {

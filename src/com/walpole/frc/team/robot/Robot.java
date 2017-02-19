@@ -6,7 +6,8 @@ import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
-import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
+import com.walpole.frc.team.robot.autonomous.DriveAndTurnLeftGear;
+import com.walpole.frc.team.robot.autonomous.DriveAndTurnRightGear;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
@@ -79,9 +80,10 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Drive 2 Feet", new DriveForwardWithEncoder(120));
 	chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(90));
 	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
-	chooser.addObject("Drive And Turn", new DriveAndTurn());
-	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
+	chooser.addObject("Drive And Turn Left Gear", new DriveAndTurnLeftGear());
+	chooser.addObject("Cross The Green Line", new CrossGreenLine());
 	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
+	chooser.addObject("Drive And Turn Right Gear", new DriveAndTurnRightGear());
 //		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
 //	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	        
@@ -153,6 +155,7 @@ public class Robot extends IterativeRobot {
 		} */
     	
     	// schedule the autonomous command (example)
+        
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -162,10 +165,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
 	Scheduler.getInstance().run();
 	updateDashboard();
-        Scheduler.getInstance().run();
-        new ExtendGearPusherCommand();
-        
-        updateDashboard();
+        //new ExtendGearPusherCommand();
     }
 
     public void teleopInit() {

@@ -6,24 +6,28 @@ import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class DriveAndTurn extends CommandGroup {
+public class DriveAndTurnLeftGear extends CommandGroup {
     
-    private static final int inchesToDrive = 77; 
+    /*private static final int inchesToDrive = 77; 
     private static final int degrees = 90; 
     private static final int secondsToWait = 1;
-    private static final int inchesToAirship = 76;
+    private static final int inchesToAirship = 76;*/
 
-    public DriveAndTurn() {
+    public DriveAndTurnLeftGear() {
 	super();
 	
-	addSequential(new DriveForwardWithEncoder(inchesToDrive));
+	/*addSequential(new DriveForwardWithEncoder(inchesToDrive));
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degrees)); 
 	addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new DriveForwardWithEncoder(inchesToAirship));
+	addSequential(new DriveForwardWithEncoder(inchesToAirship));*/
+	
+	addSequential(new DriveForwardWithEncoder(92));
+	addSequential(new WaitCommand(1));
+	addSequential(new TurnWithGyroCommand(60));
     }
 
-    public DriveAndTurn(String name) {
+    public DriveAndTurnLeftGear(String name) {
 	super(name);
     }
 }

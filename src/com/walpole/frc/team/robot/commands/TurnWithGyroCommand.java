@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot.commands;
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnWithGyroCommand extends Command {
     
@@ -16,8 +17,8 @@ public class TurnWithGyroCommand extends Command {
     protected void initialize() {
 	Robot.drive.resetGyro();
 	Robot.drive.setTurnPIDSetpoint(degreesToTurn);
-	Robot.drive.enableGyroPID();
 	Robot.drive.disableDrivePID();
+	Robot.drive.enableGyroPID();
 	// startTimeMillis = System.currentTimeMillis();
 	// Robot.driveSubsystem.setMaxGyroOutput(speed);
     }
@@ -40,7 +41,7 @@ public class TurnWithGyroCommand extends Command {
 	double error = Math.abs(Robot.drive.getGyroPIDError());
 	double output = Math.abs(Robot.drive.getGyroPIDOutput());
 	
-	return error <= 2 && output <= 1;
+	return error <= 2 && output <= 0.01;
     }
 
     protected void end() {

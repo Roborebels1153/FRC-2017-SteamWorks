@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot.subsystems;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import com.walpole.frc.team.robot.lib.RebelDrive;
+import com.walpole.frc.team.robot.lib.RebelGyro;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
@@ -76,17 +77,17 @@ public class Drive extends Subsystem {
 
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DummyPIDOutput();
-	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
+	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
 	rightEncoderOutput = new DummyPIDOutput();
-	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder, rightEncoderOutput);
 
 	/*gyro = new RebelGyro();
 	gyro.startThread();*/
 	gyro = new AnalogGyro(RobotMap.GYRO);
 	gyroOutput = new DummyPIDOutput();
-	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
+	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput);
 	gyroPID.setOutputRange(-1, 1);
 	gyroPID.setInputRange(0, 360);
 	gyroPID.setContinuous();
@@ -113,9 +114,9 @@ public class Drive extends Subsystem {
     public void updatePIDControllers() {
 	loadPIDValues();
 
-	leftEncoderPID.setPID(encoderP, encoderI, encoderD);
-	rightEncoderPID.setPID(encoderP, encoderI, encoderD);
-	gyroPID.setPID(gyroP, gyroI, gyroD);
+	//leftEncoderPID.setPID(encoderP, encoderI, encoderD);
+	//rightEncoderPID.setPID(encoderP, encoderI, encoderD);
+	//gyroPID.setPID(gyroP, gyroI, gyroD);
     }
 
     // Put methods for controlling this subsystem
@@ -194,6 +195,10 @@ public class Drive extends Subsystem {
     
     public void tankDrive(double leftDrive, double rightDrive) {
 	robotDrive.tankDrive(leftDrive, rightDrive);
+    }
+    
+    public void avgDrive(double leftOutput, double rightOutput, double gyroOutput) {
+	robotDrive.avgDrive(leftOutput, rightOutput, gyroOutput);
     }
     
     public void arcadeTankDrive(double leftOutput, double rightOutput, double gyroOutput) {
