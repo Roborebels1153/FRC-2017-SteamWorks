@@ -31,7 +31,7 @@ public class DriveStraightWithGyroCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 	double gyroOutput = Robot.drive.getGyroPIDOutput();
-	Robot.drive.arcadeDrive(-0.6, gyroOutput);
+	Robot.drive.arcadeDrive(0.6, gyroOutput);
 	// SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
 

@@ -63,21 +63,25 @@ public class RebelDrive extends RobotDrive {
 	    if (turnSpeed > 0.0) {
 		// We are going forward and turning right
 		leftMotorPower = driveLeftSpeed * (moveValue - turnSpeed);
-		rightMotorPower = Math.max((driveRightSpeed * moveValue), turnSpeed);
+		rightMotorPower = driveRightSpeed * (Math.max(moveValue, turnSpeed));
+		//rightMotorPower = Math.max((driveRightSpeed * moveValue), turnSpeed);
 	    } else {
 		// We are going forward and turning left
-		leftMotorPower = Math.max((driveLeftSpeed * moveValue), -turnSpeed);
+		leftMotorPower = driveLeftSpeed * (Math.max(moveValue, -turnSpeed));
+		//leftMotorPower = Math.max((driveLeftSpeed * moveValue), -turnSpeed);
 		rightMotorPower = driveRightSpeed * (moveValue + turnSpeed);
 	    }
 	} else {
 	    if (turnSpeed > 0.0) {
 		// We are going backwards and turning left
-		leftMotorPower = -Math.max(-(driveLeftSpeed * moveValue), turnSpeed);
+		leftMotorPower = driveLeftSpeed * (-Math.max(-moveValue, turnSpeed));
+		//leftMotorPower = Math.max(-(driveLeftSpeed * moveValue), turnSpeed);
 		rightMotorPower = driveRightSpeed * (moveValue + turnSpeed);
 	    } else {
 		// We are going backwards and turning right
 		leftMotorPower = driveLeftSpeed * (moveValue - turnSpeed);
-		rightMotorPower = -Math.max(-(driveRightSpeed * moveValue), -turnSpeed);
+		rightMotorPower = driveRightSpeed * (-Math.max(-moveValue, -turnSpeed));
+		//rightMotorPower = Math.max(-(driveRightSpeed * moveValue), -turnSpeed);
 	    }
 	}
 	
