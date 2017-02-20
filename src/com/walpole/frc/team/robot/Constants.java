@@ -21,5 +21,5 @@ public class Constants {
     public static double gyroI = 0;
     public static double gyroD = 0.015;
     
-	public static double originalWantedRPM = 3000;
+	public static double originalWantedRPM = 4000;
 }

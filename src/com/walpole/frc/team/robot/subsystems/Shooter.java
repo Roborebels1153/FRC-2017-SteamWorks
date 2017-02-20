@@ -16,12 +16,12 @@ public class Shooter extends Subsystem {
 	
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
-    private Encoder shooterEncoder;
+//    private Encoder shooterEncoder;
     
-    static double shooterP = 0.0001;
-    static double shooterI = 0.00001;
-    static double shooterD = 0.0015;
-    static double shooterF = 0;
+    static double shooterP = 0.000004;
+    static double shooterI = 0;
+    static double shooterD = 0.000001275;
+    static double shooterF = 0.000182;
     
 	private PIDController shooterPID;
 	
@@ -48,20 +48,20 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         
     }
-    public Encoder getEncoder() {
-    	return shooterEncoder;
-    }
+//    public Encoder getEncoder() {
+//    	return shooterEncoder;
+//    }
     public void shoot() {
     	shooterPID.enable();
-    	if (shooterPID.getError() < 20 && -shooterPID.getError() < 20) {
-    		agitatorMotor.set(1);
-    	} else {
-    		agitatorMotor.set(0);
-    	}
+//    	if (shooterPID.getError() < 20 && -shooterPID.getError() < 20) {
+    		//agitatorMotor.set(-1);
+//    	} else {
+//    		agitatorMotor.set(0);
+//    	}
     }
     public void stopShooting() {
     	shooterPID.disable();
-		//agitatorMotor.set(0);
+		agitatorMotor.set(0);
     }
 
     
