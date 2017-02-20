@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueLeftScoreAGear extends CommandGroup {
-    int inchesToTurn = 72;
+    int inchesForward = 72;
     int degreesToTurn = 60;
     int inchesToAirship = 80;
     int secondsToWait = 1; 
@@ -19,8 +19,8 @@ public class BlueLeftScoreAGear extends CommandGroup {
     public BlueLeftScoreAGear() {
 	super();
 	
-	addSequential(new ExtendGearPusherCommand());
-	addSequential(new DriveForwardWithEncoder(inchesToTurn));
+	//addSequential(new ExtendGearPusherCommand());
+	addSequential(new DriveForwardWithEncoder(inchesForward));
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
 	addSequential(new DriveForwardWithEncoder(inchesToAirship));  
 	addSequential(new ReleaseGearCommand()); 

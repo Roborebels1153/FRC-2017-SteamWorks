@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CrossGreenLine extends CommandGroup {
     
-    int secondsToAirship = 5; 
+    int secondsToAirship = 7; 
     
     
     public CrossGreenLine() { 

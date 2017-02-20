@@ -18,6 +18,7 @@ public class DriveForwardWithEncoder extends Command {
 
     protected void initialize() {
 	Robot.drive.resetEncoders();
+	Robot.drive.resetGyro();
 	double gyroStartingAngle = Robot.drive.getGyroAngle();
 	Robot.drive.setTurnPIDSetpoint(gyroStartingAngle);
 	Robot.drive.setMaxDrivePIDOutput(speed);
@@ -31,8 +32,8 @@ public class DriveForwardWithEncoder extends Command {
 	double leftOutput = Robot.drive.getLeftPIDOutput();
 	double rightOutput = Robot.drive.getRightPIDOutput();
 	
-	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
-	Robot.drive.tankDrive(leftOutput, rightOutput);
+	Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
+	//Robot.drive.tankDrive(leftOutput, rightOutput);
     }
 
     protected boolean isFinished() {
