@@ -40,12 +40,13 @@ public class RebelDrive extends RobotDrive {
 
 	}
     }
-   
+    
+    
     public void arcadeTankDrive(double driveLeftSpeed, double driveRightSpeed, double turnSpeed) {
 	double moveValue;
 	
 	// Use the average of the two drive speeds to find the direction of the robot
-	if (avg(driveLeftSpeed, driveRightSpeed) > 0) {
+	if (avg(driveLeftSpeed, driveRightSpeed) < 0) {
 	    moveValue = 1;
 	} else {
 	    moveValue = -1;
@@ -57,29 +58,6 @@ public class RebelDrive extends RobotDrive {
 
 	double leftMotorPower;
 	double rightMotorPower;
-
-	// Scale each motor power by multiplying full motor power by the motor speed
-        /*if (moveValue > 0.0) {
-	    if (turnSpeed > 0.0) {
-		// We are going forward and turning right
-		leftMotorPower = driveLeftSpeed * (moveValue - turnSpeed);
-		rightMotorPower = Math.max((driveRightSpeed * moveValue), turnSpeed);
-	    } else {
-		// We are going forward and turning left
-		leftMotorPower = Math.max((driveLeftSpeed * moveValue), -turnSpeed);
-		rightMotorPower = driveRightSpeed * (moveValue + turnSpeed);
-	    }
-	} else {
-	    if (turnSpeed > 0.0) {
-		// We are going backwards and turning left
-		leftMotorPower = -Math.max(-(driveLeftSpeed * moveValue), turnSpeed);
-		rightMotorPower = driveRightSpeed * (moveValue + turnSpeed);
-	    } else {
-		// We are going backwards and turning right
-		leftMotorPower = driveLeftSpeed * (moveValue - turnSpeed);
-		rightMotorPower = -Math.max(-(driveRightSpeed * moveValue), -turnSpeed);
-	    }
-	}*/
 	
 	// Scale each motor power by multiplying full motor power by the motor speed
 	if (moveValue > 0.0) {
@@ -110,4 +88,6 @@ public class RebelDrive extends RobotDrive {
     private double avg(double a, double b) {
 	return (a + b) / 2;
     }
+    
+
 }

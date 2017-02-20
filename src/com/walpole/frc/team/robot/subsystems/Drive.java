@@ -196,9 +196,12 @@ public class Drive extends Subsystem {
 	robotDrive.tankDrive(leftDrive, rightDrive);
     }
     
-    public void arcadeTankDrive(double leftOutput, double rightOutput, double gyroOutput) {
-	robotDrive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
+    public void arcadeTankDrive(double driveLeftSpeed, double driveRightSpeed, double turnSpeed) { 
+	robotDrive.arcadeTankDrive(driveLeftSpeed, driveRightSpeed, turnSpeed); 
     }
+//    public void arcadeTankDrive(double leftOutput, double rightOutput, double gyroOutput) {
+//	robotDrive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
+//    }
 
     public boolean isOnTarget() {
 	return Math.abs(leftEncoderPID.getError()) < driveTolerance

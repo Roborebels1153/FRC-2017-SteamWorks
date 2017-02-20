@@ -8,6 +8,7 @@ import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
 //import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
+import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
@@ -153,7 +154,12 @@ public class Robot extends IterativeRobot {
 		} */
     	
     	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand != null) {
+            autonomousCommand.start();
+        } else {
+            autonomousCommand = new DriveForwardWithGyroEncoder(120);
+            autonomousCommand.start();
+        }
     }
 
     /**
