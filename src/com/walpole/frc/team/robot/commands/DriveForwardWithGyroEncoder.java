@@ -5,13 +5,13 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveForwardWithEncoder extends Command {
+public class DriveForwardWithGyroEncoder extends Command {
 
     private double speed;
     private double inchesToDrive;
     private double setPoint;
-
-    public DriveForwardWithEncoder(int inchesToDrive) {
+    
+    public DriveForwardWithGyroEncoder(int inchesToDrive) {
 	requires(Robot.drive);
 	this.speed = 0.5;
 	this.inchesToDrive = inchesToDrive;
@@ -26,11 +26,17 @@ public class DriveForwardWithEncoder extends Command {
 	Robot.drive.setMaxDrivePIDOutput(speed);
 	Robot.drive.setDrivePIDSetPoint(setPoint);
 	Robot.drive.enableDrivePID();
+	
+	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
+	double leftOutput = Robot.drive.getLeftPIDOutput();
+	double rightOutput = Robot.drive.getRightPIDOutput();
+	double gyroOutput = Robot.drive.getGyroPIDOutput(); 
+	//Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
+	Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
     }
 
     // Make this return true when this Command no longer needs to run execute()
