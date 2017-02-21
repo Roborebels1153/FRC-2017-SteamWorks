@@ -17,7 +17,7 @@ public class BlueCenterScoreAGearWithSeconds extends CommandGroup {
     public BlueCenterScoreAGearWithSeconds() {
 	super();
 
-	addSequential(new ExtendGearPusherCommand());
+	//addSequential(new ExtendGearPusherCommand());
 	addSequential(new DriveForwardWithSeconds(secondsToAirShip));  
 	addSequential(new ReleaseGearCommand());
 	addSequential(new WaitInBetweenCommandsCommand(secondsToWait));

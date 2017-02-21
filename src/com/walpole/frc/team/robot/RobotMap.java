@@ -42,7 +42,8 @@ public class RobotMap {
 	public static int SHOOTER_ENCODER1 = 4;
 	public static int SHOOTER_ENCODER2 = 5;
 
-	public static int COLLECT_MOTOR = 6;
+	public static int CONVEYER_MOTORS = 6;   //Aayush and Brigham: we are commenting this out because it was not functioning properly (2/21)
+
 	
 //	public static int AGITATOR = 8;
 	

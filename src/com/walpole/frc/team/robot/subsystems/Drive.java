@@ -5,6 +5,7 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.lib.RebelDrive;
 import com.walpole.frc.team.robot.lib.RebelGyro;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
+import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
 
@@ -12,10 +13,12 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -50,7 +53,8 @@ public class Drive extends Subsystem {
     private PIDController rightEncoderPID;
 
     //private RebelGyro gyro;
-    private AnalogGyro gyro;
+    //private AnalogGyro gyro;
+    private AHRS gyro;
     private PIDController gyroPID;
     private DummyPIDOutput gyroOutput;
     private boolean turnIsFinished;
@@ -89,7 +93,13 @@ public class Drive extends Subsystem {
 
 	//gyro = new RebelGyro();
 	//gyro.startThread();
-	gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
+	//gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
+	try {
+	    gyro = new AHRS(SerialPort.Port.kUSB);
+	} catch (RuntimeException ex) {
+            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+	    // TODO Add global variable
+	}
 	gyroOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
 	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
@@ -198,6 +208,10 @@ public class Drive extends Subsystem {
 	robotDrive.arcadeDrive(driveSpeed, turnSpeed);
     }
     
+    public void arcadeDrive(double driveSpeed, double turnSpeed, boolean squaredInputs) {
+	robotDrive.arcadeDrive(driveSpeed, turnSpeed, squaredInputs);
+    }
+    
     public void tankDrive(double leftDrive, double rightDrive) {
 	robotDrive.tankDrive(leftDrive, rightDrive);
     }
@@ -233,6 +247,10 @@ public class Drive extends Subsystem {
 
     public void resetGyro() {
 	gyro.reset();
+    }
+    
+    public double getGyroYaw() {
+	return gyro.getYaw();
     }
 
     /**
