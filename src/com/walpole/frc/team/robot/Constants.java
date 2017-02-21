@@ -21,7 +21,7 @@ public class Constants {
     // PID Constants for 2017 Prototype (1154)
     public static final double encoderP = 0.2025;
     public static final double encoderI = 0;
-    public static final double encoderD = 0.5075; 
+    public static final double encoderD = 0.5075;
     // Box Gyro
     public static final double gyroP = -0.0172997;
     public static final double gyroI = 0;

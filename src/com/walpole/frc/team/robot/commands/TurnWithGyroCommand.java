@@ -5,55 +5,43 @@ import com.walpole.frc.team.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnWithGyroCommand extends Command {
-    
-    private double degreesToTurn;
-    private double speedDrive; 
-    private double speedTurn;
 
-    public TurnWithGyroCommand(double degreesToTurn) {
-	requires(Robot.drive);
-	this.degreesToTurn = degreesToTurn;
-	this.speedTurn = 0.8;
-	
-    }
+	private double degreesToTurn;
+	private double speedTurn = 0.8;
 
-    protected void initialize() {
-	Robot.drive.resetGyro();
-	Robot.drive.setTurnPIDSetpoint(degreesToTurn);
-	Robot.drive.enableGyroPID();
-	Robot.drive.disableDrivePID();
-	//Robot.drive.setMaxDrivePIDOutput(speedDrive); 
-	// startTimeMillis = System.currentTimeMillis();
-	Robot.drive.setMaxGyroOutput(speedTurn);
-    }
-
-    protected void execute() {
-	double gyroOutput = Robot.drive.getGyroPIDOutput();   
-	Robot.drive.turnAtSpeed(gyroOutput);
-	// SmartDashboard.putNumber("Turn Speed", gyroOutput);
-    }
-
-    public boolean withinTargetValue(double targetValue, double errorTolerance, double actualValue) {
-	if ((actualValue >= targetValue - errorTolerance) && (actualValue <= targetValue + errorTolerance)) {
-	    return true;
-	} else {
-	    return false;
+	public TurnWithGyroCommand(double degreesToTurn) {
+		requires(Robot.drive);
+		
+		this.degreesToTurn = degreesToTurn;
 	}
-    }
 
-    protected boolean isFinished() {
-	double error = Math.abs(Robot.drive.getGyroPIDError());
-	double output = Math.abs(Robot.drive.getGyroPIDOutput());
-	
-	return error <= 2 && output <= 1;
-	//return false;
-    }
+	protected void initialize() {
+		Robot.drive.disableDrivePID();
+		
+		Robot.drive.resetGyro();
+		Robot.drive.setTurnPIDSetpoint(degreesToTurn);
+		Robot.drive.setMaxGyroOutput(speedTurn);
+		
+		Robot.drive.enableGyroPID();
+	}
 
-    protected void end() {
-	Robot.drive.disableGyroPID();
-    }
+	protected void execute() {
+		double gyroOutput = Robot.drive.getGyroPIDOutput();
+		Robot.drive.turnAtSpeed(gyroOutput);
+	}
 
-    protected void interrupted() {
-	Robot.drive.disableGyroPID();
-    }
+	protected boolean isFinished() {
+		double error = Math.abs(Robot.drive.getGyroPIDError());
+		double output = Math.abs(Robot.drive.getGyroPIDOutput());
+
+		return error <= 2 && output <= 1;
+	}
+
+	protected void end() {
+		Robot.drive.disableGyroPID();
+	}
+
+	protected void interrupted() {
+		Robot.drive.disableGyroPID();
+	}
 }

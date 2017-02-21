@@ -6,12 +6,9 @@ import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
 import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
-//import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
-import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
-import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
@@ -26,10 +23,8 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -42,14 +37,16 @@ public class Robot extends IterativeRobot {
 	
 	public static Preferences prefs;
 	
-	// public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
+
 	// public static final CountRPM countRPM = new CountRPM();
+	
 	public static OI oi = new OI();
+	
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480;
 
@@ -62,13 +59,11 @@ public class Robot extends IterativeRobot {
 
 	private Command autonomousCommand;
 	private SendableChooser<Command> chooser;
+	
 	// Removed unused variable (Brigham)
 	// static NetworkTable table;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	@Override
 	public void robotInit() {
 		prefs = Preferences.getInstance();
 		
@@ -86,8 +81,6 @@ public class Robot extends IterativeRobot {
 	}
 	
 	private void addChooserCommands() {
-		// TODO: Consider adding a default command
-		
 		// Autonomous commands
 		chooser.addObject("Blue Center Deliver A Gear", new BlueCenterScoreAGear());
 		chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
@@ -98,7 +91,7 @@ public class Robot extends IterativeRobot {
 		
 		// Testing commands
 		chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-		chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
+		chooser.addDefault("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
 		chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(60));
 		chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 		//chooser.addObject("Drive And Turn", new DriveAndTurn());
@@ -137,60 +130,35 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 	}
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
+	@Override
 	public void disabledInit() {
 	}
 
+	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		// TODO: Why is this called in periodic?
-		new RetractGearPusherCommand();
 		updateDashboard();
 	}
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
+	@Override
 	public void autonomousInit() {
 		drive.updatePIDControllers();
 		autonomousCommand = (Command) chooser.getSelected();
 
-		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
-			/* TODO: This is redundant; call it from outside the if statement. Also,
-			 * why create a command that is never started nor referenced?
-			 */
-			new ExtendGearPusherCommand();
-		} else {
-			// TODO: This is improper implementation of a default command
-			autonomousCommand = new DriveForwardWithEncoder(120);
-			autonomousCommand.start();
-			new ExtendGearPusherCommand();
+			Robot.gear.fireGearPusher();
 		}
 	}
 
-	/**
-	 * This function is called periodically during autonomous
-	 */
+	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
 		updateDashboard();
 	}
 
+	@Override
 	public void teleopInit() {
 		Robot.gear.fireGearPusher();
 		Robot.drive.resetEncoders();
@@ -200,9 +168,7 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
-	/**
-	 * This function is called periodically during operator control
-	 */
+	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		drive.drive(oi.getDriverJoystick());
@@ -211,9 +177,7 @@ public class Robot extends IterativeRobot {
 		// Robot.shooter.turnLightOn();
 	}
 
-	/**
-	 * This function is called periodically during test mode
-	 */
+	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
 	}

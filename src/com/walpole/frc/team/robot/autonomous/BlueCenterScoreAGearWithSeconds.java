@@ -9,18 +9,18 @@ import com.walpole.frc.team.robot.commands.WaitInBetweenCommandsCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class BlueCenterScoreAGearWithSeconds extends CommandGroup {
-    int secondsToAirShip = 5;
-    int secondsBack = 3;
-    
-    double secondsToWait = 1;
 
-    public BlueCenterScoreAGearWithSeconds() {
-	super();
+	private static final int secondsToAirShip = 5;
+	private static final int secondsBack = 3;
+	private static final double secondsToWait = 1;
 
-	addSequential(new ExtendGearPusherCommand());
-	addSequential(new DriveForwardWithSeconds(secondsToAirShip));  
-	addSequential(new ReleaseGearCommand());
-	addSequential(new WaitInBetweenCommandsCommand(secondsToWait));
-	addSequential(new DriveBackwardsWithSeconds(secondsBack));     
-    }
+	public BlueCenterScoreAGearWithSeconds() {
+		super();
+
+		addSequential(new ExtendGearPusherCommand());
+		addSequential(new DriveForwardWithSeconds(secondsToAirShip));
+		addSequential(new ReleaseGearCommand());
+		addSequential(new WaitInBetweenCommandsCommand(secondsToWait));
+		addSequential(new DriveBackwardsWithSeconds(secondsBack));
+	}
 }

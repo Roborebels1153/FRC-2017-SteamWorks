@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -61,12 +60,7 @@ public class Drive extends Subsystem {
 		High, Low
 	}
 
-	public enum Speed {
-		Normal, Slow
-	}
-
 	private Shifter currGear = Shifter.Low;
-	private Speed currSpeed = Speed.Normal;
 
 	public Drive() {
 		leftFrontVictor = new Victor(RobotMap.LEFT_FRONT_MOTOR);
@@ -79,11 +73,13 @@ public class Drive extends Subsystem {
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 		leftEncoderOutput = new DummyPIDOutput();
 		leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
+		leftEncoderPID.setOutputRange(-1, 1);
 		
 		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 		rightEncoder.setReverseDirection(true);
 		rightEncoderOutput = new DummyPIDOutput();
 		rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+		rightEncoderPID.setOutputRange(-1, 1);
 
 		// gyro = new RebelGyro();
 		// gyro.startThread();
@@ -153,9 +149,8 @@ public class Drive extends Subsystem {
 	
 	// Shifting Methods
 	
-	// TODO: Condsider renaming Speed enum to something more descriptive, like gear
-	public Speed getCurrSpeed() {
-		return currSpeed;
+	public Shifter getShift() {
+		return currGear;
 	}
 
 	public void shiftHigh() {
@@ -183,7 +178,7 @@ public class Drive extends Subsystem {
 	public void drive(Joystick joystick) {
 		double moveValue = Constants.TELE_DRIVE_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
 		double rotateValue = Constants.TELE_TURN_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
-		robotDrive.arcadeDrive(moveValue, rotateValue, true);
+		robotDrive.rebelArcadeDrive(moveValue, rotateValue);
 	}
 
 	public double getLeftMotorPower() {
@@ -208,15 +203,11 @@ public class Drive extends Subsystem {
 	}
 
 	public void arcadeDrive(double driveSpeed, double turnSpeed) {
-		robotDrive.arcadeDrive(driveSpeed, turnSpeed);
+		robotDrive.arcadeDrive(driveSpeed, turnSpeed, false);
 	}
 
 	public void tankDrive(double leftDrive, double rightDrive) {
-		robotDrive.tankDrive(leftDrive, rightDrive);
-	}
-
-	public void arcadeTankDrive(double driveLeftSpeed, double driveRightSpeed, double turnSpeed) {
-		robotDrive.arcadeTankDrive(driveLeftSpeed, driveRightSpeed, turnSpeed);
+		robotDrive.tankDrive(leftDrive, rightDrive, false);
 	}
 	
 	// Encoder Methods
