@@ -1,14 +1,9 @@
 
 package com.walpole.frc.team.robot;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 
-/**
- *
- */
 public class CountRPM {
 	
 	private DigitalInput lightSensor;
