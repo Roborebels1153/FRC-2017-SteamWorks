@@ -10,9 +10,16 @@ public class DriveForwardWithGyroEncoder extends Command {
     private double speed;
     private double setPoint;
     
+    
     public DriveForwardWithGyroEncoder(int inchesToDrive) {
 	requires(Robot.drive);
 	this.speed = 0.8;
+	this.setPoint = Constants.ticksPerInch * inchesToDrive;
+    }
+    
+    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
+	requires(Robot.drive);
+	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
     }
 
@@ -59,7 +66,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// This is a new command that finishes DriveForwardWithEncoder when the
 	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
-    	double error = Robot.drive.getLeftPIDError();
+    	double error = Math.abs(Robot.drive.getLeftPIDError());
     	return leftMotorPower <= 0.1 && error <= 50;   
     	//if the encoder tick count is above the target tick count, the motors will stop
 

@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
 	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
 	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-	chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(90));
+	chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(60));
 	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
 	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 

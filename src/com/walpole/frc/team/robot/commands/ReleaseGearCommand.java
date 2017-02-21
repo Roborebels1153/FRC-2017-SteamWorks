@@ -12,7 +12,7 @@ public class ReleaseGearCommand extends Command {
 
 	protected void initialize() {
 			
-		Robot.gear.keepGear();	
+		Robot.gear.retractGearRetainer();	
 	}
 
     	// Called repeatedly when this Command is scheduled to run
@@ -23,7 +23,7 @@ public class ReleaseGearCommand extends Command {
 
     	// Make this return true when this Command no longer needs to run execute()
     	protected boolean isFinished() {
-        return false; 
+        return true; 
     	}
 
     	// Called once after isFinished returns true

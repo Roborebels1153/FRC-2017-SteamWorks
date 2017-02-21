@@ -68,8 +68,8 @@ public OI() {
 //	opBack.whileHeld(new TurnLightOffCommand());
 	
 	
-	opBumperL.whileHeld(new RetainGearCommand());
-	opBumperL.whenReleased(new ReleaseGearCommand());
+	opBumperL.whileHeld(new ReleaseGearCommand());
+	opBumperL.whenReleased(new RetainGearCommand());
 	opBumperR.whenReleased(new ExtendGearPusherCommand());
 	opBumperR.whileHeld(new RetractGearPusherCommand());
 

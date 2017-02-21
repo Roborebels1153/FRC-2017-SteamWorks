@@ -11,8 +11,8 @@ public class RetainGearCommand extends Command {
 	}
 
 	protected void initialize() {
-		Robot.gear.retractGearRetainer();
-		//Robot.gear.keepGear();
+//		Robot.gear.retractGearRetainer();
+		Robot.gear.keepGear();
     	 
     }
 

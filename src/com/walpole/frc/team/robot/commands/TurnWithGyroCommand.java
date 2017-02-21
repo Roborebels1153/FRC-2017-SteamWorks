@@ -45,8 +45,8 @@ public class TurnWithGyroCommand extends Command {
 	double error = Math.abs(Robot.drive.getGyroPIDError());
 	double output = Math.abs(Robot.drive.getGyroPIDOutput());
 	
-	//return error <= 2 && output <= 1;
-	return false;
+	return error <= 2 && output <= 1;
+	//return false;
     }
 
     protected void end() {

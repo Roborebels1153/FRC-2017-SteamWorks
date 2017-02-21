@@ -8,13 +8,17 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveBackwardsWithEncoder extends Command {
 
     private double speed;
-    private double inchesToDrive;
     private double setPoint;
-
+    private int inchesToDrive; 
     public DriveBackwardsWithEncoder(int inchesToDrive) {
 	requires(Robot.drive);
 	this.speed = 0.85;
 	this.inchesToDrive = inchesToDrive;
+	this.setPoint = Constants.ticksPerInch * inchesToDrive;
+    }
+    public DriveBackwardsWithEncoder(int inchesToDrive, double speed) {
+	requires(Robot.drive);
+	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
     }
 
@@ -34,7 +38,7 @@ public class DriveBackwardsWithEncoder extends Command {
 	double leftOutput = Robot.drive.getLeftPIDOutput();
 	double rightOutput = Robot.drive.getRightPIDOutput();
 
-	Robot.drive.driveAtSpeed(-speed);
+	Robot.drive.driveAtSpeed(speed);
 
     }
 
