@@ -7,6 +7,7 @@ import com.walpole.frc.team.robot.lib.RebelGyro;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.Constants;
+import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -104,7 +105,7 @@ public class Drive extends Subsystem {
 	//Add Constants here if you want to load PID values from constants class
 	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
 	gyroPID.setOutputRange(-1, 1);
-	gyroPID.setInputRange(0, 360);
+	gyroPID.setInputRange(-180, 180);
 	gyroPID.setContinuous();
 
 	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
@@ -114,13 +115,13 @@ public class Drive extends Subsystem {
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", encoderP); //Add Constants here if you want to load PID values from constants class
-	encoderI = prefs.getDouble("encoderI", encoderI); //Add Constants here if you want to load PID values from constants class
-	encoderD = prefs.getDouble("encoderD", encoderD);//Add Constants here if you want to load PID values from constants class
+	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
+	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
+	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
 
-	gyroP = prefs.getDouble("gyroP", gyroP); //Add Constants here if you want to load PID values from constants class
-	gyroI = prefs.getDouble("gyroI", gyroI); //Add Constants here if you want to load PID values from constants class
-	gyroD = prefs.getDouble("gyroD", gyroD); //Add Constants here if you want to load PID values from constants class
+	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
+	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
+	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
     }
 
     /**
@@ -229,7 +230,8 @@ public class Drive extends Subsystem {
     }
 
     public void setTurnSpeed(double speed) {
-	robotDrive.arcadeDrive(0, speed);
+	// the 3rd argument is set to false because we do not need squared inputs for autonomous
+	robotDrive.arcadeDrive(0, speed, false);
     }
 
     /**
@@ -245,9 +247,9 @@ public class Drive extends Subsystem {
 	gyroPID.enable();
     }
 
-    public void resetGyro() {
-	gyro.reset();
-    }
+//    public void resetGyro() {
+//	gyro.reset();
+//    }
     
     public double getGyroYaw() {
 	return gyro.getYaw();
@@ -282,6 +284,10 @@ public class Drive extends Subsystem {
     public void setTurnPIDSetpoint(double setPoint) {
 	gyroPID.setSetpoint(setPoint);
     }
+   
+    public double getTurnPIDSetpoint() { 
+	return gyroPID.getSetpoint(); 
+    }
 
     public void setMaxDrivePIDOutput(double drivingSpeed) {
 	leftEncoderPID.setOutputRange(-drivingSpeed, drivingSpeed);
@@ -290,7 +296,13 @@ public class Drive extends Subsystem {
 
     public void setMaxGyroOutput(double turningSpeed) {
 	gyroPID.setOutputRange(-turningSpeed, turningSpeed);
+	
     }
+    
+    public boolean checkGyroCalibration() {
+	return gyro.isCalibrating();
+    }
+    	
 
     /*
      * public void goSetDistance() { if (leftEncoder.get() >=
@@ -301,6 +313,7 @@ public class Drive extends Subsystem {
     /**
      * Used to make the robot stop
      */
+ 
     public void stopDrive() {
 	leftFrontVictor.set(0);
 	leftBackVictor.set(0);
@@ -347,4 +360,5 @@ public class Drive extends Subsystem {
     public boolean turnIsFinished() {
 	return this.turnIsFinished;
     }
+    
 }

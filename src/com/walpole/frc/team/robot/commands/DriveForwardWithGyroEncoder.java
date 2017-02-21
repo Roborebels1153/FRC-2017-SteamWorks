@@ -25,7 +25,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.drive.resetGyro();
+	//Robot.drive.resetGyro();
 	Robot.drive.setMaxGyroOutput(0.8);
 	Robot.drive.setTurnPIDSetpoint(0);
 	

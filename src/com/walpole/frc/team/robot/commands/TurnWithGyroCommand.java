@@ -7,45 +7,39 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TurnWithGyroCommand extends Command {
     
     private double degreesToTurn;
-    private double speedDrive; 
     private double speedTurn;
 
     public TurnWithGyroCommand(double degreesToTurn) {
 	requires(Robot.drive);
 	this.degreesToTurn = degreesToTurn;
-	this.speedTurn = 0.8;
-	
+	this.speedTurn = 0.7;
     }
 
     protected void initialize() {
-	Robot.drive.resetGyro();
-	Robot.drive.setTurnPIDSetpoint(degreesToTurn);
-	Robot.drive.enableGyroPID();
 	Robot.drive.disableDrivePID();
-	//Robot.drive.setMaxDrivePIDOutput(speedDrive); 
-	// startTimeMillis = System.currentTimeMillis();
+	Robot.drive.setTurnPIDSetpoint(degreesToTurn);
 	Robot.drive.setMaxGyroOutput(speedTurn);
+	Robot.drive.enableGyroPID();
     }
 
     protected void execute() {
 	double gyroOutput = Robot.drive.getGyroPIDOutput();   
 	Robot.drive.setTurnSpeed(gyroOutput);
-	// SmartDashboard.putNumber("Turn Speed", gyroOutput);
     }
 
-    public boolean withinTargetValue(double targetValue, double errorTolerance, double actualValue) {
+    /*public boolean withinTargetValue(double targetValue, double errorTolerance, double actualValue) {
 	if ((actualValue >= targetValue - errorTolerance) && (actualValue <= targetValue + errorTolerance)) {
 	    return true;
 	} else {
 	    return false;
 	}
-    }
+    }*/
 
     protected boolean isFinished() {
 	double error = Math.abs(Robot.drive.getGyroPIDError());
 	double output = Math.abs(Robot.drive.getGyroPIDOutput());
 	
-	return error <= 2 && output <= 1;
+	return error <= 2 && output <= 0.1;
 	//return false;
     }
 

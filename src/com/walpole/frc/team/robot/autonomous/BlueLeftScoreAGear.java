@@ -1,7 +1,5 @@
 package com.walpole.frc.team.robot.autonomous;
 
-import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
-import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand; 
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;

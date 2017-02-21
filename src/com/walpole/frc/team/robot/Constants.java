@@ -32,10 +32,10 @@ public class Constants {
     public static double encoderP = 0.0015;
     public static double encoderI = 0;
     public static double encoderD = 0;*/
-  /*  // SPI Gyro
+    // SPI Gyro
     public static double gyroP = 0.14;
     public static double gyroI = 0;
-    public static double gyroD = 0;*/
+    public static double gyroD = 0;
     
     // PID Constants for Kit Bot (1156)
     /*public static double gyroP = -0.15;

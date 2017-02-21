@@ -39,10 +39,10 @@ public class Climb extends Subsystem {
 
     public void climbDown() { // this method is for de-climbing the robot,
 			      // bringing it toward the ground
-	climberVictor.set(-1);
+	climberVictor.set(-0.7);
     }
 
-    public DigitalInput getLimitSwitch() {
-	return limitSwitch;
+    public boolean getLimitSwitchState() {
+	return limitSwitch.get();
     }
 }
