@@ -5,42 +5,56 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Drives forward a given distance without turn bias compensation
+ */
 public class DriveForwardWithEncoder extends Command {
 
-    private double speed;
-    private double setPoint;
+	// TODO Consider increasing the speed?
+	private double speed = 0.5;
+	private double setPoint;
 
-    public DriveForwardWithEncoder(int inchesToDrive) {
-	requires(Robot.drive);
-	this.speed = 0.5;
-	this.setPoint = Constants.ticksPerInch * inchesToDrive;
-    }
+	public DriveForwardWithEncoder(int inchesToDrive) {
+		requires(Robot.drive);
+		
+		setPoint = Constants.ticksPerInch * inchesToDrive;
+	}
 
-    protected void initialize() {
-	Robot.drive.disableGyroPID();
-	Robot.drive.resetEncoders();	
-	Robot.drive.setMaxDrivePIDOutput(speed);
-	Robot.drive.setDrivePIDSetPoint(setPoint);
-	Robot.drive.enableDrivePID();
-    }
+	@Override
+	protected void initialize() {
+		Robot.drive.disableGyroPID();
 
-    protected void execute() {
-	Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
-    }
+		Robot.drive.resetEncoders();
+		Robot.drive.setMaxDrivePIDOutput(speed);
+		Robot.drive.setDrivePIDSetPoint(setPoint);
 
-    protected boolean isFinished() {
-    	double leftMotorPower = Robot.drive.getLeftMotorPower();
-    	double error = Robot.drive.getLeftPIDError();
-    	
-    	// If the encoder tick count is above the target tick count, the motors will stop
-    	return leftMotorPower <= 0.1 && error <= 50;
-    }
+		Robot.drive.enableDrivePID();
+	}
 
-    protected void end() {
-	Robot.drive.disableDrivePID();
-    }
+	@Override
+	protected void execute() {
+		double leftOutput = Robot.drive.getLeftPIDOutput();
+		double rightOutput = Robot.drive.getRightPIDOutput();
+		
+		Robot.drive.tankDrive(leftOutput, rightOutput);
+	}
 
-    protected void interrupted() {
-	Robot.drive.disableDrivePID();
-    }
+	@Override
+	protected boolean isFinished() {
+		double leftMotorPower = Robot.drive.getLeftMotorPower();
+		double error = Robot.drive.getLeftPIDError();
+
+		// TODO Consider using PIDController#setAbsoluteTolerance
+		return leftMotorPower <= 0.1 && error <= 50;
+	}
+
+	@Override
+	protected void end() {
+		Robot.drive.disableDrivePID();
+	}
+
+	@Override
+	protected void interrupted() {
+		Robot.drive.disableDrivePID();
+	}
 }

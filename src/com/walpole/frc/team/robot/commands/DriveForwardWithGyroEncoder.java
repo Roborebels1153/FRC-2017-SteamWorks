@@ -5,84 +5,71 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Drives forward a given distance with turn bias compensation
+ */
 public class DriveForwardWithGyroEncoder extends Command {
 
-    private double speed;
-    private double setPoint;
-    
-    
-    public DriveForwardWithGyroEncoder(int inchesToDrive) {
-	requires(Robot.drive);
-	this.speed = 0.8;
-	this.setPoint = Constants.ticksPerInch * inchesToDrive;
-    }
-    
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
-	requires(Robot.drive);
-	this.speed = speed;
-	this.setPoint = Constants.ticksPerInch * inchesToDrive;
-    }
+	// Default speed is 0.8
+	private double speed = 0.8;
+	private double setPoint;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-	Robot.drive.resetGyro();
-	Robot.drive.setMaxGyroOutput(0.8);
-	Robot.drive.setTurnPIDSetpoint(0);
+	public DriveForwardWithGyroEncoder(int inchesToDrive) {
+		requires(Robot.drive);
+		
+		setPoint = Constants.ticksPerInch * inchesToDrive;
+	}
+
+	public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
+		requires(Robot.drive);
+		
+		this.speed = speed;
+		setPoint = Constants.ticksPerInch * inchesToDrive;
+	}
+
 	
-	Robot.drive.resetEncoders();
-	Robot.drive.setMaxDrivePIDOutput(speed);
-	Robot.drive.setDrivePIDSetPoint(setPoint);
-	
-	Robot.drive.enableGyroPID();
-	Robot.drive.enableDrivePID();
-    }
+	@Override
+	protected void initialize() {
+		Robot.drive.resetGyro();
+		Robot.drive.setMaxGyroOutput(0.8);
+		Robot.drive.setTurnPIDSetpoint(0);
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-	double leftOutput = Robot.drive.getLeftPIDOutput();
-	double rightOutput = Robot.drive.getRightPIDOutput();
-	double gyroOutput = Robot.drive.getGyroPIDOutput(); 
-	double driveOutput = (leftOutput + rightOutput) / 2;
-	
-	Robot.drive.arcadeDrive(-driveOutput, gyroOutput);
-	//This makes it goes forward
-	//Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
-	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
-    }
+		Robot.drive.resetEncoders();
+		Robot.drive.setMaxDrivePIDOutput(speed);
+		Robot.drive.setDrivePIDSetPoint(setPoint);
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-	// double leftMotorPower = Robot.driveSubsystem.getLeftMotorPower();
-	// double leftError = Robot.driveSubsystem.getLeftPIDError();
-	// boolean leftMotorFinished = leftMotorPower <= 0.1 && leftError <= 50;
-	//
-	// double rightMotorPower = Robot.driveSubsystem.getRightMotorPower();
-	// double rightError = Robot.driveSubsystem.getRightPIDError();
-	// boolean rightMotorFinished = rightMotorPower <= 0.1 && rightError <=
-	// 50;
-	//
-	// return leftMotorFinished && rightMotorFinished;
-	//return Robot.driveSubsystem.isOnTarget();
-	// This is a new command that finishes DriveForwardWithEncoder when the
-	// robot is on target
-    	double leftMotorPower = Robot.drive.getLeftMotorPower();
-    	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	return leftMotorPower <= 0.1 && error <= 50;   
-    	//if the encoder tick count is above the target tick count, the motors will stop
+		Robot.drive.enableGyroPID();
+		Robot.drive.enableDrivePID();
+	}
 
-    }
+	@Override
+	protected void execute() {
+		double leftOutput = Robot.drive.getLeftPIDOutput();
+		double rightOutput = Robot.drive.getRightPIDOutput();
+		double gyroOutput = Robot.drive.getGyroPIDOutput();
+		double driveOutput = (leftOutput + rightOutput) / 2;
 
-    // Called once after isFinished returns true
-    protected void end() {
+		// A negative drive power will make the robot go forward
+		Robot.drive.arcadeDrive(-driveOutput, gyroOutput);
+	}
 
-	//Robot.driveSubsystem.stopDrive();
-	Robot.drive.disableDrivePID();
-    }
+	@Override
+	protected boolean isFinished() {
+		double leftMotorPower = Robot.drive.getLeftMotorPower();
+		double rightMotorPower = Robot.drive.getRightMotorPower();
+		double motorPower = (leftMotorPower + rightMotorPower) / 2;
+		double error = Math.abs(Robot.drive.getLeftPIDError());
+		
+		return motorPower <= 0.1 && error <= 50;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-	//Robot.driveSubsystem.stopDrive();
-	Robot.drive.disableDrivePID();
-    }
+	@Override
+	protected void end() {
+		Robot.drive.disableDrivePID();
+	}
+
+	@Override
+	protected void interrupted() {
+		Robot.drive.disableDrivePID();
+	}
 }
