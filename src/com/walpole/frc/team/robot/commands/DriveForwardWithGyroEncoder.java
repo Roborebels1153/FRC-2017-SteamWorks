@@ -8,26 +8,26 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveForwardWithGyroEncoder extends Command {
 
     private double speed;
-    private double inchesToDrive;
     private double setPoint;
     
     public DriveForwardWithGyroEncoder(int inchesToDrive) {
 	requires(Robot.drive);
-	this.speed = 0.5;
-	this.inchesToDrive = inchesToDrive;
+	this.speed = 0.8;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
-
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.drive.disableGyroPID();
-	Robot.drive.resetEncoders();	
+	Robot.drive.resetGyro();
+	Robot.drive.setMaxGyroOutput(0.8);
+	Robot.drive.setTurnPIDSetpoint(0);
+	
+	Robot.drive.resetEncoders();
 	Robot.drive.setMaxDrivePIDOutput(speed);
 	Robot.drive.setDrivePIDSetPoint(setPoint);
+	
+	Robot.drive.enableGyroPID();
 	Robot.drive.enableDrivePID();
-	
-	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,8 +35,12 @@ public class DriveForwardWithGyroEncoder extends Command {
 	double leftOutput = Robot.drive.getLeftPIDOutput();
 	double rightOutput = Robot.drive.getRightPIDOutput();
 	double gyroOutput = Robot.drive.getGyroPIDOutput(); 
+	double driveOutput = (leftOutput + rightOutput) / 2;
+	
+	Robot.drive.arcadeDrive(-driveOutput, gyroOutput);
+	//This makes it goes forward
 	//Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
-	Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
+	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
     }
 
     // Make this return true when this Command no longer needs to run execute()

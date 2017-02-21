@@ -3,11 +3,13 @@ package com.walpole.frc.team.robot.subsystems;
 import com.walpole.frc.team.robot.subsystems.Drive;
 
 import com.walpole.frc.team.robot.lib.RebelDrive;
+import com.walpole.frc.team.robot.lib.RebelGyro;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem {
 
@@ -64,7 +67,7 @@ public class Drive extends Subsystem {
     private Shifter currGear = Shifter.Low;
     private Speed currSpeed = Speed.Normal;
 
-    private double desiredRotationDegrees;
+    //private double desiredRotationDegrees;
 
     public Drive() {
 	leftFrontVictor = new Victor(RobotMap.LEFT_FRONT_MOTOR);
@@ -76,17 +79,20 @@ public class Drive extends Subsystem {
 
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DummyPIDOutput();
-	leftEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, leftEncoder, leftEncoderOutput);
+	//Add Constants here if you want to load PID values from constants class
+	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
 	rightEncoderOutput = new DummyPIDOutput();
-	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder, rightEncoderOutput); //Add Constants here if you want to load PID values from constants class
+	//Add Constants here if you want to load PID values from constants class
+	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
 
-	/*gyro = new RebelGyro();
-	gyro.startThread();*/
-	gyro = new AnalogGyro(RobotMap.GYRO);
+	//gyro = new RebelGyro();
+	//gyro.startThread();
+	gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
 	gyroOutput = new DummyPIDOutput();
-	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput); //Add Constants here if you want to load PID values from constants class
+	//Add Constants here if you want to load PID values from constants class
+	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
 	gyroPID.setOutputRange(-1, 1);
 	gyroPID.setInputRange(0, 360);
 	gyroPID.setContinuous();
@@ -98,13 +104,13 @@ public class Drive extends Subsystem {
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", Constants.encoderP); //Add Constants here if you want to load PID values from constants class
-	encoderI = prefs.getDouble("encoderI", Constants.encoderI); //Add Constants here if you want to load PID values from constants class
-	encoderD = prefs.getDouble("encoderD", Constants.encoderD);//Add Constants here if you want to load PID values from constants class
+	encoderP = prefs.getDouble("encoderP", encoderP); //Add Constants here if you want to load PID values from constants class
+	encoderI = prefs.getDouble("encoderI", encoderI); //Add Constants here if you want to load PID values from constants class
+	encoderD = prefs.getDouble("encoderD", encoderD);//Add Constants here if you want to load PID values from constants class
 
-	gyroP = prefs.getDouble("gyroP", Constants.gyroP); //Add Constants here if you want to load PID values from constants class
-	gyroI = prefs.getDouble("gyroI", Constants.gyroI); //Add Constants here if you want to load PID values from constants class
-	gyroD = prefs.getDouble("gyroD", Constants.gyroD); //Add Constants here if you want to load PID values from constants class
+	gyroP = prefs.getDouble("gyroP", gyroP); //Add Constants here if you want to load PID values from constants class
+	gyroI = prefs.getDouble("gyroI", gyroI); //Add Constants here if you want to load PID values from constants class
+	gyroD = prefs.getDouble("gyroD", gyroD); //Add Constants here if you want to load PID values from constants class
     }
 
     /**

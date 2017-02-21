@@ -32,6 +32,8 @@ public class RebelDrive extends RobotDrive {
 	}
     }
 
+    // Remove overridden implementation of arcade drive
+    /*@Override
     public void arcadeDrive(double driveSpeed, double turnSpeed) {
 	if (Speed.Slow.equals(Robot.drive.getCurrSpeed())) {
 	    arcadeDrive(driveSpeed * SLOW, turnSpeed, true);
@@ -39,14 +41,14 @@ public class RebelDrive extends RobotDrive {
 	    arcadeDrive(driveSpeed * STRAIGHT_THROTTLE, lowSpeedNic.calculate(turnSpeed * TURN_THROTTLE), true);
 
 	}
-    }
+    }*/
     
     
     public void arcadeTankDrive(double driveLeftSpeed, double driveRightSpeed, double turnSpeed) {
 	double moveValue;
 	
 	// Use the average of the two drive speeds to find the direction of the robot
-	if (avg(driveLeftSpeed, driveRightSpeed) < 0) {
+	if (driveLeftSpeed > 0) {
 	    moveValue = 1;
 	} else {
 	    moveValue = -1;
@@ -88,6 +90,4 @@ public class RebelDrive extends RobotDrive {
     private double avg(double a, double b) {
 	return (a + b) / 2;
     }
-    
-
 }
