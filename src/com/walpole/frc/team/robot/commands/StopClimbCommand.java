@@ -19,13 +19,15 @@ public class StopClimbCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+	Robot.climb.stopClimb();  // to execute, we need the stopClimb
+	  // method
     }
+    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 
-	Robot.climb.stopClimb(); // to execute, we need the stopClimb
-					  // method
+	
     }
 
     // Make this return true when this Command no longer needs to run execute()

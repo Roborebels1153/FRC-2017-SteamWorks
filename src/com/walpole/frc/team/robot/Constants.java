@@ -20,14 +20,14 @@ public class Constants {
     public static double ticksPerInch = (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV) / (WHEEL_DIAMETER * Math.PI);*/
    // public static double ticksPerInch = 32.158; 
 
-    // PID Constants for 2017 Prototype (1154)
+    // PID Constants for 2017 FINAL Robot (1153)
     public static double encoderP = 0.012;
     public static double encoderI = 0;
     public static double encoderD = 0.06882; 
     // Navx-Micro Gyro
     public static double gyroP = 0.05;
     public static double gyroI = 0;
-    public static double gyroD = 0.03;
+    public static double gyroD = 0.025;
     // Box Gyro
    /* public static double gyroP = -0.0172997;
     public static double gyroI = 0;

@@ -80,7 +80,7 @@ public OI() {
 	drRB.whenPressed(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
 	drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning
 
-	drLB.whenPressed(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
+	drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
 	drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
 	}
 	

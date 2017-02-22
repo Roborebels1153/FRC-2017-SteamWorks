@@ -4,9 +4,8 @@ import com.walpole.frc.team.robot.commands.DriveBackwardsWithSeconds;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
-import com.walpole.frc.team.robot.commands.WaitInBetweenCommandsCommand;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueCenterScoreAGearWithSeconds extends CommandGroup {
     int secondsToAirShip = 5;
@@ -20,7 +19,7 @@ public class BlueCenterScoreAGearWithSeconds extends CommandGroup {
 	//addSequential(new ExtendGearPusherCommand());
 	addSequential(new DriveForwardWithSeconds(secondsToAirShip));  
 	addSequential(new ReleaseGearCommand());
-	addSequential(new WaitInBetweenCommandsCommand(secondsToWait));
+	addSequential(new WaitCommand(secondsToWait));
 	addSequential(new DriveBackwardsWithSeconds(secondsBack));     
     }
 }
