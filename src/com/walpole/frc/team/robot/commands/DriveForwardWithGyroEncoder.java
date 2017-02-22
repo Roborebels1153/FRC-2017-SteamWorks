@@ -13,7 +13,7 @@ public class DriveForwardWithGyroEncoder extends Command {
     
     public DriveForwardWithGyroEncoder(int inchesToDrive) {
 	requires(Robot.drive);
-	this.speed = 0.8;
+	this.speed = 0.4;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
     }
     
@@ -25,9 +25,8 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	//Robot.drive.resetGyro();
 	Robot.drive.setMaxGyroOutput(0.8);
-	Robot.drive.setTurnPIDSetpoint(0);
+	Robot.drive.setTurnPIDSetpoint(Robot.drive.getGyroYaw());
 	
 	Robot.drive.resetEncoders();
 	Robot.drive.setMaxDrivePIDOutput(speed);
@@ -68,16 +67,15 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	return leftMotorPower <= 0.1 && error <= 50;   
-    	//if the encoder tick count is above the target tick count, the motors will stop
-
+    	//return leftMotorPower <= 0.1 && error <= 50;
+    	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-
 	//Robot.driveSubsystem.stopDrive();
 	Robot.drive.disableDrivePID();
+	Robot.drive.disableGyroPID();
     }
 
     // Called when another command which requires one or more of the same
@@ -85,5 +83,6 @@ public class DriveForwardWithGyroEncoder extends Command {
     protected void interrupted() {
 	//Robot.driveSubsystem.stopDrive();
 	Robot.drive.disableDrivePID();
+	Robot.drive.disableGyroPID();
     }
 }

@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueLeftScoreAGear extends CommandGroup {
-    int inchesForward = 72;
-    int degreesToTurn = 300;
-    int inchesToAirship = 80;
-    int secondsToWait = 2; 
-    int inchesBack = 60; 
-    double speedToAirShip = 0.6; 
+    private static final int inchesForward = 72;
+    private static final int degreesToTurn = -30;
+    private static final int inchesToAirship = 80;
+    private static final int secondsToWait = 2; 
+   // private static final int inchesBack = 60; 
+    private static final  double speedToAirShip = 0.6; 
     
     public BlueLeftScoreAGear() {
 	super();

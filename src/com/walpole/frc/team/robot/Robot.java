@@ -75,20 +75,19 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Blue Center Deliver A Gear", new BlueCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(60));
+	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
 	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
-	chooser.addObject("Turn Left With Gyro", new TurnWithGyroCommand(-90));
+	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
 	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
 	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	
-	AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
+	/*AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
 	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	        
 	AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.70");
-	       cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
-    
+	       cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);*/
     }    
 	
     

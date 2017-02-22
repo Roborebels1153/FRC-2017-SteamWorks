@@ -115,9 +115,9 @@ public class Drive extends Subsystem {
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
-	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
-	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
+	encoderP = prefs.getDouble("encoderP", encoderP);
+	encoderI = prefs.getDouble("encoderI", encoderI);
+	encoderD = prefs.getDouble("encoderD", encoderD);
 
 	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
 	gyroI = prefs.getDouble("gyroI", Constants.gyroI);

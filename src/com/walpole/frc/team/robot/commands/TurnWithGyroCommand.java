@@ -12,7 +12,7 @@ public class TurnWithGyroCommand extends Command {
     public TurnWithGyroCommand(double degreesToTurn) {
 	requires(Robot.drive);
 	this.degreesToTurn = degreesToTurn;
-	this.speedTurn = 0.7;
+	this.speedTurn = 0.6;
     }
 
     protected void initialize() {
@@ -39,8 +39,8 @@ public class TurnWithGyroCommand extends Command {
 	double error = Math.abs(Robot.drive.getGyroPIDError());
 	double output = Math.abs(Robot.drive.getGyroPIDOutput());
 	
-	return error <= 2 && output <= 0.1;
-	//return false;
+	//return error <= 2 && output <= 0.1;
+	return false;
     }
 
     protected void end() {
