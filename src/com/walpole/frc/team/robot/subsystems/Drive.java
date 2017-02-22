@@ -48,8 +48,9 @@ public class Drive extends Subsystem {
 	private DummyPIDOutput rightEncoderOutput;
 	private PIDController rightEncoderPID;
 
-	// private RebelGyro gyro;
-	private AnalogGyro gyro;
+	//private RebelGyro gyro;
+	//private AnalogGyro gyro;
+	private AHRS gyro;
 	private PIDController gyroPID;
 	private DummyPIDOutput gyroOutput;
 	private boolean turnIsFinished;
@@ -81,13 +82,19 @@ public class Drive extends Subsystem {
 		rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
 		rightEncoderPID.setOutputRange(-1, 1);
 
-		// gyro = new RebelGyro();
-		// gyro.startThread();
-		gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
+		//gyro = new RebelGyro();
+		//gyro.startThread();
+		//gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
+		try {
+		    gyro = new AHRS(SerialPort.Port.kUSB);
+		} catch (RuntimeException ex) {
+	        DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+		    // TODO Add fallback code for when the gyro cannot instantiate
+		}
 		gyroOutput = new DummyPIDOutput();
 		gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
 		gyroPID.setOutputRange(-1, 1);
-		gyroPID.setInputRange(0, 360);
+		gyroPID.setInputRange(-180, 180);
 		gyroPID.setContinuous();
 
 		robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
@@ -134,7 +141,6 @@ public class Drive extends Subsystem {
 
 	/**
 	 * Used to find how many encoder ticks per given inches
-	 * 
 	 * @param Inches
 	 * @return Ticks
 	 */
@@ -271,10 +277,14 @@ public class Drive extends Subsystem {
 	
 	// Gyro Methods
 	
-	public double getGyroAngle() {
-		return gyro.getAngle();
-	}
+    public double getGyroYaw() {
+    	return gyro.getYaw();
+    }
 	
+    public boolean checkGyroCalibration() {
+    	return gyro.isCalibrating();
+    }
+    
 	public void enableGyroPID() {
 		gyroPID.enable();
 	}
@@ -283,9 +293,10 @@ public class Drive extends Subsystem {
 		gyroPID.disable();
 	}
 	
-	public void resetGyro() {
+	// We no longer want to reset the gyro because of the way the navX gyro works
+	/*public void resetGyro() {
 		gyro.reset();
-	}
+	}*/
 	
 	public double getGyroPIDError() {
 		return gyroPID.getError();
@@ -306,5 +317,4 @@ public class Drive extends Subsystem {
 	public boolean turnIsFinished() {
 		return this.turnIsFinished;
 	}
-
 }

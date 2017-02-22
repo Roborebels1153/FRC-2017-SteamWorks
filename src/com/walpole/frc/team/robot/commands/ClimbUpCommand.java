@@ -1,9 +1,9 @@
-
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClimbUpCommand extends Command {
 
@@ -22,8 +22,9 @@ public class ClimbUpCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// Stop when the limit switch is enabled
-		return Robot.climb.getLimitSwitch().get();
+		// return false;
+		// Stop climbing when the limit switch is hit
+		return Robot.climb.getLimitSwitchState();
 	}
 
 	@Override
@@ -33,6 +34,5 @@ public class ClimbUpCommand extends Command {
 
 	@Override
 	protected void interrupted() {
-		Robot.climb.stopClimb();
 	}
 }

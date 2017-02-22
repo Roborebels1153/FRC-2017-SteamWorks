@@ -12,6 +12,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 
 	// Default speed is 0.8
 	private double speed = 0.8;
+	private double turnSpeed = 0.8;
 	private double setPoint;
 
 	public DriveForwardWithGyroEncoder(int inchesToDrive) {
@@ -30,8 +31,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	
 	@Override
 	protected void initialize() {
-		Robot.drive.resetGyro();
-		Robot.drive.setMaxGyroOutput(0.8);
+		Robot.drive.setMaxGyroOutput(turnSpeed);
 		Robot.drive.setTurnPIDSetpoint(0);
 
 		Robot.drive.resetEncoders();
@@ -49,8 +49,11 @@ public class DriveForwardWithGyroEncoder extends Command {
 		double gyroOutput = Robot.drive.getGyroPIDOutput();
 		double driveOutput = (leftOutput + rightOutput) / 2;
 
-		// A negative drive power will make the robot go forward
-		Robot.drive.arcadeDrive(-driveOutput, gyroOutput);
+		/*
+		 * A negative drive power will make the robot go forward, false
+		 * removes squared inputs which are bad for autonomous
+		 */
+		Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);
 	}
 
 	@Override
@@ -66,10 +69,12 @@ public class DriveForwardWithGyroEncoder extends Command {
 	@Override
 	protected void end() {
 		Robot.drive.disableDrivePID();
+		Robot.drive.disableGyroPID();
 	}
 
 	@Override
 	protected void interrupted() {
 		Robot.drive.disableDrivePID();
+		Robot.drive.disableGyroPID();
 	}
 }

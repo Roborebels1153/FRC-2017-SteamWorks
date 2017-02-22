@@ -23,18 +23,18 @@ public class Constants {
     public static final double encoderI = 0;
     public static final double encoderD = 0.5075;
     // Box Gyro
-    public static final double gyroP = -0.0172997;
+    /*public static final double gyroP = -0.0172997;
     public static final double gyroI = 0;
-    public static final double gyroD = 0;
+    public static final double gyroD = 0;*/
     
     // PID Constants for 2016 Final Bot (1156)
     /*public static final double encoderP = 0.0015;
     public static final double encoderI = 0;
     public static final double encoderD = 0;*/
     // SPI Gyro
-    /*public static final double gyroP = 0.14;
+    public static final double gyroP = 0.14;
     public static final double gyroI = 0;
-    public static final double gyroD = 0;*/
+    public static final double gyroD = 0;
     
     // PID Constants for Kit Bot (1156)
     /*public static final double gyroP = -0.15;

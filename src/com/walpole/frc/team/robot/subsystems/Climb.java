@@ -31,10 +31,10 @@ public class Climb extends Subsystem {
 	}
 
 	public void climbDown() {
-		climberVictor.set(-1);
+		climberVictor.set(-0.7);
 	}
 
-	public DigitalInput getLimitSwitch() {
-		return limitSwitch;
+	public boolean getLimitSwitchState() {
+		return limitSwitch.get();
 	}
 }

@@ -18,7 +18,6 @@ public class TurnWithGyroCommand extends Command {
 	protected void initialize() {
 		Robot.drive.disableDrivePID();
 		
-		Robot.drive.resetGyro();
 		Robot.drive.setTurnPIDSetpoint(degreesToTurn);
 		Robot.drive.setMaxGyroOutput(speedTurn);
 		
@@ -34,7 +33,7 @@ public class TurnWithGyroCommand extends Command {
 		double error = Math.abs(Robot.drive.getGyroPIDError());
 		double output = Math.abs(Robot.drive.getGyroPIDOutput());
 
-		return error <= 2 && output <= 1;
+		return error <= 2 && output <= 0.1;
 	}
 
 	protected void end() {

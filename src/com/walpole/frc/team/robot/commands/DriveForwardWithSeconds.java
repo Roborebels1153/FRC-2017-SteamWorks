@@ -24,7 +24,7 @@ public class DriveForwardWithSeconds extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.drive.driveAtSpeed(speed);
+		Robot.drive.driveAtSpeed(-speed);
 	}
 
 	@Override
@@ -39,5 +39,6 @@ public class DriveForwardWithSeconds extends Command {
 
 	@Override
 	protected void interrupted() {
+		Robot.drive.stopDrive();
 	}
 }

@@ -84,17 +84,16 @@ public class Robot extends IterativeRobot {
 		// Autonomous commands
 		chooser.addObject("Blue Center Deliver A Gear", new BlueCenterScoreAGear());
 		chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
-		chooser.addObject("Deliver a Gear Left Side", new DeliverAGearLeft());
-		chooser.addObject("Deliver a Gear Right Side", new DeliverAGearRight());
-		chooser.addObject("Cross The Green Line", new CrossGreenLine());
+		//chooser.addObject("Drive And Turn", new DriveAndTurn());
+		chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 		chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 		
 		// Testing commands
 		chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-		chooser.addDefault("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-		chooser.addObject("Turn With Gyro", new TurnWithGyroCommand(60));
+		chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(60));
+		chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
+		chooser.addObject("Turn Left With Gyro", new TurnWithGyroCommand(-90));
 		chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
-		//chooser.addObject("Drive And Turn", new DriveAndTurn());
 	}
 
 	private void updateDashboard() {
@@ -105,10 +104,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
 		
 		// Gyro Values
-		SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
 		SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
 		SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
 		SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
+		SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
+		SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
+		SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
 		
 		// General Encoder Values
 		SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
