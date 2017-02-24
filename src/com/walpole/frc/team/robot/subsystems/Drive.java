@@ -48,7 +48,7 @@ public class Drive extends Subsystem {
 
     private Encoder leftEncoder;
     private DummyPIDOutput leftEncoderOutput;
-    private PIDController leftEncoderPID;
+    private PIDController leftEncoderPID; 
     private Encoder rightEncoder;
     private DummyPIDOutput rightEncoderOutput;
     private PIDController rightEncoderPID;
@@ -176,7 +176,8 @@ public class Drive extends Subsystem {
     }
 
     public int getLeftEncoderCount() {
-	return leftEncoder.get();
+	//we are negating this as it shows up as a negative on the SmartDashboard
+	return -leftEncoder.get();
     }
 
     public double getGyroAngle() {

@@ -13,7 +13,7 @@ public class DriveForwardWithGyroEncoder extends Command {
     
     public DriveForwardWithGyroEncoder(int inchesToDrive) {
 	requires(Robot.drive);
-	this.speed = 0.4;
+	this.speed = 0.8;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
     }
     
@@ -67,8 +67,8 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	//return leftMotorPower <= 0.1 && error <= 50;
-    	return false;
+    	return leftMotorPower <= 0.1 && error <= 50;
+    	//return false;
     }
 
     // Called once after isFinished returns true

@@ -4,13 +4,17 @@ import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
 import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
+import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 //import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
+import com.walpole.frc.team.robot.commands.ShiftHighCommand;
+import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
@@ -74,6 +78,7 @@ public class Robot extends IterativeRobot {
 
 	chooser.addObject("Blue Center Deliver A Gear", new BlueCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
+	chooser.addObject("Blue Right Deliver A Gear", new BlueRightScoreAGear()); 
 	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
 	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
 	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
@@ -82,6 +87,9 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
 	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
+	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
+	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
+	chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
 	/*AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
 	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);

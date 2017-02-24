@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueCenterScoreAGear extends CommandGroup {
-    int inchesToAirShip = 76;
-    double speedForward = 0.6; 
+    int inchesToAirShip = 78;
+    double speedForward = 0.5; 
     int secondsToWait = 3; 
     int inchesBack = 6; 
     double speedBack = 0.6; 
