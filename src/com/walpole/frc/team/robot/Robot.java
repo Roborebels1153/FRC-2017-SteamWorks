@@ -6,6 +6,8 @@ import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,8 +32,8 @@ public class Robot extends IterativeRobot {
 	//public static final Climb climb = new Climb();
 	//public static final Gear gear = new Gear();
 	public static OI oi = new OI();
-	//private static final int IMG_WIDTH = 640;
-	//private static final int IMG_HEIGHT = 480; 
+	private static final int IMG_WIDTH = 640;
+	private static final int IMG_HEIGHT = 480; 
 	
 	//private VisionThread visionThread;
 	//private double centerX = 0.0; 
@@ -51,13 +53,14 @@ public class Robot extends IterativeRobot {
      * This function is run when  the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {    	
-//		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.91.69");
-//	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+    public void robotInit() {  
+    	
+		 AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.53.3");
+	        camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     	
 	        
-	    // AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera" , "10.11.54.63");
-	    //    cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	     AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.53.4");
+	        cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	        
 	       
        

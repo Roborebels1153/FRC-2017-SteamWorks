@@ -2,6 +2,8 @@ package com.walpole.frc.team.robot;
 
 
 import com.walpole.frc.team.robot.commands.CollecterCollectCommand;
+import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
+import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
@@ -56,7 +58,9 @@ public class OI {
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
-	opTriggerL.whileHeld(new CollecterCollectCommand());
+	
+	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
+	opTriggerL.whenReleased(new ConveyerOffCommand());
 	
 	opA.toggleWhenPressed(new ToggleInternalMotors());
 //	opB.whenPressed(new ShooterRPMChange(2000));

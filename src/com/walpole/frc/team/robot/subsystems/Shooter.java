@@ -8,6 +8,7 @@ import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,12 +17,21 @@ public class Shooter extends Subsystem {
 	
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
+	
+	private Solenoid indexer;
 //    private Encoder shooterEncoder;
+	
+//    1500 RPM
+//    static double shooterP = 0.001;
+//    static double shooterI = 0;
+//    static double shooterD = 0.102;
+//    static double shooterF = 0.0001;
     
-    static double shooterP = 0.000004;
+//	  2500 RPM
+    static double shooterP = 0.002;
     static double shooterI = 0;
-    static double shooterD = 0.000001275;
-    static double shooterF = 0.000182;
+    static double shooterD = 0.12;
+    static double shooterF = 0.0001;
     
 	private PIDController shooterPID;
 	
@@ -30,15 +40,15 @@ public class Shooter extends Subsystem {
 		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
 
 		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, Robot.countRPM, shooterMotor);
-		shooterPID.setSetpoint(Constants.originalWantedRPM);
+		shooterPID.setSetpoint(4000);
 		shooterPID.setContinuous(false);
-    	shooterPID.setOutputRange(0, Constants.originalWantedRPM*1.5);
+    	shooterPID.setOutputRange(0, 0.6);
     	shooterPID.disable();
-
+    	
+    	indexer = new Solenoid(RobotMap.INDEXER_PISTON);
 	}
 	
 	public void init() {
-		
 	}
 	
 	
@@ -52,16 +62,32 @@ public class Shooter extends Subsystem {
 //    	return shooterEncoder;
 //    }
     public void shoot() {
+//    	shooterMotor.set(0.8);
+//    }
     	shooterPID.enable();
-//    	if (shooterPID.getError() < 20 && -shooterPID.getError() < 20) {
-    		//agitatorMotor.set(-1);
-//    	} else {
+    	agitatorMotor.set(-1);
+    	if (shooterPID.getError() < 100 && -shooterPID.getError() < 100) {
+//    		agitatorMotor.set(-1);
+        	indexer.set(true);
+
+    	} else {
 //    		agitatorMotor.set(0);
-//    	}
+//        	indexer.set(false);
+
+    	} 
     }
     public void stopShooting() {
     	shooterPID.disable();
 		agitatorMotor.set(0);
+//    	shooterMotor.set(0);
+    }
+    
+    public void agitatorOn() {
+    	agitatorMotor.set(-1);
+    }
+    
+    public void agitatorOff() {
+    	agitatorMotor.set(0);
     }
 
     
@@ -72,6 +98,6 @@ public class Shooter extends Subsystem {
     public double getShooterPIDError() {
     	return shooterPID.getError();
     }
-   
+    
 }
 

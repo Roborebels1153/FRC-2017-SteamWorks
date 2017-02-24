@@ -40,6 +40,8 @@ public class RobotMap {
 	public static int INTERNAL_MOTOR = 9;
 	public static int COLLECT_MOTOR = 8;
 	
+	public static int INDEXER_PISTON = 6;
+	
 	//public static int LIGHT = 0;
 	
 	//public static int SHOOTER_ENCODER1 = 4;
