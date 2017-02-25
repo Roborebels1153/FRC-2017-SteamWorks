@@ -8,13 +8,13 @@ import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class BlueCenterScoreAGear extends CommandGroup {
+public class BlueRedCenterScoreAGear extends CommandGroup {
     int inchesToAirShip = 78;
     double speedForward = 0.5; 
     int secondsToWait = 3; 
     int inchesBack = 6; 
     double speedBack = 0.6; 
-    public BlueCenterScoreAGear() {
+    public BlueRedCenterScoreAGear() {
 	super();
 //	addSequential(new ExtendGearPusherCommand()); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirShip, speedForward)); 

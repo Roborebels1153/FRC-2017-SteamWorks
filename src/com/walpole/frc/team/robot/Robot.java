@@ -1,7 +1,7 @@
 package com.walpole.frc.team.robot;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot {
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 
-	chooser.addObject("Blue Center Deliver A Gear", new BlueCenterScoreAGear());
+	chooser.addObject("Blue Center Deliver A Gear", new BlueRedCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Blue Right Deliver A Gear", new BlueRightScoreAGear()); 
 	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
