@@ -5,19 +5,19 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveForwardWithGyroEncoder extends Command {
+public class DriveBackwardsWithGyroEncoder extends Command {
 
     private double speed;
     private double setPoint;
     
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive) {
+    public DriveBackwardsWithGyroEncoder(int inchesToDrive) {
 	requires(Robot.drive);
 	this.speed = 0.8;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
     }
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
+    public DriveBackwardsWithGyroEncoder(int inchesToDrive, double speed) {
 	requires(Robot.drive);
 	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
@@ -44,7 +44,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	double driveOutput = (leftOutput + rightOutput) / 2;
 	
 	//You might have to negate the driveOutput to get Robot to drive forward 
-	Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);
+	Robot.drive.arcadeDrive(driveOutput, gyroOutput, false);
 	//This makes it goes forward
 	//Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
 	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);

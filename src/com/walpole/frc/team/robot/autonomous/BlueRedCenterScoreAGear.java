@@ -20,6 +20,7 @@ public class BlueRedCenterScoreAGear extends CommandGroup {
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirShip, speedForward)); 
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new ReleaseGearCommand());
+	//This wait command is just for testing purposes
 	addSequential(new WaitCommand(secondsToWait)); 
 	//addSequential(new DriveBackwardsWithEncoder(inchesBack, speedBack));
     }

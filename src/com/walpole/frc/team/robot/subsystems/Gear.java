@@ -12,10 +12,10 @@ public class Gear extends Subsystem {
 	
 	public Gear() {
 		
-		gearSolenoidRetainer = new Solenoid(RobotMap.GEAR_SOLENOID_A, RobotMap.GEAR_SOLENOID_B);
+		gearSolenoidRetainer = new Solenoid(RobotMap.GEAR_SOLENOID_A);
 		
 		
-		gearPusherSolenoid = new Solenoid(RobotMap.GEAR_PUSHER_SOLENOID_A, RobotMap.GEAR_PUSHER_SOLENOID_B);
+		gearPusherSolenoid = new Solenoid(RobotMap.GEAR_PUSHER_SOLENOID_A);
 		
 //		init();
 	}

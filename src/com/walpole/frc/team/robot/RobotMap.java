@@ -56,9 +56,8 @@ public class RobotMap {
 	/**GEAR RELATED**/
 	
 	public static int GEAR_SOLENOID_A = 2;
-	public static int GEAR_SOLENOID_B = 3;
-	public static int GEAR_PUSHER_SOLENOID_A = 4;
-	public static int GEAR_PUSHER_SOLENOID_B = 5;
+	public static int GEAR_PUSHER_SOLENOID_A = 3;
+	
 
 	
 }
