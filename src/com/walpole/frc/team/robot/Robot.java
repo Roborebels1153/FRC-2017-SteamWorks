@@ -3,10 +3,14 @@ package com.walpole.frc.team.robot;
 import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
+import com.walpole.frc.team.robot.autonomous.BlueLeftKnockDownHopper;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
 import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
+import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
+import com.walpole.frc.team.robot.autonomous.RedRightKnockDownHopper;
+import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 //import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
@@ -76,17 +80,25 @@ public class Robot extends IterativeRobot {
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 
-	chooser.addObject("Blue Center Deliver A Gear", new BlueRedCenterScoreAGear());
+	//Match Auto Sequential
+	//We also must uncomment the ExtendGearPusherCommand in these sequentials
+	chooser.addObject("Center Deliver A Gear", new BlueRedCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Blue Right Deliver A Gear", new BlueRightScoreAGear()); 
+	chooser.addObject("Red Right Deliver A Gear", new RedRightScoreAGear());
+	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
+	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
+	chooser.addObject("Red Right Knock Down Hopper", new RedRightKnockDownHopper());
+	chooser.addObject("Blue Left Knock Down Hopper", new BlueLeftKnockDownHopper());
+	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
+
+	//Testing Sequential
 	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
+	chooser.addObject("Drive stright 10 feet", new DriveForwardWithGyroEncoder(120));
 	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
 	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
 	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
-	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
-	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	chooser.addObject("Shift Low", new ShiftHighCommand()); 
@@ -100,27 +112,38 @@ public class Robot extends IterativeRobot {
 	
     
     public static void updateDashboard() {
-	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitchState());
+	
+	//Encoders
 	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
-	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
-	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
 	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
-	//SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
+	SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
+	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
+	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
+	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
+	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
+	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
 	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
+
+	//Gyro
+	//SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
 	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
 	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
 	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
-	SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
-	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
-	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
-	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
-	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
-	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
-	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
 	SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
 	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
+	
+	//Shooter
+	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 //	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+	
+	//Other
+	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitchState());
+	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
+	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
+	
+	
+	
     }
 
     /**

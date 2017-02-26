@@ -8,6 +8,7 @@ import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
+//Blue Alliance Wall, Boiler Side
 public class BlueLeftScoreAGear extends CommandGroup {
     private static final int inchesForward = 72;
     private static final int degreesToTurn = 60;

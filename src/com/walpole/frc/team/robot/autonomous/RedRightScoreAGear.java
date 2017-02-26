@@ -8,9 +8,10 @@ import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
+//Red Alliance Wall, Boiler Side
 public class RedRightScoreAGear extends CommandGroup {
     private static final int inchesForward = 72;
-    private static final int degreesToTurn = -30;
+    private static final int degreesToTurn = -60;
     private static final int inchesToAirship = 80;
     private static final int secondsToWait = 2; 
    // private static final int inchesBack = 60; 
