@@ -8,6 +8,7 @@ import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
+import com.walpole.frc.team.robot.commands.SetShooterDistance;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
 import com.walpole.frc.team.robot.commands.TurnLightOnCommand;
@@ -62,9 +63,9 @@ public OI() {
 	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
 	opTriggerL.whenReleased(new ConveyerOffCommand());
 	
-	opA.toggleWhenPressed(new ToggleInternalMotors());
-//	opB.whenPressed(new ShooterRPMChange(2000));
-//	opX.whenReleased(new ShooterRPMChange(3000));
+	opX.toggleWhenPressed(new ToggleInternalMotors());
+	opA.whenPressed(new SetShooterDistance(true));
+	opB.whenReleased(new SetShooterDistance(false));
 //	opY.whenPressed(new ShooterRPMChange(4000));
 	
 	opStart.whileHeld(new TurnLightOnCommand());

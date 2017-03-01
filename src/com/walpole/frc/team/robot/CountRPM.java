@@ -13,10 +13,7 @@ public class CountRPM implements PIDSource {
 	
 	private DigitalInput lightSensor;
 	private Counter shooterCounter;
-	private PIDSourceType m_pidSource;
-
-//	public ArrayList<Long> rotationTimeList = new ArrayList<Long>();
-	
+	private PIDSourceType m_pidSource;	
 
     public CountRPM() {
     	lightSensor = new DigitalInput(RobotMap.LIGHT_SENSOR);
@@ -27,28 +24,9 @@ public class CountRPM implements PIDSource {
         m_pidSource = PIDSourceType.kRate;
 
    }
-//
-//    public void check() {        	
-//    	if(!lightSensor.get()) {
-//    		rotationTimeList.add(System.currentTimeMillis());
-//    	}
-//    }
-//    
-//    public int getRPS() {
-//    	long currentTime = System.currentTimeMillis();
-//    	if (rotationTimeList.size() > 0) {
-//	    	for(int i = 0 ; i < rotationTimeList.size(); i++) {
-//	    		if ((currentTime - rotationTimeList.get(i)) >= 1000) {
-//	    			rotationTimeList.remove(i);
-//	    		}
-//	    	}
-//    	}
-//    	return rotationTimeList.size();
-//    }
 
 	public double getRate() {
-		return shooterCounter.getRate()*60;
-//		shooterCounter.reset();
+		return shooterCounter.getRate()*  60;
 	}
 
 	public boolean getLightSensor() {

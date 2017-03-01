@@ -18,32 +18,53 @@ public class Shooter extends Subsystem {
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
 	
-	private Solenoid indexer;
-//    private Encoder shooterEncoder;
+	 private Solenoid indexer;
 	
-//    1500 RPM
-//    static double shooterP = 0.001;
-//    static double shooterI = 0;
-//    static double shooterD = 0.102;
-//    static double shooterF = 0.0001;
+    static double shooterShortP = 0.002;
+    static double shooterShortI = 0;
+    static double shooterShortD = 0.12;
+    static double shooterShortF = 0.0001;
+	    
+    static double shooterFarP = 0.002;
+    static double shooterFarI = 0;
+    static double shooterFarD = 0.12;
+    static double shooterFarF = 0.0001;
     
-//	  2500 RPM
-    static double shooterP = 0.002;
-    static double shooterI = 0;
-    static double shooterD = 0.12;
-    static double shooterF = 0.0001;
-    
-	private PIDController shooterPID;
+	private PIDController shooterFarPID;
+	private PIDController shooterShortPID;
+	private boolean shootFar = true;
+	
+	public void setShooterFar(boolean far) {
+		if (far) {
+			shootFar = true;
+		} else {
+			shootFar = false;
+		}
+	}
+	
+	public PIDController getPID() {
+		if (shootFar) {
+			return shooterFarPID;
+		} else {
+			return shooterShortPID;
+		}
+	}
 	
 	public Shooter() {
 		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
 		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
 
-		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, Robot.countRPM, shooterMotor);
-		shooterPID.setSetpoint(4000);
-		shooterPID.setContinuous(false);
-    	shooterPID.setOutputRange(0, 0.6);
-    	shooterPID.disable();
+		shooterFarPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, Robot.countRPM, shooterMotor);
+		shooterFarPID.setSetpoint(4000);
+		shooterFarPID.setContinuous(false);
+    	shooterFarPID.setOutputRange(0, 0.7);
+    	shooterFarPID.disable();
+    	
+		shooterShortPID = new PIDController(shooterShortP, shooterShortI, shooterShortD, shooterShortF, Robot.countRPM, shooterMotor);
+		shooterShortPID.setSetpoint(2500);
+		shooterShortPID.setContinuous(false);
+		shooterShortPID.setOutputRange(0, 0.6);
+		shooterShortPID.disable();
     	
     	indexer = new Solenoid(RobotMap.INDEXER_PISTON);
 	}
@@ -62,24 +83,23 @@ public class Shooter extends Subsystem {
 //    	return shooterEncoder;
 //    }
     public void shoot() {
-//    	shooterMotor.set(0.8);
-//    }
-    	shooterPID.enable();
+    	getPID().enable();
     	agitatorMotor.set(-1);
-    	if (shooterPID.getError() < 100 && -shooterPID.getError() < 100) {
-//    		agitatorMotor.set(-1);
+    	if (getPID().getError() < 100 && -getPID().getError() < 100) {
+    		agitatorMotor.set(-1);
         	indexer.set(true);
-
     	} else {
-//    		agitatorMotor.set(0);
-//        	indexer.set(false);
+    		agitatorMotor.set(0);
+        	indexer.set(false);
 
     	} 
     }
+    
     public void stopShooting() {
-    	shooterPID.disable();
+    	shooterShortPID.disable();
+    	shooterFarPID.disable();
+
 		agitatorMotor.set(0);
-//    	shooterMotor.set(0);
     }
     
     public void agitatorOn() {
@@ -96,7 +116,7 @@ public class Shooter extends Subsystem {
 //    public void turnLightOff() { light.set(Value.kReverse); }
    
     public double getShooterPIDError() {
-    	return shooterPID.getError();
+    	return getPID().getError();
     }
     
 }
