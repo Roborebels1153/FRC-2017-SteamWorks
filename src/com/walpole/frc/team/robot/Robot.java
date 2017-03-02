@@ -142,6 +142,8 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
 	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
 	
+//	SmartDashboard.getBoolean("Gear State" , Robot.gear.getGearState());
+	
 	
 	
     }
@@ -154,13 +156,14 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
 	
     	
-//    	new RetractGearPusherCommand();
+//	Robot.gear.retractGearRetainer();
 
     }
 	
 	public void disabledPeriodic() {
+		Robot.gear.keepGear();
+
 		Scheduler.getInstance().run();
-		new RetractGearPusherCommand();
 		updateDashboard();
 	}
 
@@ -190,12 +193,11 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.start();
-            new ExtendGearPusherCommand();
-        } else {
+            Robot.gear.fireGearPusher();        
+            } else {
             autonomousCommand = new DriveForwardWithEncoder(120);
             autonomousCommand.start();
-            new ExtendGearPusherCommand();
-        }
+            Robot.gear.fireGearPusher();        }
     }
 
     /**
@@ -208,6 +210,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+	Robot.gear.keepGear();
     	Robot.gear.fireGearPusher();
     	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when

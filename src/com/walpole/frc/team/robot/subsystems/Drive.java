@@ -110,15 +110,16 @@ public class Drive extends Subsystem {
 	gyroPID.setContinuous();
 
 	robotDrive = new RebelDrive(leftFrontVictor, leftBackVictor, rightFrontVictor, rightBackVictor);
+	robotDrive.setSafetyEnabled(false);
     }
 
     /**
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", encoderP);
-	encoderI = prefs.getDouble("encoderI", encoderI);
-	encoderD = prefs.getDouble("encoderD", encoderD);
+	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
+	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
+	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
 
 	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
 	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
@@ -227,8 +228,8 @@ public class Drive extends Subsystem {
 //    }
 
     public boolean isOnTarget() {
-	return Math.abs(leftEncoderPID.getError()) < driveTolerance
-		|| Math.abs(rightEncoderPID.getError()) < driveTolerance;
+	return Math.abs(leftEncoderPID.getError()) < driveTolerance;
+		//|| Math.abs(rightEncoderPID.getError()) < driveTolerance;
     }
 
     public void setTurnSpeed(double speed) {

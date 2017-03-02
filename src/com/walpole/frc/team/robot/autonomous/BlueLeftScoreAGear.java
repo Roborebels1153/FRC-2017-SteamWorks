@@ -15,19 +15,19 @@ public class BlueLeftScoreAGear extends CommandGroup {
     private static final int inchesToAirship = 80;
     private static final int secondsToWait = 2; 
    // private static final int inchesBack = 60; 
-    private static final  double speedToAirShip = 0.6; 
+    private static final  double speedToAirShip = 0.5; 
     
     public BlueLeftScoreAGear() {
 	super();
 	
 	//addSequential(new ExtendGearPusherCommand());
 	addSequential(new DriveForwardWithGyroEncoder(inchesForward));
-	addSequential(new WaitCommand(secondsToWait)); 
+	//addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));  
 	addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new ReleaseGearCommand()); 
+	//addSequential(new ReleaseGearCommand()); 
 	
 	//addSequential(new DriveBackwardsWithEncoder(inchesBack));     
     }

@@ -52,7 +52,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	// double leftMotorPower = Robot.driveSubsystem.getLeftMotorPower();
+	/*double leftMotorPower = Robot.driveSubsystem.getLeftMotorPower();
 	// double leftError = Robot.driveSubsystem.getLeftPIDError();
 	// boolean leftMotorFinished = leftMotorPower <= 0.1 && leftError <= 50;
 	//
@@ -64,11 +64,15 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// return leftMotorFinished && rightMotorFinished;
 	//return Robot.driveSubsystem.isOnTarget();
 	// This is a new command that finishes DriveForwardWithEncoder when the
-	// robot is on target
+	   robot is on target*/
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	return leftMotorPower <= 0.1 && error <= 50;
+    	//double leftEncoderCount = Robot.drive.getLeftEncoderCount();
+
+    	return leftMotorPower <= 0.1 && Math.abs(error) <= 50; 
+    	
     	//return false;
+    	//return leftMotorPower <=0.1 && leftEncoderCount > 5100 && leftEncoderCount < 5500; 
     }
 
     // Called once after isFinished returns true

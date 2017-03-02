@@ -26,7 +26,7 @@ public class Constants {
     public static double encoderD = 0.06882; */
     
     //PID Constants for 2017 PROTOTYPE Robot(1154)
-    public static double encoderP = 0.017;
+    public static double encoderP = 0.017; 
     public static double encoderI = 0;
     public static double encoderD = 0.06882; 
     // Navx-Micro Gyro

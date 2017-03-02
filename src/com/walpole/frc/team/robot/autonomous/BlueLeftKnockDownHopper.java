@@ -24,7 +24,7 @@ public class BlueLeftKnockDownHopper extends CommandGroup {
 	//This wait command is for testing purposes, once we perfected autonomous, we will no longer need this 
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degrees)); 
-	addSequential(new DriveForwardWithEncoder(inchesToPushPad));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToPushPad));
 	//This wait command is for testing purposes, once we perfected autonomous, we will no longer need this 
 	addSequential(new WaitCommand(secondsToWaitTwo)); 
 	addSequential(new TurnWithGyroCommand(degrees));
