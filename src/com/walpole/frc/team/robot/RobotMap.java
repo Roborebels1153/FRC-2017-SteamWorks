@@ -57,6 +57,8 @@ public class RobotMap {
 	
 	public static int GEAR_SOLENOID_A = 2;
 	public static int GEAR_PUSHER_SOLENOID_A = 3;
+	public static int BALL_INTAKE_SOLENOID = 4;
+	
 	
 
 	

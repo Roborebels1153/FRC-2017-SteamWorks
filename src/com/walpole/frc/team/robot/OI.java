@@ -4,8 +4,10 @@ package com.walpole.frc.team.robot;
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
+import com.walpole.frc.team.robot.commands.RetractBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
@@ -72,16 +74,18 @@ public OI() {
 	opBumperL.whenReleased(new RetainGearCommand());
 	opBumperR.whenReleased(new ExtendGearPusherCommand());
 	opBumperR.whileHeld(new RetractGearPusherCommand());
+	opTriggerR.whileHeld(new FireBallFlapperCommand());
+	opTriggerR.whenReleased(new RetractBallFlapperCommand());
 
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
 
-	drRB.whenPressed(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
-	drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning
+	drRB.whenPressed(new ClimbUpCommand());       
+	drRB.whenReleased(new StopClimbCommand());   
 
-	drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
-	drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
+	drLB.whileHeld(new ClimbDownCommand());      
+	drLB.whenReleased(new StopClimbCommand());   
 	}
 	
 	public Joystick getDriverJoystick() {

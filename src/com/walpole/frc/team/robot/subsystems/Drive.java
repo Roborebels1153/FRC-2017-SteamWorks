@@ -88,7 +88,7 @@ public class Drive extends Subsystem {
 	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
-	leftEncoder.setReverseDirection(true);
+	//leftEncoder.setReverseDirection(true);
 	rightEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
 	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
@@ -117,9 +117,9 @@ public class Drive extends Subsystem {
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", Constants.encoderP);
-	encoderI = prefs.getDouble("encoderI", Constants.encoderI);
-	encoderD = prefs.getDouble("encoderD", Constants.encoderD);
+	encoderP = prefs.getDouble("encoderP", encoderP);
+	encoderI = prefs.getDouble("encoderI", encoderI);
+	encoderD = prefs.getDouble("encoderD", encoderD);
 
 	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
 	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
@@ -178,7 +178,7 @@ public class Drive extends Subsystem {
 
     public int getLeftEncoderCount() {
 	//we are negating this as it shows up as a negative on the SmartDashboard
-	return -leftEncoder.get();
+	return leftEncoder.get();
     }
 
     public double getGyroAngle() {

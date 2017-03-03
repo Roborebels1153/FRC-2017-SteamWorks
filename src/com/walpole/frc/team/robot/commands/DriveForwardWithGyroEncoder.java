@@ -66,10 +66,13 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// This is a new command that finishes DriveForwardWithEncoder when the
 	   robot is on target*/
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
-    	double error = Math.abs(Robot.drive.getLeftPIDError());
+    	//double error = Math.abs(Robot.drive.getLeftPIDError());
+    	double error = (Robot.drive.getLeftPIDError());
+
+
     	//double leftEncoderCount = Robot.drive.getLeftEncoderCount();
 
-    	return leftMotorPower <= 0.1 && Math.abs(error) <= 50; 
+    	return leftMotorPower <= 0.1 && error <= 50; 
     	
     	//return false;
     	//return leftMotorPower <=0.1 && leftEncoderCount > 5100 && leftEncoderCount < 5500; 
