@@ -28,6 +28,7 @@ import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
@@ -47,6 +48,7 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  */
 public class Robot extends IterativeRobot {
     	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
+    	public DriverStation driverStation;
 //	public static final Counter Counter = new Counter();
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
@@ -63,6 +65,7 @@ public class Robot extends IterativeRobot {
 	private static double[] defaultValue = new double[0];
 	private static double[] areas = new double[0];
 	
+	private DriverStation.Alliance alliance = DriverStation.Alliance.Invalid;
 	
 	private final Object imgLock = new Object();  
 
@@ -76,6 +79,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 	oi = new OI();
+	driverStation = DriverStation.getInstance();
 	chooser = new SendableChooser<Command>();
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
@@ -108,7 +112,7 @@ public class Robot extends IterativeRobot {
 	        
 	AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.70");
 	       cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);*/
-    }    
+    }
 	
     
     public static void updateDashboard() {
@@ -165,6 +169,21 @@ public class Robot extends IterativeRobot {
 
 		Scheduler.getInstance().run();
 		updateDashboard();
+		updateAllianceColor();
+	}
+	
+	private void updateAllianceColor() {
+	    DriverStation.Alliance newAlliance = driverStation.getAlliance();
+	    if (alliance == DriverStation.Alliance.Invalid && newAlliance != DriverStation.Alliance.Invalid) {
+		alliance = newAlliance;
+		if (alliance == DriverStation.Alliance.Red) {
+		    // We are Red
+		    Robot.drive.setLEDred();
+		} else if (alliance == DriverStation.Alliance.Blue) {
+		    // We are Blue
+		    Robot.drive.setLEDBlue();
+		}
+	    }
 	}
 
 	/**

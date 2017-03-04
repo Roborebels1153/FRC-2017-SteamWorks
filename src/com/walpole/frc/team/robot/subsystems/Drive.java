@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
@@ -37,6 +39,8 @@ public class Drive extends Subsystem {
     private SpeedController rightBackVictor;
 
     private DoubleSolenoid transmission;
+    
+    private Relay relayLED;
 
     private double encoderP;
     private double encoderI;
@@ -92,6 +96,8 @@ public class Drive extends Subsystem {
 	rightEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
 	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+	
+	relayLED = new Relay(RobotMap.HOPPER_LED_STRIP);
 
 	//gyro = new RebelGyro();
 	//gyro.startThread();
@@ -362,6 +368,16 @@ public class Drive extends Subsystem {
 
     public boolean turnIsFinished() {
 	return this.turnIsFinished;
+    }
+    
+    public void setLEDred() {
+	relayLED.set(Value.kOn);
+	
+    }
+    
+    public void setLEDBlue() {
+	relayLED.set(Value.kOff);
+	
     }
     
 }

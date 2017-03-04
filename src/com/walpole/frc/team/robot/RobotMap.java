@@ -32,6 +32,8 @@ public class RobotMap {
 	public static int TRANSMISSION_SOLENOID_A = 0;
 	public static int TRANSMISSION_SOLENOID_B = 1;
 	
+	public static int HOPPER_LED_STRIP = 1;
+	
 	/** SHOOTER/COLLECTOR RELATED**/
 	
 	public static int SHOOTER_MOTOR = 4;
