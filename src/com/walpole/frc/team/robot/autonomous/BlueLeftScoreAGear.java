@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot.autonomous;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand; 
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
+import com.walpole.frc.team.robot.commands.StopCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -21,11 +22,12 @@ public class BlueLeftScoreAGear extends CommandGroup {
 	super();
 	
 	//addSequential(new ExtendGearPusherCommand());
-	addSequential(new DriveForwardWithGyroEncoder(inchesForward));
+	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedToAirShip));
 	//addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));  
+	addSequential(new StopCommand()); 
 	addSequential(new WaitCommand(secondsToWait)); 
 	//addSequential(new ReleaseGearCommand()); 
 	
