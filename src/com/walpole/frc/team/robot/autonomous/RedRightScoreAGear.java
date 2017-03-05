@@ -9,20 +9,20 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
- * Blue Alliance Wall, Boiler Side
+ * Red Alliance Wall, Boiler Side
  * 
  * @author Aayush and Avi
  */
-public class BlueLeftScoreAGear extends CommandGroup {
-
+public class RedRightScoreAGear extends CommandGroup {
+	
 	private static final int inchesForward = 72;
-	private static final int degreesToTurn = 300;
+	private static final int degreesToTurn = -60;
 	private static final int inchesToAirship = 80;
 	private static final int secondsToWait = 2;
-	private static final int inchesBack = 60;
+	// private static final int inchesBack = 60;
 	private static final double speedToAirShip = 0.6;
 
-	public BlueLeftScoreAGear() {
+	public RedRightScoreAGear() {
 		super();
 
 		// TODO Add in ExtendGearPusherCommand
@@ -34,7 +34,6 @@ public class BlueLeftScoreAGear extends CommandGroup {
 		addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));
 		addSequential(new WaitCommand(secondsToWait));
 		addSequential(new ReleaseGearCommand());
-		// TODO Do we need this?
 		// addSequential(new DriveBackwardsWithEncoder(inchesBack));
 	}
 }

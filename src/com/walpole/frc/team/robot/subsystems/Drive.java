@@ -32,6 +32,8 @@ public class Drive extends Subsystem {
 	private SpeedController rightBackVictor;
 
 	private DoubleSolenoid transmission;
+	
+	private Relay relayLED;
 
 	private double encoderP;
 	private double encoderI;
@@ -70,6 +72,8 @@ public class Drive extends Subsystem {
 		rightBackVictor = new Victor(RobotMap.RIGHT_BACK_MOTOR);
 
 		transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
+		
+		relayLed = new Relay(RobotMap.HOPPER_LED_STRIP);
 
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 		leftEncoderOutput = new DummyPIDOutput();
@@ -153,6 +157,16 @@ public class Drive extends Subsystem {
 				|| Math.abs(rightEncoderPID.getError()) < driveTolerance;
 	}
 	
+	// LED Methods
+	
+	public void setLEDred() {
+		relayLED.set(Value.kOn);
+	}
+
+	public void setLEDBlue() {
+		relayLED.set(Value.kOff);
+	}
+	
 	// Shifting Methods
 	
 	public Shifter getShift() {
@@ -160,22 +174,12 @@ public class Drive extends Subsystem {
 	}
 
 	public void shiftHigh() {
-		/*
-		 * if (currGear.equals(Shifter.Low)) {
-		 * transmission.set(DoubleSolenoid.Value.kForward); currGear =
-		 * Shifter.High;
-		 */
-		transmission.set(DoubleSolenoid.Value.kForward);
+		transmission.set(DoubleSolenoid.Value.kReverse);
 		currGear = Shifter.High;
 	}
 
 	public void shiftLow() {
-		/*
-		 * if (currGear.equals(Shifter.High)) {
-		 * transmission.set(DoubleSolenoid.Value.kReverse); currGear =
-		 * Shifter.Low; }
-		 */
-		transmission.set(DoubleSolenoid.Value.kReverse);
+		transmission.set(DoubleSolenoid.Value.kForward);
 		currGear = Shifter.Low;
 	}
 	

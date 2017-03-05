@@ -4,20 +4,19 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class StopClimbCommand extends Command {
+public class RetractBallFlapperCommand extends Command {
 
-	public StopClimbCommand() {
-		requires(Robot.climb);
+	public RetractBallFlapperCommand() {
+		requires(Robot.gear);
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.climb.stopClimb();
+		Robot.gear.retractBallFlapper();
 	}
 
 	@Override
 	protected void execute() {
-
 	}
 
 	@Override
@@ -31,5 +30,6 @@ public class StopClimbCommand extends Command {
 
 	@Override
 	protected void interrupted() {
+		// Robot.gear.retractGearPusher();
 	}
 }

@@ -13,7 +13,7 @@ public class ShiftHighCommand extends Command {
 	@Override
 	protected void initialize() {
 	}
-
+	
 	@Override
 	protected void execute() {
 		Robot.drive.shiftHigh();
@@ -21,7 +21,7 @@ public class ShiftHighCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 	@Override

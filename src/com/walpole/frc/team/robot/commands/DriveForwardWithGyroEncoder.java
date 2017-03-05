@@ -5,34 +5,27 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- * Drives forward a given distance with turn bias compensation
- */
 public class DriveForwardWithGyroEncoder extends Command {
 
-	// Default speed is 0.8
-	private double speed = 0.8;
-	private double turnSpeed = 0.8;
+	private double speed;
 	private double setPoint;
 
 	public DriveForwardWithGyroEncoder(int inchesToDrive) {
 		requires(Robot.drive);
-		
-		setPoint = Constants.ticksPerInch * inchesToDrive;
+		this.speed = 0.8;
+		this.setPoint = Constants.ticksPerInch * inchesToDrive;
 	}
 
 	public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
 		requires(Robot.drive);
-		
 		this.speed = speed;
-		setPoint = Constants.ticksPerInch * inchesToDrive;
+		this.setPoint = Constants.ticksPerInch * inchesToDrive;
 	}
 
-	
 	@Override
 	protected void initialize() {
-		Robot.drive.setMaxGyroOutput(turnSpeed);
-		Robot.drive.setTurnPIDSetpoint(0);
+		Robot.drive.setMaxGyroOutput(0.8);
+		Robot.drive.setTurnPIDSetpoint(Robot.drive.getGyroYaw());
 
 		Robot.drive.resetEncoders();
 		Robot.drive.setMaxDrivePIDOutput(speed);
@@ -50,8 +43,8 @@ public class DriveForwardWithGyroEncoder extends Command {
 		double driveOutput = (leftOutput + rightOutput) / 2;
 
 		/*
-		 * A negative drive power will make the robot go forward, false
-		 * removes squared inputs which are bad for autonomous
+		 * A negative drive value for arcadeDrive makes the robot
+		 * go forward
 		 */
 		Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);
 	}
@@ -59,11 +52,10 @@ public class DriveForwardWithGyroEncoder extends Command {
 	@Override
 	protected boolean isFinished() {
 		double leftMotorPower = Robot.drive.getLeftMotorPower();
-		double rightMotorPower = Robot.drive.getRightMotorPower();
-		double motorPower = (leftMotorPower + rightMotorPower) / 2;
-		double error = Math.abs(Robot.drive.getLeftPIDError());
-		
-		return motorPower <= 0.1 && error <= 50;
+		// We removed the Math abs call from the error
+		double error = Robot.drive.getLeftPIDError();
+
+		return leftMotorPower <= 0.1 && error <= 50;
 	}
 
 	@Override

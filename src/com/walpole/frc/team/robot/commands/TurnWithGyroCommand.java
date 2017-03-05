@@ -7,26 +7,24 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TurnWithGyroCommand extends Command {
 
 	private double degreesToTurn;
-	private double speedTurn = 0.8;
+	private double speedTurn;
 
 	public TurnWithGyroCommand(double degreesToTurn) {
 		requires(Robot.drive);
-		
 		this.degreesToTurn = degreesToTurn;
+		this.speedTurn = 0.6;
 	}
 
 	protected void initialize() {
 		Robot.drive.disableDrivePID();
-		
 		Robot.drive.setTurnPIDSetpoint(degreesToTurn);
 		Robot.drive.setMaxGyroOutput(speedTurn);
-		
 		Robot.drive.enableGyroPID();
 	}
 
 	protected void execute() {
 		double gyroOutput = Robot.drive.getGyroPIDOutput();
-		Robot.drive.turnAtSpeed(gyroOutput);
+		Robot.drive.setTurnSpeed(gyroOutput);
 	}
 
 	protected boolean isFinished() {
