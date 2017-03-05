@@ -59,6 +59,7 @@ public class OI {
 
 public OI() {
 	opTriggerR.whileHeld(new ShooterShootCommand());
+//	opTriggerR.whileHeld(new ConveyerOnCommand());
 	
 	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
 	opTriggerL.whenReleased(new ConveyerOffCommand());
