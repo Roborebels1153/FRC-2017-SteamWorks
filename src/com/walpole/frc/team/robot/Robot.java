@@ -128,7 +128,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	private void updateAllianceColor() {
-		DriverStation.Alliance newAlliance = driverStation.getAlliance();
+		DriverStation.Alliance newAlliance = ds.getAlliance();
 		if (alliance == DriverStation.Alliance.Invalid && newAlliance != DriverStation.Alliance.Invalid) {
 			alliance = newAlliance;
 			if (alliance == DriverStation.Alliance.Red) {

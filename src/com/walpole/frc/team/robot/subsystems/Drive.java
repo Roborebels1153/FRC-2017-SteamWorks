@@ -4,6 +4,7 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 
 import com.walpole.frc.team.robot.lib.RebelDrive;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
+import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
@@ -12,9 +13,13 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -73,7 +78,7 @@ public class Drive extends Subsystem {
 
 		transmission = new DoubleSolenoid(RobotMap.TRANSMISSION_SOLENOID_A, RobotMap.TRANSMISSION_SOLENOID_B);
 		
-		relayLed = new Relay(RobotMap.HOPPER_LED_STRIP);
+		relayLED = new Relay(RobotMap.HOPPER_LED_STRIP);
 
 		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 		leftEncoderOutput = new DummyPIDOutput();
@@ -211,9 +216,17 @@ public class Drive extends Subsystem {
 	public void turnAtSpeed(double speed) {
 		robotDrive.arcadeDrive(0, speed);
 	}
+	
+	public void setTurnSpeed(double speed) {
+		robotDrive.arcadeDrive(0, speed, false);
+	}
 
 	public void arcadeDrive(double driveSpeed, double turnSpeed) {
 		robotDrive.arcadeDrive(driveSpeed, turnSpeed, false);
+	}
+	
+	public void arcadeDrive(double driveSpeed, double turnSpeed, boolean squaredInputs) {
+		robotDrive.arcadeDrive(driveSpeed, turnSpeed, squaredInputs);
 	}
 
 	public void tankDrive(double leftDrive, double rightDrive) {
@@ -318,7 +331,14 @@ public class Drive extends Subsystem {
 		gyroPID.setSetpoint(setPoint);
 	}
 	
+	public double getTurnPIDSetpoint() {
+		return gyroPID.getSetpoint();
+	}
+	
 	public boolean turnIsFinished() {
 		return this.turnIsFinished;
 	}
+
+
+
 }
