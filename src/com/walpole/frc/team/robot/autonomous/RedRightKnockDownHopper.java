@@ -22,7 +22,6 @@ public class RedRightKnockDownHopper extends CommandGroup {
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degrees)); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToPushPad));
-	addSequential(new WaitCommand(secondsToWaitTwo)); 
 	addSequential(new TurnWithGyroCommand(degrees));
 	
     }

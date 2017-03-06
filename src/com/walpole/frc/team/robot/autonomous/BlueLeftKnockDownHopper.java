@@ -22,11 +22,9 @@ public class BlueLeftKnockDownHopper extends CommandGroup {
 //	addSequential(new ExtendGearPusherCommand()); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToDrive));
 	//This wait command is for testing purposes, once we perfected autonomous, we will no longer need this 
-	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degrees)); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToPushPad));
 	//This wait command is for testing purposes, once we perfected autonomous, we will no longer need this 
-	addSequential(new WaitCommand(secondsToWaitTwo)); 
 	addSequential(new TurnWithGyroCommand(degrees));
 	
     }

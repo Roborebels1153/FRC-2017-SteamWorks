@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
     	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
     	public DriverStation driverStation;
 //	public static final Counter Counter = new Counter();
-	public static final Collector collector = new Collector();
+//	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
@@ -212,11 +212,13 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.start();
-            Robot.gear.fireGearPusher();        
+            Robot.gear.fireGearPusher();  
+            Robot.gear.keepGear();
             } else {
             autonomousCommand = new DriveForwardWithEncoder(120);
-            autonomousCommand.start();
-            Robot.gear.fireGearPusher();        }
+//            autonomousCommand.start();
+//            Robot.gear.fireGearPusher();        
+            }
     }
 
     /**
@@ -229,8 +231,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-	Robot.gear.keepGear();
-    	Robot.gear.fireGearPusher();
+//	Robot.gear.keepGear();
+//    	Robot.gear.fireGearPusher();
     	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 

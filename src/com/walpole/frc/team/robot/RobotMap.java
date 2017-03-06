@@ -53,7 +53,7 @@ public class RobotMap {
 	
 	public static int CLIMB_MOTOR = 7;
 	
-	public static int CLIMB_LIMIT_SWITCH = 7;
+	public static int CLIMB_LIMIT_SWITCH = 8;
 	
 	/**GEAR RELATED**/
 	

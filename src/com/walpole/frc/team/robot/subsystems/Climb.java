@@ -28,8 +28,11 @@ public class Climb extends Subsystem {
     }
 
     public void climbUp() { // this method is for when the climber is climbing
-			    // up toward the light
-	climberVictor.set(1);
+	if (getLimitSwitchState()  == false) {
+	    climberVictor.set(1);
+	} else if (getLimitSwitchState() == true) {
+	    climberVictor.set(0);
+	}
     }
 
     public void stopClimb() { // this method is to tell the robot when to stop
@@ -38,11 +41,13 @@ public class Climb extends Subsystem {
     }
 
     public void climbDown() { // this method is for de-climbing the robot,
-			      // bringing it toward the ground
-	climberVictor.set(-0.7);
+	    climberVictor.set(-0.65);
+	
     }
 
     public boolean getLimitSwitchState() {
-	return limitSwitch.get();
+	return !limitSwitch.get();
     }
+    
+   
 }
