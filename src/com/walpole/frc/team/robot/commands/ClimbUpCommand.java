@@ -35,4 +35,5 @@ public class ClimbUpCommand extends Command {
 	@Override
 	protected void interrupted() {
 	}
+
 }

@@ -1,26 +1,25 @@
-
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TurnLightOffCommand extends Command {
-	
-	public TurnLightOffCommand() {
-//		requires(Robot.shooter);
-	}
+/**
+ *
+ */
+public class ToggleInternalMotors extends Command {
 
-	// Called just before this Command runs the first time
+    public ToggleInternalMotors() {
+        // Use requires() here to declare subsystem dependencies
+//        requires(Robot.collector);
+    }
+
+    // Called just before this Command runs the first time
     protected void initialize() {
-//    	Robot.shooter.turnLightOff();
-    	
+//    	Robot.collector.internal();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//Robot.shooter.turnLightOff();
-		
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -30,12 +29,12 @@ public class TurnLightOffCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+//    	Robot.collector.endInternal();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	//Robot.shooter.turnLightOn();
+//    	Robot.collector.endInternal();
     }
-
 }

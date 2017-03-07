@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class StopClimbCommand extends Command {
 
+
 	public StopClimbCommand() {
 		requires(Robot.climb);
 	}

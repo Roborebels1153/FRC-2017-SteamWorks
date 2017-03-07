@@ -193,7 +193,7 @@ public class Drive extends Subsystem {
 	public void drive(Joystick joystick) {
 		double moveValue = Constants.TELE_DRIVE_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
 		double rotateValue = Constants.TELE_TURN_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
-		robotDrive.rebelArcadeDrive(moveValue, rotateValue);
+		robotDrive.arcadeDrive(moveValue, rotateValue, true);
 	}
 
 	public double getLeftMotorPower() {
@@ -293,7 +293,7 @@ public class Drive extends Subsystem {
 	}
 	
 	// Gyro Methods
-	
+
     public double getGyroYaw() {
     	return gyro.getYaw();
     }

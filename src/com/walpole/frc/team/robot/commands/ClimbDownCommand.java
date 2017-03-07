@@ -33,3 +33,4 @@ public class ClimbDownCommand extends Command {
 	protected void interrupted() {
 	}
 }
+

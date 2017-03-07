@@ -1,3 +1,4 @@
+
 package com.walpole.frc.team.robot.subsystems;
 
 import com.walpole.frc.team.robot.RobotMap;
@@ -38,3 +39,4 @@ public class Climb extends Subsystem {
 		return limitSwitch.get();
 	}
 }
+

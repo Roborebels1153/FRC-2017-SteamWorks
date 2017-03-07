@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShiftHighCommand extends Command {
 
+
 	public ShiftHighCommand() {
 		requires(Robot.drive);
 	}

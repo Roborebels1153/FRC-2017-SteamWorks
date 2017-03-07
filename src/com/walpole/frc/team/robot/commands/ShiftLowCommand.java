@@ -1,4 +1,3 @@
-
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
@@ -32,4 +31,5 @@ public class ShiftLowCommand extends Command {
 	@Override
 	protected void interrupted() {
 	}
+
 }

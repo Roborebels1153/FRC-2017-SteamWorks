@@ -1,3 +1,4 @@
+
 package com.walpole.frc.team.robot;
 
 
@@ -22,6 +23,7 @@ import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
+import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -46,12 +48,16 @@ public class Robot extends IterativeRobot {
 	public static Preferences prefs;
 	public static DriverStation ds;
 	
-	public static final Collector collector = new Collector();
+//	public static final Collector collector = new Collector();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
+	public static final Shooter shooter = new Shooter();
+	public static final CountRPM countRPM = new CountRPM();
 	
 	public static OI oi = new OI();
+	private static final int IMG_WIDTH = 640;
+	private static final int IMG_HEIGHT = 480; 
 	
 	private DriverStation.Alliance alliance = DriverStation.Alliance.Invalid;
 
@@ -71,6 +77,11 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser<Command>();
 		addChooserCommands();
 		SmartDashboard.putData("Auto mode", chooser);
+		
+		AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-normal","10.11.53.3");
+	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+		
+		
 	}
 	
 	private void addChooserCommands() {
@@ -125,6 +136,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
 		SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
 		SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
+		
+		//Shooter Values
+//		SmartDashboard.putNumber("RPS", countRPM.getRate()/60);
+//		SmartDashboard.putNumber("RPM", countRPM.getRate());
+//		SmartDashboard.putNumber("PID Error", shooter.getShooterPIDError());
+//		SmartDashboard.putBoolean("Light Sensor", countRPM.getLightSensor());
 	}
 	
 	private void updateAllianceColor() {

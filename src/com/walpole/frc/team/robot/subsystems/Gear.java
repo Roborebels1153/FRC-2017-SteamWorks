@@ -12,6 +12,7 @@ public class Gear extends Subsystem {
 	private Solenoid ballIntakeFlapper;
 
 	public Gear() {
+
 		gearSolenoidRetainer = new Solenoid(RobotMap.GEAR_SOLENOID_A);
 		gearPusherSolenoid = new Solenoid(RobotMap.GEAR_PUSHER_SOLENOID_A);
 		ballIntakeFlapper = new Solenoid(RobotMap.BALL_INTAKE_SOLENOID);
