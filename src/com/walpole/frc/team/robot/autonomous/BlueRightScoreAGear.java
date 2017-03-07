@@ -22,7 +22,7 @@ public class BlueRightScoreAGear extends CommandGroup {
 	super();
 	
 	//addSequential(new ExtendGearPusherCommand());
-	addSequential(new DriveForwardWithGyroEncoder(inchesForward));
+	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedToAirShip));
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
 	addSequential(new WaitCommand(secondsToWait)); 

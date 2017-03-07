@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class BlueLeftScoreAGear extends CommandGroup {
     private static final int inchesForward = 72;
     private static final int degreesToTurn = 60;
-    private static final int inchesToAirship = 80;
-    private static final int secondsToWait = 2; 
+    private static final int inchesToAirship = 78;
+    private static final int secondsToWait = 1; 
    // private static final int inchesBack = 60; 
     private static final double speedForward = 0.6; 
-    private static final  double speedToAirShip = 0.5; 
+    private static final  double speedToAirShip = 0.4; 
+    private static final double speedToTurn = 0.5; 
     
     public BlueLeftScoreAGear() {
 	super();
@@ -25,7 +26,7 @@ public class BlueLeftScoreAGear extends CommandGroup {
 	//addSequential(new ExtendGearPusherCommand());
 	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward));
 	//addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new TurnWithGyroCommand(degreesToTurn));
+	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));  
 	addSequential(new StopCommand()); 

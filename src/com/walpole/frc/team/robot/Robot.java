@@ -161,6 +161,8 @@ public class Robot extends IterativeRobot {
 	
     	
 //	Robot.gear.retractGearRetainer();
+	Robot.gear.retractBallFlapper(); 
+
 
     }
 	
@@ -170,6 +172,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		updateDashboard();
 		updateAllianceColor();
+
 	}
 	
 	private void updateAllianceColor() {
