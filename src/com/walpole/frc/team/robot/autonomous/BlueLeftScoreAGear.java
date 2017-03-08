@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot.autonomous;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand; 
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
+import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
@@ -17,21 +18,20 @@ public class BlueLeftScoreAGear extends CommandGroup {
     private static final int secondsToWait = 1; 
    // private static final int inchesBack = 60; 
     private static final double speedForward = 0.6; 
-    private static final  double speedToAirShip = 0.4; 
+    private static final  double speedToAirShip = 0.5; 
     private static final double speedToTurn = 0.5; 
     
     public BlueLeftScoreAGear() {
 	super();
 	
 	//addSequential(new ExtendGearPusherCommand());
+	addSequential(new ShiftLowCommand()); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward));
 	//addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
-	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));  
 	addSequential(new StopCommand()); 
-	addSequential(new WaitCommand(secondsToWait)); 
-	//addSequential(new ReleaseGearCommand()); 
+	addSequential(new ReleaseGearCommand()); 
 	
 	//addSequential(new DriveBackwardsWithEncoder(inchesBack));     
     }

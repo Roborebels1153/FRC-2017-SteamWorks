@@ -86,26 +86,26 @@ public class Robot extends IterativeRobot {
 
 	//Match Auto Sequential
 	//We also must uncomment the ExtendGearPusherCommand in these sequentials
-	chooser.addObject("Center Deliver A Gear", new BlueRedCenterScoreAGear());
+	chooser.addObject("Center Deliver A Gear", new BlueRedCenterScoreAGear()); 
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Blue Right Deliver A Gear", new BlueRightScoreAGear()); 
 	chooser.addObject("Red Right Deliver A Gear", new RedRightScoreAGear());
 	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
-	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
-	chooser.addObject("Red Right Knock Down Hopper", new RedRightKnockDownHopper());
-	chooser.addObject("Blue Left Knock Down Hopper", new BlueLeftKnockDownHopper());
-	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
+	chooser.addObject("Mobility Points", new CrossGreenLine()); 
+	//chooser.addObject("Red Right Knock Down Hopper", new RedRightKnockDownHopper());
+	//chooser.addObject("Blue Left Knock Down Hopper", new BlueLeftKnockDownHopper());
+	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 
 	//Testing Sequential
-	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-	chooser.addObject("Drive stright 10 feet", new DriveForwardWithGyroEncoder(120));
-	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
-	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
-	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
+	//chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
+	//chooser.addObject("Drive stright 10 feet", new DriveForwardWithGyroEncoder(120));
+	//chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
+	//chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
+	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
-	chooser.addObject("Shift Low", new ShiftHighCommand()); 
+	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
 	/*AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
 	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);

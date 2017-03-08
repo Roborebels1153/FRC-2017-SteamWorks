@@ -184,7 +184,7 @@ public class Drive extends Subsystem {
 
     public int getLeftEncoderCount() {
 	//we are negating this as it shows up as a negative on the SmartDashboard
-	return leftEncoder.get();
+	return -leftEncoder.get();
     }
 
     public double getGyroAngle() {

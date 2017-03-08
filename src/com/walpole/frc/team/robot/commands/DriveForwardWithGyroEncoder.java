@@ -72,7 +72,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     	//double leftEncoderCount = Robot.drive.getLeftEncoderCount();
 
-    	return leftMotorPower <= 0.1 && error <= 50; 
+    	return leftMotorPower <= 0.1 && error <= 100; 
     	
     	//return false;
     	//return leftMotorPower <=0.1 && leftEncoderCount > 5100 && leftEncoderCount < 5500; 
