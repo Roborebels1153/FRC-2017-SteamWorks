@@ -69,13 +69,13 @@ public OI() {
 //	opStart.whileHeld(new TurnLightOnCommand());
 //	opBack.whileHeld(new TurnLightOffCommand());
 	
-	
+	//Final Operator Buttons:
 	opBumperL.whileHeld(new ReleaseGearCommand());
 	opBumperL.whenReleased(new RetainGearCommand());
 	opBumperR.whenReleased(new ExtendGearPusherCommand());
 	opBumperR.whileHeld(new RetractGearPusherCommand());
-	opTriggerR.whileHeld(new FireBallFlapperCommand());
-	opTriggerR.whenReleased(new RetractBallFlapperCommand());
+	opTriggerL.whileHeld(new FireBallFlapperCommand());
+	opTriggerL.whenReleased(new RetractBallFlapperCommand());
 
 
 	drLT.whenPressed(new ShiftHighCommand());
