@@ -252,16 +252,21 @@ public class Drive extends Subsystem {
 		leftEncoderPID.enable();
 		rightEncoderPID.enable();
 	}
-	
 
-    /**
-     * Disables both the Left Encoder PID and the Right Encoder PID by calling
-     * disable() on each
-     */
-    public void disableDrivePID() {
-	leftEncoderPID.disable();
-	rightEncoderPID.disable();
-    }
+
+	/**
+	 * Disables both the Left Encoder PID and the Right Encoder PID by calling
+	 * disable() on each
+	 */
+	public void disableDrivePID() {
+		leftEncoderPID.disable();
+		rightEncoderPID.disable();
+	}
+
+	public void setMaxDrivePIDOutput(double drivingSpeed) {
+		leftEncoderPID.setOutputRange(-drivingSpeed, drivingSpeed);
+		rightEncoderPID.setOutputRange(-drivingSpeed, drivingSpeed);
+	}
 
 
 	public void enableGyroPID() {
@@ -365,6 +370,11 @@ public class Drive extends Subsystem {
 	public void setLEDBlue() {
 		relayLED.set(Value.kOff);
 
+	}
+
+	public void setDrivePIDSetPoint(double setPoint) {
+		leftEncoderPID.setSetpoint(setPoint);
+		rightEncoderPID.setSetpoint(setPoint);
 	}
 
 	public double getLeftEncoderSetpoint() {
