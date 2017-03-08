@@ -22,13 +22,13 @@ public class Shooter extends Subsystem {
 	
     static double shooterShortP = 0.002;
     static double shooterShortI = 0;
-    static double shooterShortD = 0.12;
+    static double shooterShortD = 0.2;
     static double shooterShortF = 0.0001;
 	    
-    static double shooterFarP = 0.002;
+    static double shooterFarP = 0.003;
     static double shooterFarI = 0;
-    static double shooterFarD = 0.12;
-    static double shooterFarF = 0.0001;
+    static double shooterFarD = 0.15;
+    static double shooterFarF = 0.00015;
     
 	private PIDController shooterFarPID;
 	private PIDController shooterShortPID;
@@ -55,9 +55,9 @@ public class Shooter extends Subsystem {
 		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
 
 		shooterFarPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, Robot.countRPM, shooterMotor);
-		shooterFarPID.setSetpoint(4000);
+		shooterFarPID.setSetpoint(4100);
 		shooterFarPID.setContinuous(false);
-    	shooterFarPID.setOutputRange(0, 0.7);
+    	shooterFarPID.setOutputRange(0, 1);
     	shooterFarPID.disable();
     	
 		shooterShortPID = new PIDController(shooterShortP, shooterShortI, shooterShortD, shooterShortF, Robot.countRPM, shooterMotor);
@@ -84,8 +84,8 @@ public class Shooter extends Subsystem {
 //    }
     public void shoot() {
     	getPID().enable();
-    	agitatorMotor.set(-1);
-    	if (getPID().getError() < 100 && -getPID().getError() < 100) {
+//    	agitatorMotor.set(-1);
+    	if (getPID().getError() < 125 && -getPID().getError() < 125) {
     		agitatorMotor.set(-1);
         	indexer.set(true);
     	} else {
@@ -96,7 +96,7 @@ public class Shooter extends Subsystem {
     }
     
     public void shootWhenWeDontHaveALightSensor() {
-    	shooterMotor.set(0.9);
+    	shooterMotor.set(1);
     	agitatorMotor.set(-1);
     }
     
