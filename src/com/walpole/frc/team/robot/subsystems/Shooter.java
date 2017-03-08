@@ -95,6 +95,10 @@ public class Shooter extends Subsystem {
     	} 
     }
     
+    public void shootWithoutPID() {
+    	shooterMotor.set(0.9);
+    }
+    
     public void stopShooting() {
     	shooterShortPID.disable();
     	shooterFarPID.disable();

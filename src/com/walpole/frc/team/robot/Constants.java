@@ -15,7 +15,8 @@ public class Constants {
     public static double inchesPerTick = WHEEL_DIAMETER * Math.PI / (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV);
     public static double ticksPerInch = (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV) / (WHEEL_DIAMETER * Math.PI);
     */
-    public static double ticksPerInch = 73.825; 
+    //public static double ticksPerInch = 60.5; 
+    public static double ticksPerInch = 75.66; 
     // Gear Ratios for 2016 Final Bot (1156)
     /*public static int WHEEL_DIAMETER = 10;
     public static double ENCODER_COUNTS_PER_REV = 8.5;

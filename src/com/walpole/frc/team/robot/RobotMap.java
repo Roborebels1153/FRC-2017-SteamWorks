@@ -30,7 +30,9 @@ public class RobotMap {
 	
 	public static final int GYRO = 0;
 	
-	public static final int HOPPER_LED_STRIP = 0;
+	public static int HOPPER_LED_STRIP = 1;
+	
+	/** SHOOTER/COLLECTOR RELATED**/
 	
 	public static final int TRANSMISSION_SOLENOID_A = 0;
 	public static final int TRANSMISSION_SOLENOID_B = 1;
@@ -44,6 +46,7 @@ public class RobotMap {
 	
 	public static int INTERNAL_MOTOR = 9;
 	
+
 	public static int COLLECT_MOTOR = 8;
 	
 	public static int INDEXER_PISTON = 6;

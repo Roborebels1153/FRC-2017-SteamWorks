@@ -61,8 +61,10 @@ public class OI {
 	public OI() {
 		opBumperL.whileHeld(new ReleaseGearCommand());
 		opBumperL.whenReleased(new RetainGearCommand());
-		opTriggerL.whenReleased(new ExtendGearPusherCommand());
-		opTriggerL.whileHeld(new RetractGearPusherCommand());
+		opBumperR.whenReleased(new ExtendGearPusherCommand());
+		opBumperR.whileHeld(new RetractGearPusherCommand());
+		opTriggerL.whileHeld(new FireBallFlapperCommand());
+		opTriggerL.whenReleased(new RetractBallFlapperCommand());
 	
 		opTriggerR.whileHeld(new ShooterShootCommand());
 		
@@ -76,7 +78,6 @@ public class OI {
 //		
 //		opStart.whileHeld(new TurnLightOnCommand());
 //		opBack.whileHeld(new TurnLightOffCommand());
-	
 	
 		drLT.whenPressed(new ShiftHighCommand());
 		drLT.whenReleased(new ShiftLowCommand());

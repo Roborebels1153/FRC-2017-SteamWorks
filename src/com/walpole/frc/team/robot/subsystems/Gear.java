@@ -27,34 +27,42 @@ public class Gear extends Subsystem {
 	}
 
 	public void retractGearRetainer() {
-		gearSolenoidRetainer.set(true);
-	}
 
-	public void keepGear() {
 		gearSolenoidRetainer.set(false);
 	}
 
-	public void retractGearPusher() {
-		gearPusherSolenoid.set(false);
+	public void keepGear() {
+	
+		gearSolenoidRetainer.set(true);
+	}
 
+	public void retractGearPusher() {
+		
+		gearPusherSolenoid.set(true);
+		
 	}
 
 	public void fireGearPusher() {
-		gearPusherSolenoid.set(true);
+		
+		gearPusherSolenoid.set(false);
 	}
 
 	public void getGearState() {
+		
 		gearSolenoidRetainer.get();
 	}
 
 	public void fireBallFlapper() {
-		// the false/true can be changed
-		ballIntakeFlapper.set(false);
+		
+		ballIntakeFlapper.set(true);
+
 	}
 
+
 	public void retractBallFlapper() {
-		// the false/true can be changed
-		ballIntakeFlapper.set(true);
+
+	    ballIntakeFlapper.set(false); //the false/true can be changed
+
 	}
 
 	@Override

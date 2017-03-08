@@ -1,3 +1,4 @@
+
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
@@ -6,30 +7,35 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShiftLowCommand extends Command {
 
-	public ShiftLowCommand() {
-		requires(Robot.drive);
-	}
+    public ShiftLowCommand() {
+	requires(Robot.drive);
+	// Use requires() here to declare subsystem dependencies
+    }
 
-	@Override
-	protected void initialize() {
-	}
+    // Called just before this Command runs the first time
+    protected void initialize() {
 
-	@Override
-	protected void execute() {
-		Robot.drive.shiftLow();
-	}
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
 
-	@Override
-	protected void end() {
-	}
+	Robot.drive.shiftLow();
 
-	@Override
-	protected void interrupted() {
-	}
+    }
 
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+	return true;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    }
 }

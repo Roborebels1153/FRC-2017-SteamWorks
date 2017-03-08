@@ -25,6 +25,7 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
+
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -33,8 +34,10 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -44,22 +47,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
-	public static Preferences prefs;
-	public static DriverStation ds;
-	
+    	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
+    	public DriverStation driverStation;
+//	public static final Counter Counter = new Counter();
 //	public static final Collector collector = new Collector();
+	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
-	public static final Shooter shooter = new Shooter();
-	public static final CountRPM countRPM = new CountRPM();
-	
+//	public static final CountRPM countRPM = new CountRPM();
 	public static OI oi = new OI();
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480; 
+	private DriverStation ds;
+	
+    NetworkTable table;
+
+	
 	
 	private DriverStation.Alliance alliance = DriverStation.Alliance.Invalid;
+	private VisionThread visionThread;
+
 
 	private Command autonomousCommand;
 	private SendableChooser<Command> chooser;
@@ -71,6 +79,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		prefs = Preferences.getInstance();
 		ds = DriverStation.getInstance();
+	    
 		
 		oi = new OI();
 		
@@ -79,7 +88,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
 		
 		AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-normal","10.11.53.3");
-	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT); 
+	       
+	    AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.53.4");
+	    	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 		
 		
 	}
@@ -166,6 +178,9 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateDashboard();
+		
+		updateAllianceColor();
+
 	}
 
 	@Override
@@ -209,4 +224,6 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+
+	
 }
