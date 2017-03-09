@@ -9,33 +9,38 @@ public class Gear extends Subsystem {
 	
 	private Solenoid gearSolenoidRetainer;
 	private Solenoid gearPusherSolenoid;
+	private Solenoid ballIntakeFlapper;
 	
 	public Gear() {
 		
-		gearSolenoidRetainer = new Solenoid(RobotMap.GEAR_SOLENOID_A, RobotMap.GEAR_SOLENOID_B);
+		gearSolenoidRetainer = new Solenoid(RobotMap.GEAR_SOLENOID_A);
 		
 		
-		gearPusherSolenoid = new Solenoid(RobotMap.GEAR_PUSHER_SOLENOID_A, RobotMap.GEAR_PUSHER_SOLENOID_B);
+		gearPusherSolenoid = new Solenoid(RobotMap.GEAR_PUSHER_SOLENOID_A);
 		
+		ballIntakeFlapper = new Solenoid(RobotMap.BALL_INTAKE_SOLENOID);
+
 //		init();
 	}
 	
 	private void init() {
 		
-//		gearSolenoidRetainer.set(DoubleSolenoid.Value.kForward);
-//		gearPusherSolenoid.set(DoubleSolenoid.Value.kForward);
+//		gearSolenoidRetainer.set(false);
+//		gearPusherSolenoid.set(true);
+//		ballIntakeFlapper.set(false);
+
 		
 	}
 	
 	public void retractGearRetainer() {
 		
-		gearSolenoidRetainer.set(false);
+		gearSolenoidRetainer.set(true);
 		
 	}
 	
 	public void keepGear() {
 		
-		gearSolenoidRetainer.set(true);
+		gearSolenoidRetainer.set(false);
 		
 		
 	}
@@ -51,6 +56,18 @@ public class Gear extends Subsystem {
 		gearPusherSolenoid.set(true);
 	}
 
+	public void retractBallFlapper() {
+		
+		ballIntakeFlapper.set(true);
+		
+	}
+	
+	public void fireBallFlapper() {
+		
+		ballIntakeFlapper.set(false);
+	}
+
+	
 	@Override
 	protected void initDefaultCommand() {
 		

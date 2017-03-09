@@ -7,11 +7,14 @@ import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
 import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
+import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
+import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 //import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
@@ -163,15 +166,27 @@ public class Robot extends IterativeRobot {
 			autonomousCommand = new ExampleCommand();
 			break;
 		} */
+        //Robot.gear.fireGearPusher();
+//        Robot.gear.retractGearPusher();
+        
+       //AUTONOMOUS MODES 
+        //autonomousCommand = new BlueRedCenterScoreAGear(); 
+        autonomousCommand = new BlueLeftScoreAGear(); 
+       // autonomousCommand = new BlueRightScoreAGear();
+       // autonomousCommand = new RedRightScoreAGear(); 
+      //  autonomousCommand = new RedLeftScoreAGear(); 
+        
+         // autonomousCommand = new Drive10FeetShiftLow(); 
+        //autonomousCommand = new TurnWithGyroCommand(90);
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.start();
-            new ExtendGearPusherCommand();
+        	Robot.gear.fireGearPusher();
         } else {
             autonomousCommand = new DriveForwardWithEncoder(120);
             autonomousCommand.start();
-            new ExtendGearPusherCommand();
+        	Robot.gear.fireGearPusher();
         }
     }
 
