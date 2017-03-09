@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 
     private Victor shooterMotor;
-    private Victor shooterMotor2;
-    // private Victor agitator;
+//    private Victor shooterMotor2;
+    private Victor agitatorMotor;
     private double powerPercent = 1;
     // private Encoder shooterEncoder;
     private double neededPower;
@@ -35,7 +35,7 @@ public class Shooter extends Subsystem {
 	// shooterPID = new PIDController(shooterP, shooterI, shooterD,
 	// Robot.countRPM.getCounter() , agitator);
 	shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
-	shooterMotor2 = new Victor(RobotMap.SHOOTER_MOTOR_TWO);
+//	shooterMotor2 = new Victor(RobotMap.SHOOTER_MOTOR_TWO);
 	// agitator = new Victor(RobotMap.AGITATOR);
 
 	// shooterEncoder = new Encoder(RobotMap.SHOOTER_ENCODER1,
@@ -65,6 +65,26 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
 
     }
+    
+    public void Shoot() {
+    	shooterMotor.set(1);
+    }
+    
+    public void stopShooting() {
+    	// shooterPID.disable();
+    	// agitator.set(0);
+    	 shooterMotor.set(0);
+    	// shooterMotor2.set(0);
+        }
+    
+    public void agitatorStart() {
+    	agitatorMotor.set(1);
+    }
+    
+    public void agitatorStop() {
+    	agitatorMotor.set(0);
+    }
+    
 
     // public Encoder getEncoder() {
     // return shooterEncoder;
@@ -137,16 +157,10 @@ public class Shooter extends Subsystem {
 	// agitator.set(0);
 	// }
 	shooterMotor.set(speed);
-	shooterMotor2.set(speed * -1);
+//	shooterMotor2.set(speed * -1);
     }
 
-    public void stopShooting() {
-	// shooterPID.disable();
-	// agitator.set(0);
-	// shooterMotor.set(0);
-	// <<<<<<< HEAD
-	// shooterMotor2.set(0);
-    }
+  
 
     // public Value getLight() {
     // return light.get();

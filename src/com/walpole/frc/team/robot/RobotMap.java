@@ -14,9 +14,7 @@ public class RobotMap {
 	
 	public static int JOYSTICK_LEFT_Y = 1;
 	public static int JOYSTICK_RIGHT_X = 4;
-	
-	public static int LIGHT_SENSOR = 7;
-	
+		
 	public static int LEFT_FRONT_MOTOR = 0;
 	public static int LEFT_BACK_MOTOR = 1;
 	public static int RIGHT_FRONT_MOTOR = 2;
@@ -39,6 +37,8 @@ public class RobotMap {
 	
 	public static int LIGHT = 0;
 	
+	public static int LIGHT_SENSOR = 7;
+	
 	public static int SHOOTER_ENCODER1 = 4;
 	public static int SHOOTER_ENCODER2 = 5;
 
@@ -51,7 +51,9 @@ public class RobotMap {
 	
 	public static int CLIMB_MOTOR = 7;
 	
-	public static int CLIMB_LIMIT_SWITCH = 7;
+	public static int CLIMB_LIMIT_SWITCH = 8;
+	
+	public static int CLIMB_LIMIT_SWITCH_CLOSER = 9;
 	
 	/**GEAR RELATED**/
 	

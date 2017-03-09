@@ -79,20 +79,22 @@ public class Robot extends IterativeRobot {
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 
-	chooser.addObject("Blue Center Deliver A Gear", new BlueRedCenterScoreAGear());
+	chooser.addObject("Blue Red Center Deliver A Gear", new BlueRedCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Blue Right Deliver A Gear", new BlueRightScoreAGear()); 
-	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
-	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
-	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
+	chooser.addObject("Red Right Deliver A Gear", new RedRightScoreAGear());
+	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
+	//chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
+	//chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
+	//chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
+	//chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
+	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
-	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
-	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
+	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
+	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
-	chooser.addObject("Shift Low", new ShiftHighCommand()); 
+	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
 	/*AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
 	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
@@ -201,6 +203,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	Robot.gear.fireGearPusher();
+    	Robot.gear.keepGear();
     	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 

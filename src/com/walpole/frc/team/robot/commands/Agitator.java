@@ -1,24 +1,21 @@
-
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ClimbUpCommand extends Command {
+public class Agitator extends Command {
 
-    public ClimbUpCommand() {
-	requires(Robot.climb); // for this command, we require the
-					// climb subsystem
+    public Agitator() {
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.climb.climbUp();
+    	Robot.shooter.agitatorStart();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,23 +24,16 @@ public class ClimbUpCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(!Robot.climb.getLimitSwitchState() | !Robot.climb.getOtherLimitSwitchState() == true) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-//    	return false;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.climb.stopClimb(); // calling the stopClimb method
-    	
+    	Robot.shooter.agitatorStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-
     }
 }

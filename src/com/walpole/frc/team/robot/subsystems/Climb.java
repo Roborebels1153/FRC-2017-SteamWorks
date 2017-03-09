@@ -13,6 +13,7 @@ public class Climb extends Subsystem {
 
     private SpeedController climberVictor;
     private DigitalInput limitSwitch;
+    private DigitalInput limitSwitchClose;
 
     public Climb() {
 	climberVictor = new Victor(RobotMap.CLIMB_MOTOR); // we only need one
@@ -20,6 +21,7 @@ public class Climb extends Subsystem {
 							  // of now, we might
 							  // have to add things)
 	limitSwitch = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH);
+	limitSwitchClose = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH_CLOSER);
     }
 
     @Override
@@ -28,9 +30,14 @@ public class Climb extends Subsystem {
     }
 
     public void climbUp() { // this method is for when the climber is climbing
-			    // up toward the light
-	climberVictor.set(1);
-    }
+	if (getLimitSwitchState() == true) {
+			climberVictor.set(-1);
+		} else if (getLimitSwitchState() == false) {
+			climberVictor.set(0);
+		}
+//    	climberVictor.set(1);
+
+	}
 
     public void stopClimb() { // this method is to tell the robot when to stop
 			      // climbing
@@ -39,10 +46,18 @@ public class Climb extends Subsystem {
 
     public void climbDown() { // this method is for de-climbing the robot,
 			      // bringing it toward the ground
-	climberVictor.set(-0.7);
+	climberVictor.set(0.7);
+    }
+    
+    public void climbWithoutLimit() {
+    	climberVictor.set(-1);
     }
 
     public boolean getLimitSwitchState() {
 	return limitSwitch.get();
+    }
+    
+    public boolean getOtherLimitSwitchState() {
+    return limitSwitchClose.get();
     }
 }

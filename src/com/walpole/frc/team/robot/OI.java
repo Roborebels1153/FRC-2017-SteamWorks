@@ -1,14 +1,17 @@
 package com.walpole.frc.team.robot;
 
 
+import com.walpole.frc.team.robot.commands.Agitator;
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
+import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
+import com.walpole.frc.team.robot.commands.ShooterWithTimer;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 
@@ -76,6 +79,9 @@ public OI() {
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
+	
+	drRT.whenPressed(new ClimbWithoutLimitSwitch());
+	drRT.whenReleased(new StopClimbCommand());
 
 	drRB.whenPressed(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
 	drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning

@@ -32,6 +32,5 @@ public class BlueLeftScoreAGear extends CommandGroup {
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new ReleaseGearCommand()); 
 	
-	//addSequential(new DriveBackwardsWithEncoder(inchesBack));     
     }
 }
