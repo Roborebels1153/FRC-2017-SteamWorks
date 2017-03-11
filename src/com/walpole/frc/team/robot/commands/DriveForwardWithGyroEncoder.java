@@ -9,24 +9,28 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     private double speed;
     private double setPoint;
+    private long startTimeMillis;
+    private double secondsToDrive;
     
-    
-    public DriveForwardWithGyroEncoder(int inchesToDrive) {
+    public DriveForwardWithGyroEncoder(int inchesToDrive, double secondsToDrive) {
 	requires(Robot.drive);
 	this.speed = 0.8;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
+	this.secondsToDrive = secondsToDrive;
     }
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
+    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed, double secondsToDrive) {
 	requires(Robot.drive);
 	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
+	this.secondsToDrive = secondsToDrive;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
 	Robot.drive.setMaxGyroOutput(0.8);
 	Robot.drive.setTurnPIDSetpoint(Robot.drive.getGyroYaw());
+	startTimeMillis = System.currentTimeMillis();
 	
 	Robot.drive.resetEncoders();
 	Robot.drive.setMaxDrivePIDOutput(speed);
@@ -67,8 +71,11 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	return leftMotorPower <= 0.1 && error <= 1250;
-    	//return false;
+    	if ((leftMotorPower <= 0.1 && error <= 1200) | System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
+    		return true;
+    	} else {
+    		return false; 
+    	}
     }
 
     // Called once after isFinished returns true

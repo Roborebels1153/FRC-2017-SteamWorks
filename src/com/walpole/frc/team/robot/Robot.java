@@ -18,6 +18,7 @@ import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
+import com.walpole.frc.team.robot.commands.ShootWithTimer;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
@@ -119,7 +120,6 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
 	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
 	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
-	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
 	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
@@ -156,6 +156,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	Robot.gear.keepGear();
         autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -171,9 +172,11 @@ public class Robot extends IterativeRobot {
         //Robot.gear.fireGearPusher();
 //        Robot.gear.retractGearPusher();
         
-       //AUTONOMOUS MODES 
-        //autonomousCommand = new BlueRedCenterScoreAGear(); 
-        autonomousCommand = new BlueLeftScoreAGear(); 
+        // autonomousCommand = new ShootWithTimer();
+
+          //AUTONOMOUS MODES 
+//        autonomousCommand = new BlueRedCenterScoreAGear(); 
+//        autonomousCommand = new BlueLeftScoreAGear(); 
        // autonomousCommand = new BlueRightScoreAGear();
        // autonomousCommand = new RedRightScoreAGear(); 
       //  autonomousCommand = new RedLeftScoreAGear(); 
