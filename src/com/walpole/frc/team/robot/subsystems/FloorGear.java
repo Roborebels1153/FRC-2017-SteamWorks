@@ -12,6 +12,7 @@ public class FloorGear extends Subsystem {
 	private Victor gearMotorLeft;
 	private Victor gearMotorRight;
 	//private DualPIDOutput dualPIDOutput;
+	private Victor collector;
 	
 	//private Encoder gearEncoder;
 	
@@ -21,6 +22,7 @@ public class FloorGear extends Subsystem {
 		gearMotorLeft = new Victor(RobotMap.GEAR_MOTOR_LEFT);
 		gearMotorRight = new Victor(RobotMap.GEAR_MOTOR_RIGHT);
 		//dualPIDOutput = new DualPIDOutput(gearMotorLeft, gearMotorRight);
+		collector = new Victor(RobotMap.GEAR_MOTOR_COLLECTOR);
 		
 		//gearEncoder = new Encoder(RobotMap.GEAR_ENCODER_A, RobotMap.GEAR_ENCODER_B, false, EncodingType.k4X);
 		
@@ -36,9 +38,17 @@ public class FloorGear extends Subsystem {
 	}*/
 	
 	public void gear(Joystick joystick) {
-		double speed = Constants.FLOOR_GEAR_COLLECTOR_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+		double speed = Constants.FLOOR_GEAR_LEVER_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
 		gearMotorLeft.set(speed);
 		gearMotorRight.set(-speed);
+	}
+	
+	public void collectorOn() {
+	    collector.set(Constants.FLOOR_GEAR_LEVER_SPEED);
+	}
+	
+	public void collectorOff() {
+	    collector.set(0);
 	}
 	
 	@Override

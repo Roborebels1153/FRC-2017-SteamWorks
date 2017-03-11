@@ -4,25 +4,24 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GearWithJoysticks extends Command {
+public class GearCollectorOff extends Command {
 
-    public GearWithJoysticks() {
+    public GearCollectorOff() {
         requires(Robot.floorGear);
     }
 
     @Override
     protected void initialize() {
-    	Robot.floorGear.disableGearPID();
+	Robot.floorGear.collectorOff();
     }
 
     @Override
     protected void execute() {
-    	
     }
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
