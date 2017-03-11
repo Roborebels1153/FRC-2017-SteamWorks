@@ -27,13 +27,18 @@ public class ClimbUpCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if(!Robot.climb.getLimitSwitchState() | !Robot.climb.getOtherLimitSwitchState() == true) {
+    		return true;
+    	} else {
+    		return false;
+    	}
 //    	return false;
-    	return Robot.climb.getLimitSwitchState(); // this is referring to whether the limit switch if true or not
     }
 
     // Called once after isFinished returns true
     protected void end() {
 	Robot.climb.stopClimb(); // calling the stopClimb method
+    	
     }
 
     // Called when another command which requires one or more of the same

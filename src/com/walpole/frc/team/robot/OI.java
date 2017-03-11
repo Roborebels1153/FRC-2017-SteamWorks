@@ -1,14 +1,19 @@
 package com.walpole.frc.team.robot;
 
-
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
+import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
+import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
+import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
+import com.walpole.frc.team.robot.commands.ShootWithTimer;
+import com.walpole.frc.team.robot.commands.ShooterShootCommand;
+import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 
@@ -53,31 +58,21 @@ public class OI {
 
 
 public OI() {
-    
-	
-    
-//	opTriggerR.whileHeld(new ShooterShootCommand());
-////	opA.whileHeld(new CountRPM(60));
-//	opTriggerL.whileHeld(new CollecterCollectCommand());
-//	
-//	opA.whenPressed(new ShooterSpeedDecrement());
-//	opX.whenPressed(new ShooterSpeedCommand(0.75));
-//	opY.whenPressed(new ShooterSpeedCommand(1));
-//	
-//	opStart.whileHeld(new TurnLightOnCommand());
-//	opBack.whileHeld(new TurnLightOffCommand());
-	
-	
 	opBumperL.whileHeld(new ReleaseGearCommand());
 	opBumperL.whenReleased(new RetainGearCommand());
 	opBumperR.whenReleased(new ExtendGearPusherCommand());
 	opBumperR.whileHeld(new RetractGearPusherCommand());
-
+	
+	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
+	opTriggerL.whenReleased(new ConveyerOffCommand());
+	
+	opTriggerR.whenPressed(new ShootWithTimer());
+	opTriggerR.whenReleased(new ShooterSpeedCommand(0));
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
 
-	drRB.whenPressed(new ClimbUpCommand());        // when right bumper is held, robot motor will spin in one direction
+	drRB.whenPressed(new ClimbWithoutLimitSwitch());        // when right bumper is held, robot motor will spin in one direction
 	drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning
 
 	drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction

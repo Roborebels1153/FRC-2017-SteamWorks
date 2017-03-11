@@ -14,8 +14,6 @@ public class ClimbDownCommand extends Command {
 	requires(Robot.climb); // for this command, we require the
 					// climb subsystem
 	// Use requires() here to declare subsystem dependencies
-    	requires (Robot.climb);    //for this command, we require the climb subsystem
-        // Use requires() here to declare subsystem dependencies
     }
 
     // Called just before this Command runs the first time

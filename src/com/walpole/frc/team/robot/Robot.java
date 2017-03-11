@@ -18,6 +18,7 @@ import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
+import com.walpole.frc.team.robot.commands.ShootWithTimer;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
@@ -79,20 +80,22 @@ public class Robot extends IterativeRobot {
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 
-	chooser.addObject("Blue Center Deliver A Gear", new BlueRedCenterScoreAGear());
+	chooser.addObject("Blue Red Center Deliver A Gear", new BlueRedCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Blue Right Deliver A Gear", new BlueRightScoreAGear()); 
-	chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
-	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
-	chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
+	chooser.addObject("Red Right Deliver A Gear", new RedRightScoreAGear());
+	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
+	//chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
+	//chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
+	//chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
+	//chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
+	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
-	chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
-	chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
+	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
+	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
-	chooser.addObject("Shift Low", new ShiftHighCommand()); 
+	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
 	/*AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
 	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
@@ -117,7 +120,6 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
 	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
 	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
-	SmartDashboard.putNumber("Shooter Power", shooter.getSpeed());
 	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
 	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
@@ -154,6 +156,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	Robot.gear.keepGear();
         autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -169,9 +172,11 @@ public class Robot extends IterativeRobot {
         //Robot.gear.fireGearPusher();
 //        Robot.gear.retractGearPusher();
         
-       //AUTONOMOUS MODES 
-        //autonomousCommand = new BlueRedCenterScoreAGear(); 
-        autonomousCommand = new BlueLeftScoreAGear(); 
+        // autonomousCommand = new ShootWithTimer();
+
+          //AUTONOMOUS MODES 
+//        autonomousCommand = new BlueRedCenterScoreAGear(); 
+//        autonomousCommand = new BlueLeftScoreAGear(); 
        // autonomousCommand = new BlueRightScoreAGear();
        // autonomousCommand = new RedRightScoreAGear(); 
       //  autonomousCommand = new RedLeftScoreAGear(); 
@@ -201,6 +206,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	Robot.gear.fireGearPusher();
+    	Robot.gear.keepGear();
     	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 

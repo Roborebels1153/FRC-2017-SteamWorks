@@ -6,9 +6,11 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveForwardWithSeconds extends Command {
 
-    private long startTimeMillis;
     private double speed;
     private double secondsToDrive;
+    private long startTimeMillis;
+
+    
 
     public DriveForwardWithSeconds(double secondsToDrive) {
 	requires(Robot.drive);

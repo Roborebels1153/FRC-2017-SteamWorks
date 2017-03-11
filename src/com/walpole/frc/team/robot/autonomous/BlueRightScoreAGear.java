@@ -15,14 +15,16 @@ public class BlueRightScoreAGear extends CommandGroup {
     private static final int secondsToWait = 1; 
    // private static final int inchesBack = 60; 
     private static final  double speedToAirShip = 0.6; 
+    private static final  double speedForward = 0.7; 
+
     
     public BlueRightScoreAGear() {
 	super();
 	
 	//addSequential(new ExtendGearPusherCommand());
-	addSequential(new DriveForwardWithGyroEncoder(inchesForward));
+	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 3));
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
-	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));  
+	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2));  
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new ReleaseGearCommand()); 
 	
