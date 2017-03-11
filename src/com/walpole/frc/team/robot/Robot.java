@@ -28,7 +28,10 @@ import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -46,15 +49,14 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
-//	public static final Counter Counter = new Counter();
+    private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
 	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
-//	public static final CountRPM countRPM = new CountRPM();
 	public static OI oi = new OI();
+		
 	private static final int IMG_WIDTH = 640;
 	private static final int IMG_HEIGHT = 480; 
 	

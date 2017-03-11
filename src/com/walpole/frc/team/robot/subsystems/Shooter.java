@@ -6,6 +6,7 @@ import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -19,55 +20,63 @@ public class Shooter extends Subsystem {
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
 	
-//	 private Solenoid indexer;
+	private Solenoid indexer;
 	
-//    static double shooterShortP = 0.002;
-//    static double shooterShortI = 0;
-//    static double shooterShortD = 0.2;
-//    static double shooterShortF = 0.0001;
-//	    
-//    static double shooterFarP = 0.003;
-//    static double shooterFarI = 0;
-//    static double shooterFarD = 0.15;
-//    static double shooterFarF = 0.00015;
-//    
-//	private PIDController shooterFarPID;
-//	private PIDController shooterShortPID;
-//	private boolean shootFar = true;
-//	
-//	public void setShooterFar(boolean far) {
-//		if (far) {
-//			shootFar = true;
-//		} else {
-//			shootFar = true;
-//		}
-//	}
-//	
-//	public PIDController getPID() {
-//		if (shootFar) {
-//			return shooterFarPID;
-//		} else {
-//			return shooterFarPID;
-//		}
-//	}
+    static double shooterShortP = 0.002;
+    static double shooterShortI = 0;
+    static double shooterShortD = 0.2;
+    static double shooterShortF = 0.0001;
+	    
+    static double shooterFarP = 0.003;
+    static double shooterFarI = 0;
+    static double shooterFarD = 0.15;
+    static double shooterFarF = 0.00015;
+    
+	private PIDController shooterFarPID;
+	private PIDController shooterShortPID;
+	private boolean shootFar = true;
+	
+	private Counter shooterCounter = new Counter(RobotMap.LIGHT_SENSOR);
+
+	
+	public void setShooterFar(boolean far) {
+		if (far) {
+			shootFar = true;
+		} else {
+			shootFar = true;
+		}
+	}
+	
+	public PIDController getPID() {
+		if (shootFar) {
+			return shooterFarPID;
+		} else {
+			return shooterFarPID;
+		}
+	}
 	
 	public Shooter() {
+	
 		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
 		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
 		
+		shooterCounter.setUpDownCounterMode();
+		shooterCounter.setDistancePerPulse(1);
+		shooterCounter.setMaxPeriod(0.01);
+		shooterCounter.setPIDSourceType(PIDSourceType.kRate);
 
-//		shooterFarPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, Robot.countRPM, shooterMotor);
-//		shooterFarPID.setSetpoint(4100);
-//		shooterFarPID.setContinuous(false);
-//    	shooterFarPID.setOutputRange(0, 1);
-//    	shooterFarPID.disable();
-//    	
-//		shooterShortPID = new PIDController(shooterShortP, shooterShortI, shooterShortD, shooterShortF, Robot.countRPM, shooterMotor);
-//		shooterShortPID.setSetpoint(2500);
-//		shooterShortPID.setContinuous(false);
-//		shooterShortPID.setOutputRange(0, 0.6);
-//		shooterShortPID.disable();
-//    	
+		shooterFarPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, shooterCounter, shooterMotor);
+		shooterFarPID.setSetpoint(4100/60);
+		shooterFarPID.setContinuous(false);
+    	shooterFarPID.setOutputRange(0, 1);
+    	shooterFarPID.disable();
+    	
+		shooterShortPID = new PIDController(shooterShortP, shooterShortI, shooterShortD, shooterShortF, shooterCounter, shooterMotor);
+		shooterShortPID.setSetpoint(2500/60);
+		shooterShortPID.setContinuous(false);
+		shooterShortPID.setOutputRange(0, 0.6);
+		shooterShortPID.disable();
+    	
 	}
 	
 	public void init() {
