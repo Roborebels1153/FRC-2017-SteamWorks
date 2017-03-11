@@ -29,8 +29,6 @@ public class Drive extends Subsystem {
 
     private RebelDrive robotDrive;
 
-    private Preferences prefs;
-
     private SpeedController leftFrontVictor;
     private SpeedController leftBackVictor;
     private SpeedController rightFrontVictor;
@@ -116,13 +114,13 @@ public class Drive extends Subsystem {
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", encoderP);
-	encoderI = prefs.getDouble("encoderI", encoderI);
-	encoderD = prefs.getDouble("encoderD", encoderD);
+	encoderP = Robot.prefs.getDouble("encoderP", encoderP);
+	encoderI = Robot.prefs.getDouble("encoderI", encoderI);
+	encoderD = Robot.prefs.getDouble("encoderD", encoderD);
 
-	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
-	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
-	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
+	gyroP = Robot.prefs.getDouble("gyroP", Constants.gyroP);
+	gyroI = Robot.prefs.getDouble("gyroI", Constants.gyroI);
+	gyroD = Robot.prefs.getDouble("gyroD", Constants.gyroD);
     }
 
     /**
@@ -136,13 +134,8 @@ public class Drive extends Subsystem {
 	gyroPID.setPID(gyroP, gyroI, gyroD);
     }
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
+    @Override
     public void initDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
-	prefs = Preferences.getInstance();
     }
 
     public void drive(Joystick joystick) {
