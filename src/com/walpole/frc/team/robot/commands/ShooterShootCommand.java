@@ -18,8 +18,7 @@ public class ShooterShootCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        	Robot.shooter.agitatorOn();
-        	Robot.shooter.shootWhenWeDontHaveALightSensor();
+        	Robot.shooter.shoot();
     	}
 //    	Robot.shooter.getPIDController().enable();
 //    	SmartDashboard.putBoolean("shooting", true);
@@ -41,14 +40,11 @@ public class ShooterShootCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.shooter.stopShooting();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	
-    	
     }
 }
 

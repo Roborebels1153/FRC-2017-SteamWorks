@@ -79,6 +79,10 @@ public class Shooter extends Subsystem {
     	
 	}
 	
+	public double getRPM() {
+		return shooterCounter.getRate() * 60;
+	}
+	
 	public void init() {
 	}
 	
@@ -89,21 +93,18 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         
     }
-//    public Encoder getEncoder() {
-//    	return shooterEncoder;
-//    }
-//    public void shoot() {
-//    	getPID().enable();
-////    	agitatorMotor.set(-1);
-//    	if (getPID().getError() < 125 && -getPID().getError() < 125) {
-//    		agitatorMotor.set(-1);
-////        	indexer.set(true);
-//    	} else {
-//    		agitatorMotor.set(0);
-////        	indexer.set(false);
-//
-//    	} 
-//    }
+    public void shoot() {
+    	getPID().enable();
+//    	agitatorMotor.set(-1);
+    	if (getPID().getError() < 125 && -getPID().getError() < 125) {
+    		agitatorMotor.set(-1);
+//        	indexer.set(true);
+    	} else {
+    		agitatorMotor.set(0);
+//        	indexer.set(false);
+
+    	} 
+    }
     
     public void shootWhenWeDontHaveALightSensor() {
     	shooterMotor.set(.8);
@@ -111,8 +112,8 @@ public class Shooter extends Subsystem {
     }
     
     public void stopShooting() {
-//    	shooterShortPID.disable();
-//    	shooterFarPID.disable();
+    	shooterShortPID.disable();
+    	shooterFarPID.disable();
     	shooterMotor.set(0);
 		agitatorMotor.set(0);
     }

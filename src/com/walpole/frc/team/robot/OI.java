@@ -11,9 +11,8 @@ import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
-import com.walpole.frc.team.robot.commands.ShootWithTimer;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
-import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
+import com.walpole.frc.team.robot.commands.ShooterStopCommand;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 
@@ -66,8 +65,8 @@ public OI() {
 	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
 	opTriggerL.whenReleased(new ConveyerOffCommand());
 	
-	opTriggerR.whenPressed(new ShootWithTimer());
-	opTriggerR.whenReleased(new ShooterSpeedCommand(0));
+	opTriggerR.whenPressed(new ShooterShootCommand());
+	opTriggerR.whenReleased(new ShooterStopCommand());
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());

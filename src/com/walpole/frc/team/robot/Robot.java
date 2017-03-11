@@ -18,7 +18,6 @@ import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
-import com.walpole.frc.team.robot.commands.ShootWithTimer;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
@@ -127,7 +126,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
 	SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
 	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
-//	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+	SmartDashboard.putNumber("RPM", Robot.shooter.getRPM());
     }
 
     /**
