@@ -18,13 +18,10 @@ import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
-import com.walpole.frc.team.robot.commands.ShootWithTimer;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
-import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
-import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -48,27 +45,16 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 public class Robot extends IterativeRobot {
     	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
 //	public static final Counter Counter = new Counter();
-	public static final Collector collector = new Collector();
-	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
 //	public static final CountRPM countRPM = new CountRPM();
 	public static OI oi = new OI();
-	private static final int IMG_WIDTH = 640;
-	private static final int IMG_HEIGHT = 480; 
-	
-	private VisionThread visionThread;
-	private double centerX = 0.0;
-	private static double[] defaultValue = new double[0];
-	private static double[] areas = new double[0];
-	
 	
 	private final Object imgLock = new Object();  
 
     private Command autonomousCommand;
     private SendableChooser<Command> chooser;
-    static NetworkTable table;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -96,12 +82,6 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
-	
-	/*AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
-	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-	        
-	AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.70");
-	       cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);*/
     }    
 	
     

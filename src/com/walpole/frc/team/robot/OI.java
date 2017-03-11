@@ -3,17 +3,12 @@ package com.walpole.frc.team.robot;
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
-import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
-import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
-import com.walpole.frc.team.robot.commands.ShootWithTimer;
-import com.walpole.frc.team.robot.commands.ShooterShootCommand;
-import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 
@@ -32,6 +27,7 @@ public class OI {
     private Joystick opStick = new Joystick(RobotMap.OPERATOR_STICK);
     private Joystick driverJoystick = new Joystick(RobotMap.DRIVER_JOYSTICK);
     
+    // Reserved for Climbing
     Button opTriggerL = new RebelTrigger(opStick, 2);
     Button opTriggerR = new RebelTrigger(opStick, 3);
     
@@ -62,12 +58,6 @@ public OI() {
 	opBumperL.whenReleased(new RetainGearCommand());
 	opBumperR.whenReleased(new ExtendGearPusherCommand());
 	opBumperR.whileHeld(new RetractGearPusherCommand());
-	
-	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
-	opTriggerL.whenReleased(new ConveyerOffCommand());
-	
-	opTriggerR.whenPressed(new ShootWithTimer());
-	opTriggerR.whenReleased(new ShooterSpeedCommand(0));
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
