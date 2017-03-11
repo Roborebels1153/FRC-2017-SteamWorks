@@ -1,5 +1,6 @@
 package com.walpole.frc.team.robot.subsystems;
 
+import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
 import com.walpole.frc.team.robot.lib.DualPIDOutput;
 
@@ -39,7 +40,7 @@ public class FloorGear extends Subsystem {
 	}
 	
 	public void gear(Joystick joystick) {
-		double speed = joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+		double speed = Constants.FLOOR_GEAR_COLLECTOR_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
 		gearMotorLeft.set(speed);
 		gearMotorRight.set(-speed);
 	}
