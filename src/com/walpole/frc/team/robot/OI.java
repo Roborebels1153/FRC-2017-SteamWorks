@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 
     private Joystick opStick = new Joystick(RobotMap.OPERATOR_STICK);
-    private Joystick driverJoystick = new Joystick(RobotMap.DRIVER_JOYSTICK);
+    private Joystick driverStick = new Joystick(RobotMap.DRIVER_JOYSTICK);
     
     // Reserved for Climbing
     Button opTriggerL = new RebelTrigger(opStick, 2);
@@ -44,10 +44,10 @@ public class OI {
     
 
 	
-	private Button drLT = new RebelTrigger(driverJoystick, 2);
-	private Button drRT = new RebelTrigger(driverJoystick, 3);
-	private Button drRB = new JoystickButton(driverJoystick, 6);     //the drLb and drRb are the left and right bumpers on the XBOX controller
-	private Button drLB = new JoystickButton(driverJoystick, 5 );
+	private Button drLT = new RebelTrigger(driverStick, 2);
+	private Button drRT = new RebelTrigger(driverStick, 3);
+	private Button drRB = new JoystickButton(driverStick, 6);     //the drLb and drRb are the left and right bumpers on the XBOX controller
+	private Button drLB = new JoystickButton(driverStick, 5 );
 
 	
 
@@ -70,7 +70,10 @@ public OI() {
 	}
 	
 	public Joystick getDriverJoystick() {
-		return driverJoystick;
+		return driverStick;
 	}
 
+	public Joystick getOperatorJoystick() {
+		return opStick;
+	}
 }

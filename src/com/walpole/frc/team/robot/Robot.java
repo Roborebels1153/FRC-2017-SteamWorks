@@ -21,6 +21,7 @@ import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
+import com.walpole.frc.team.robot.subsystems.FloorGear;
 import com.walpole.frc.team.robot.subsystems.Gear;
 
 import edu.wpi.cscore.AxisCamera;
@@ -48,6 +49,7 @@ public class Robot extends IterativeRobot {
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
 	public static final Gear gear = new Gear();
+	public static final FloorGear floorGear = new FloorGear();
 //	public static final CountRPM countRPM = new CountRPM();
 	public static OI oi = new OI();
 	
@@ -201,6 +203,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
 	Scheduler.getInstance().run();
 	drive.drive(oi.getDriverJoystick());
+	floorGear.gear(oi.getOperatorJoystick());
 	updateDashboard();
   //      Robot.shooter.turnLightOn();
     }
