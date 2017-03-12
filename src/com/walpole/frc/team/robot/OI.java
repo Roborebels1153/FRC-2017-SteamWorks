@@ -5,7 +5,8 @@ import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
-import com.walpole.frc.team.robot.commands.GearCollectorOn;
+import com.walpole.frc.team.robot.commands.GearCollectorOut;
+import com.walpole.frc.team.robot.commands.GearCollectorIn;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
@@ -70,8 +71,10 @@ public OI() {
 	drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
 	drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
 	
-	opA.whenPressed(new GearCollectorOn());
+	opA.whenPressed(new GearCollectorIn());
 	opA.whenReleased(new GearCollectorOff());
+	opB.whenPressed(new GearCollectorOut());
+	opB.whenReleased(new GearCollectorOff());
 	}
 	
 	public Joystick getDriverJoystick() {

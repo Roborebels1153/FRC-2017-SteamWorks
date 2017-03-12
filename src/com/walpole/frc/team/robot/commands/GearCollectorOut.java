@@ -4,15 +4,15 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GearCollectorOn extends Command {
+public class GearCollectorOut extends Command {
 
-    public GearCollectorOn() {
+    public GearCollectorOut() {
         requires(Robot.floorGear);
     }
 
     @Override
     protected void initialize() {
-	Robot.floorGear.collectorOn();
+	Robot.floorGear.collectorOut();
     }
 
     @Override

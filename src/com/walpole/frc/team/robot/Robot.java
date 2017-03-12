@@ -29,10 +29,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    	public static final Preferences prefs = Preferences.getInstance();
+    	public static Preferences prefs;
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
-	public static final Gear gear = new Gear();
+	//public static final Gear gear = new Gear();
 	public static final FloorGear floorGear = new FloorGear();
 	public static OI oi = new OI();
 	
@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	prefs = Preferences.getInstance();;
 	oi = new OI();
 	chooser = new SendableChooser<Command>();
 	// chooser.addObject("My Auto", new MyAutoCommand());
@@ -121,7 +122,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	Robot.gear.keepGear();
+    	//Robot.gear.keepGear();
         autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -152,11 +153,11 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.start();
-        	Robot.gear.fireGearPusher();
+        	//Robot.gear.fireGearPusher();
         } else {
             autonomousCommand = new DriveForwardWithEncoder(120);
             autonomousCommand.start();
-        	Robot.gear.fireGearPusher();
+        	//Robot.gear.fireGearPusher();
         }
     }
 
@@ -170,8 +171,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-    	Robot.gear.fireGearPusher();
-    	Robot.gear.keepGear();
+    	//Robot.gear.fireGearPusher();
+    	//Robot.gear.keepGear();
     	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 

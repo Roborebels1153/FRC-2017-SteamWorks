@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ExtendGearPusherCommand extends Command {
 
     public ExtendGearPusherCommand() {
-        requires(Robot.gear);
+        //requires(Robot.gear);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	Robot.gear.fireGearPusher();
+    	//Robot.gear.fireGearPusher();
     	
     }
 

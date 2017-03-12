@@ -2,8 +2,9 @@ package com.walpole.frc.team.robot;
 
 public class Constants {
     
-    public static double FLOOR_GEAR_LEVER_SPEED = 0.1;
-    public static double FLOOR_GEAR_COLLECTOR_SPEED = 0.1;
+    public static double FLOOR_GEAR_LEVER_SPEED = 0.5;
+    public static double FLOOR_GEAR_COLLECTOR_SPEED = 1;
+    public static double FLOOR_GEAR_COLLECTOR_PASSIVE_SPEED = 0.25;
 
     // Gear Ratios for 2017 Prototype (1154)
    /* public static int WHEEL_DIAMETER = 4;

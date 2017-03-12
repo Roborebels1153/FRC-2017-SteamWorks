@@ -43,12 +43,16 @@ public class FloorGear extends Subsystem {
 		gearMotorRight.set(-speed);
 	}
 	
-	public void collectorOn() {
+	public void collectorIn() {
 	    collector.set(Constants.FLOOR_GEAR_LEVER_SPEED);
 	}
 	
+	public void collectorOut() {
+	    collector.set(-Constants.FLOOR_GEAR_LEVER_SPEED);
+	}
+	
 	public void collectorOff() {
-	    collector.set(0);
+	    collector.set(Constants.FLOOR_GEAR_COLLECTOR_PASSIVE_SPEED);
 	}
 	
 	@Override
