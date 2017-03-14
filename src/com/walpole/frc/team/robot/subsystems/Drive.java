@@ -58,6 +58,12 @@ public class Drive extends Subsystem {
     private DummyPIDOutput gyroOutput;
     private boolean turnIsFinished;
     private double driveTolerance = 15;
+    
+    private double previousJoystickValue = 0;
+    private double joystickChangeLimiter = .01;
+    
+    private boolean turboMode = false;
+   
 
     public enum Shifter {
 	High, Low
@@ -139,11 +145,56 @@ public class Drive extends Subsystem {
     }
 
     public void drive(Joystick joystick) {
-	double moveValue = 0.8 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
-	double rotateValue = 0.75 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
-	robotDrive.arcadeDrive(moveValue, rotateValue, true);
+		double moveValue = 1 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+		double rotateValue = 0.7 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		robotDrive.arcadeDrive(moveValue, rotateValue, true);
     }
-
+    
+    public void driveWithInertia(Joystick joystick) {
+    	
+    	double currentJoystick = joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+    	double changeInJoystick = currentJoystick - previousJoystickValue;
+    	double speedMultiplyer;
+    	
+    	if (changeInJoystick > joystickChangeLimiter) {
+    		changeInJoystick = joystickChangeLimiter;
+    	} else if (changeInJoystick < -joystickChangeLimiter) {
+    		changeInJoystick = -joystickChangeLimiter;
+    	}
+    	
+    	if (turboMode) {
+    		speedMultiplyer = 1;
+    	} else {
+    		speedMultiplyer = 0.8;
+    	}
+    	
+    	previousJoystickValue = previousJoystickValue + changeInJoystick;
+    	
+		double moveValue = speedMultiplyer * previousJoystickValue;
+		double rotateValue = speedMultiplyer * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		robotDrive.arcadeDrive(moveValue, rotateValue, true);
+    	
+    }
+    
+    public Shifter getCurrGear() {
+    	return currGear;
+    }
+    
+    public void turboOn() {
+    	turboMode = true;
+    }
+    
+    public void turboOff() {
+    	turboMode = false;
+    }
+    
+    public void Nitro(Joystick joystick) {
+    	//double moveValue = speed;
+    	double moveValue = 1 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+    	double rotateValue = 0.7 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+    	robotDrive.arcadeDrive(moveValue, rotateValue, true); 
+    }
+    
     public Speed getCurrSpeed() {
 	return currSpeed;
     }
@@ -167,6 +218,10 @@ public class Drive extends Subsystem {
 	transmission.set(DoubleSolenoid.Value.kReverse);
 	currGear = Shifter.Low;
     }
+    
+   /* public rampUpCode() {
+    	
+    }*/
 
     public int getLeftEncoderCount() {
 	//we are negating this as it shows up as a negative on the SmartDashboard

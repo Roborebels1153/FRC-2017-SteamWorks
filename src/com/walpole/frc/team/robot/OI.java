@@ -13,6 +13,8 @@ import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
+import com.walpole.frc.team.robot.commands.TurboModeOff;
+import com.walpole.frc.team.robot.commands.TurboModeOn;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -70,6 +72,12 @@ public OI() {
 
 	drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
 	drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
+	
+	drRT.whenPressed(new TurboModeOn());
+	drRT.whenReleased(new TurboModeOff());
+	
+	
+	
 	
 	opA.whenPressed(new GearCollectorIn());
 	opA.whenReleased(new GearCollectorOff());
