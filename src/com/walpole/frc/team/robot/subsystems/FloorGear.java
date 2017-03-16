@@ -2,47 +2,40 @@ package com.walpole.frc.team.robot.subsystems;
 
 import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.RobotMap;
+import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class FloorGear extends Subsystem {
 	
-	private Victor gearMotorLeft;
-	private Victor gearMotorRight;
-	//private DualPIDOutput dualPIDOutput;
+	private Victor gearMotor;
 	private Victor collector;
 	
-	//private Encoder gearEncoder;
-	
+	private Encoder gearEncoder;
 	//private PIDController gearPID;
+	//private DummyPIDOutput gearEncoderOutput;
 
 	public FloorGear() {
-		gearMotorLeft = new Victor(RobotMap.GEAR_MOTOR_LEFT);
-		gearMotorRight = new Victor(RobotMap.GEAR_MOTOR_RIGHT);
-		//dualPIDOutput = new DualPIDOutput(gearMotorLeft, gearMotorRight);
+		gearMotor = new Victor(RobotMap.GEAR_MOTOR);
 		collector = new Victor(RobotMap.GEAR_MOTOR_COLLECTOR);
-		
-		//gearEncoder = new Encoder(RobotMap.GEAR_ENCODER_A, RobotMap.GEAR_ENCODER_B, false, EncodingType.k4X);
-		
-		//gearPID = new PIDController(0.2, 0, 0, gearEncoder, dualPIDOutput);
+		gearEncoder = new Encoder(RobotMap.GEAR_ENCODER_A, RobotMap.GEAR_ENCODER_B, false, EncodingType.k4X);
+		 //gearEncoderOutput = new DummyPIDOutput();
+		//gearPID = new PIDController(0.2, 0, 0, gearEncoder, gearEncoderOutput);
 	}
-	
-	/*public void disableGearPID() {
-		gearPID.disable();
-	}*/
-	
-	/*public void enableGearPID() {
-		gearPID.enable();
-	}*/
 	
 	public void gear(Joystick joystick) {
 		double speed = Constants.FLOOR_GEAR_LEVER_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
-		gearMotorLeft.set(speed);
-		gearMotorRight.set(-speed);
+		gearMotor.set(-speed);
 	}
 	
+	public void setGearMotor (double power) { 
+		gearMotor.set(power);
+	}
 	public void collectorIn() {
 	    collector.set(Constants.FLOOR_GEAR_LEVER_SPEED);
 	}
@@ -52,11 +45,61 @@ public class FloorGear extends Subsystem {
 	}
 	
 	public void collectorOff() {
-	    collector.set(Constants.FLOOR_GEAR_COLLECTOR_PASSIVE_SPEED);
+	    collector.set(0);
+	}
+	
+	public double getCollectorMotorValue() {
+		return collector.get();
+	}
+	
+	public double getGearMotorValue() {
+		return gearMotor.get();
 	}
 	
 	@Override
     public void initDefaultCommand() {
 		
     }
+	
+	public void resetGearEncoder() {
+		gearEncoder.reset();
+	}
+	
+	public double getGearEncoderCount() {
+		return gearEncoder.get();
+	}
+	
+//	public void enableGearPID() {
+//		gearPID.enable();
+//	}
+//	
+//	public void disableGearPID() {
+//		gearPID.disable();
+//	}
+//	
+//	public void setGearEncoderPIDSetpoint(double setPoint) { 
+//		gearPID.setSetpoint(setPoint);
+//		
+//	}
+//	
+//	public double getGearPIDError() {
+//		return gearPID.getError();
+//	}
+//	
+//	public double getGearPIDOutput() {
+//		return gearPID.get();
+//	}
+//	public double getGearPIDSetPoint () { 
+//		return gearPID.getSetpoint(); 
+//	}
+//	
+//	public void setMaxGearCollectorPIDOutput(double speed) { 
+//		gearPID.setOutputRange(-speed, speed);
+//	}
+//	
+//	
+//	
+//	
+//	
+//	
 }

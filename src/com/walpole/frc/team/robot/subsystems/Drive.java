@@ -60,7 +60,7 @@ public class Drive extends Subsystem {
     private double driveTolerance = 15;
     
     private double previousJoystickValue = 0;
-    private double joystickChangeLimiter = .01;
+    private double joystickChangeLimiter = .1;
     
     private boolean turboMode = false;
    
@@ -326,6 +326,7 @@ public class Drive extends Subsystem {
     public double getRightEncoderSetpoint () {
 	return rightEncoderPID.getSetpoint();
     }
+ 
     
     public double getLeftEncoderSetpoint () {
 	return leftEncoderPID.getSetpoint();

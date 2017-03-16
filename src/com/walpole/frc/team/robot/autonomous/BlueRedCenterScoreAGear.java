@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot.autonomous;
 //import com.walpole.frc.team.robot.commands.DriveBackwardsWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.GearCollectorOut;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 
@@ -19,6 +20,7 @@ public class BlueRedCenterScoreAGear extends CommandGroup {
 	addSequential(new ShiftHighCommand()); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirShip, speedForward, 3)); 
 	addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new ReleaseGearCommand());
+	//addSequential(new ReleaseGearCommand());
+	addSequential(new GearCollectorOut()); 
     }
 }

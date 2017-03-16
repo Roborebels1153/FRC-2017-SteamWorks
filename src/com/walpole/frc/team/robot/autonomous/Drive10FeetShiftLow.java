@@ -1,6 +1,7 @@
 package com.walpole.frc.team.robot.autonomous;
 
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
+import com.walpole.frc.team.robot.commands.GearCollectorOut;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -18,6 +19,7 @@ public class Drive10FeetShiftLow extends CommandGroup {
 	addSequential(new ShiftHighCommand()); 
 	//addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new DriveForwardWithGyroEncoder(distance, 3)); 
+	addSequential(new GearCollectorOut()); 
     }
 
 }

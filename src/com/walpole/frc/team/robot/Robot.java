@@ -91,7 +91,12 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
 	SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
 	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
+	SmartDashboard.putNumber("Motor Power", floorGear.getGearMotorValue());
 //	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+//	SmartDashboard.putNumber("Gear Encoder Value", floorGear.getGearEncoderCount());
+//	SmartDashboard.putNumber("Gear PID Output", floorGear.getGearPIDOutput()); 
+//	SmartDashboard.putNumber("Gear PID Error", floorGear.getGearPIDError()); 
+//	SmartDashboard.putNumber("Gear Encoder Setpoint", floorGear.getGearPIDSetPoint()); 
     }
 
     /**
@@ -186,7 +191,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 	Scheduler.getInstance().run();
-//	drive.drive(oi.getDriverJoystick());
+	//drive.drive(oi.getDriverJoystick());
 	drive.driveWithInertia(oi.getDriverJoystick());
 	floorGear.gear(oi.getOperatorJoystick());
 	updateDashboard();
