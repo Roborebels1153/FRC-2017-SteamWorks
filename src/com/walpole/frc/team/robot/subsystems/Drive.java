@@ -60,7 +60,8 @@ public class Drive extends Subsystem {
     private double driveTolerance = 15;
     
     private double previousJoystickValue = 0;
-    private double joystickChangeLimiter = .1;
+
+    private double joystickChangeLimiter = .08;
     
     private boolean turboMode = false;
    
@@ -154,24 +155,26 @@ public class Drive extends Subsystem {
     	
     	double currentJoystick = joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
     	double changeInJoystick = currentJoystick - previousJoystickValue;
-    	double speedMultiplyer;
     	
     	if (changeInJoystick > joystickChangeLimiter) {
     		changeInJoystick = joystickChangeLimiter;
     	} else if (changeInJoystick < -joystickChangeLimiter) {
     		changeInJoystick = -joystickChangeLimiter;
     	}
-    	
-    	if (turboMode) {
-    		speedMultiplyer = 1;
+    	double speedMultiplyer;
+  	
+    	if (turboMode == true) {
+    		//speedMultiplyer = 1;
+        	 speedMultiplyer = 1;
     	} else {
-    		speedMultiplyer = 0.8;
+    		//speedMultiplyer = 0.8;
+        	 speedMultiplyer = 0.8; 
     	}
-    	
+   	
     	previousJoystickValue = previousJoystickValue + changeInJoystick;
     	
 		double moveValue = speedMultiplyer * previousJoystickValue;
-		double rotateValue = speedMultiplyer * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		double rotateValue = 0.8 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
 		robotDrive.arcadeDrive(moveValue, rotateValue, true);
     	
     }
