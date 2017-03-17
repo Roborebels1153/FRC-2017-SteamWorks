@@ -34,7 +34,7 @@ public class RobotMap {
 	
 	public static int SHOOTER_MOTOR = 4;
 	public static int AGITATOR_MOTOR = 6;
-	
+
 //	public static int LIGHT = 0;
 	
 	public static int LIGHT_SENSOR = 7;
@@ -65,6 +65,9 @@ public class RobotMap {
 	
 	public static int GEAR_ENCODER_A = 4;
 	public static int GEAR_ENCODER_B = 5;
+	
+	public static int GEAR_LIMIT_SWITCH = 10;
+	public static int GEAR_LIMIT_SWITCH_TWO = 11; 
 	
 	
 }
