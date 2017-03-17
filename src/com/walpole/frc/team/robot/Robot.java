@@ -126,7 +126,9 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
 	SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
 	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
-	SmartDashboard.putNumber("RPM", Robot.shooter.getRPM());
+	SmartDashboard.putNumber("RPS", Robot.shooter.getRPS());
+	SmartDashboard.putNumber("RPM", Robot.shooter.getRPS() * 60);
+	SmartDashboard.putNumber("Shooter Error", shooter.shooterPIDError());
     }
 
     /**

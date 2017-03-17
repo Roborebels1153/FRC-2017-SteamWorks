@@ -1,59 +1,33 @@
 package com.walpole.frc.team.robot.subsystems;
 
-import com.walpole.frc.team.robot.Constants;
-
-import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
-import com.walpole.frc.team.robot.lib.DummyPIDOutput;
+import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
+import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 
 import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
 	
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
-	
-	private Solenoid indexer;
-	
-    static double shooterShortP = 0.002;
+		
+    static double shooterShortP = 0.2;
     static double shooterShortI = 0;
-    static double shooterShortD = 0.2;
+    static double shooterShortD = 0;
     static double shooterShortF = 0.0001;
 	    
-    static double shooterFarP = 0.003;
+    static double shooterFarP = 0.3;
     static double shooterFarI = 0;
-    static double shooterFarD = 0.15;
-    static double shooterFarF = 0.00015;
+    static double shooterFarD = 0;
+    static double shooterFarF = 0.00005;
     
-	private PIDController shooterFarPID;
-	private PIDController shooterShortPID;
-	private boolean shootFar = true;
+	private PIDController shooterPID;
 	
 	private Counter shooterCounter = new Counter(RobotMap.LIGHT_SENSOR);
-
-	
-	public void setShooterFar(boolean far) {
-		if (far) {
-			shootFar = true;
-		} else {
-			shootFar = true;
-		}
-	}
-	
-	public PIDController getPID() {
-		if (shootFar) {
-			return shooterFarPID;
-		} else {
-			return shooterFarPID;
-		}
-	}
 	
 	public Shooter() {
 	
@@ -65,28 +39,17 @@ public class Shooter extends Subsystem {
 		shooterCounter.setMaxPeriod(0.01);
 		shooterCounter.setPIDSourceType(PIDSourceType.kRate);
 
-		shooterFarPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, shooterCounter, shooterMotor);
-		shooterFarPID.setSetpoint(4100/60);
-		shooterFarPID.setContinuous(false);
-    	shooterFarPID.setOutputRange(0, 1);
-    	shooterFarPID.disable();
-    	
-		shooterShortPID = new PIDController(shooterShortP, shooterShortI, shooterShortD, shooterShortF, shooterCounter, shooterMotor);
-		shooterShortPID.setSetpoint(2500/60);
-		shooterShortPID.setContinuous(false);
-		shooterShortPID.setOutputRange(0, 0.6);
-		shooterShortPID.disable();
-    	
+		shooterPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, shooterCounter, shooterMotor);
+		shooterPID.setSetpoint(3500/60);
+		shooterPID.setContinuous(false);
+    	shooterPID.setOutputRange(0, 0.8);
+    	shooterPID.disable();
 	}
 	
-	public double getRPM() {
-		return shooterCounter.getRate() * 60;
+	public double getRPS() {
+		return shooterCounter.getRate();
 	}
-	
-	public void init() {
-	}
-	
-	
+
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -94,16 +57,16 @@ public class Shooter extends Subsystem {
         
     }
     public void shoot() {
-    	getPID().enable();
-//    	agitatorMotor.set(-1);
-    	if (getPID().getError() < 125 && -getPID().getError() < 125) {
-    		agitatorMotor.set(-1);
-//        	indexer.set(true);
+    	shooterPID.enable();
+    	if (shooterPID.getError() < 15 && shooterPID.getError() > -15) {
+    		agitatorOn();
     	} else {
-    		agitatorMotor.set(0);
-//        	indexer.set(false);
-
+    		agitatorOff();
     	} 
+    }
+    
+    public double shooterPIDError() {
+    	return shooterPID.getError();
     }
     
     public void shootWhenWeDontHaveALightSensor() {
@@ -112,10 +75,8 @@ public class Shooter extends Subsystem {
     }
     
     public void stopShooting() {
-    	shooterShortPID.disable();
-    	shooterFarPID.disable();
+    	shooterPID.disable();
     	shooterMotor.set(0);
-		agitatorMotor.set(0);
     }
     
     public void agitatorOn() {
