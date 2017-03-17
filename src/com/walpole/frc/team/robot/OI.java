@@ -59,7 +59,7 @@ public class OI {
 public OI() {
 	opBumperL.whileHeld(new ReleaseGearCommand());
 	opBumperL.whenReleased(new RetainGearCommand());
-	opBumperR.whenReleased(new ExtendGearPusherCommand());
+	opBumperR.whenReleased(new ExtendGearPusherCommand()); 
 	opBumperR.whileHeld(new RetractGearPusherCommand());
 	
 	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test

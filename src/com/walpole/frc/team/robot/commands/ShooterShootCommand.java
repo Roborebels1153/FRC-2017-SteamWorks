@@ -18,7 +18,6 @@ public class ShooterShootCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        	Robot.shooter.shoot();
     	}
 //    	Robot.shooter.getPIDController().enable();
 //    	SmartDashboard.putBoolean("shooting", true);
@@ -28,7 +27,8 @@ public class ShooterShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	Robot.shooter.shoot();
+
     	
 // the amazing variable names    	Robot.shooter.shootWhenWeDontHaveALightSensor();
     }
