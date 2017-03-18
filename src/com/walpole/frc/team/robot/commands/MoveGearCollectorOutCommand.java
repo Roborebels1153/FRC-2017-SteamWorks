@@ -9,7 +9,7 @@ public class MoveGearCollectorOutCommand extends Command {
 	private double speed;
 	private double setPoint;
 	
-public MoveGearCollectorOutCommand(int setPoint, int speed) {
+public MoveGearCollectorOutCommand(int setPoint, double speed) {
 	requires(Robot.floorGear); 
 	this.speed = speed; 
 	this.setPoint = setPoint; 
@@ -19,17 +19,18 @@ public MoveGearCollectorOutCommand(int setPoint, int speed) {
 	@Override
 	protected void initialize() {
 		Robot.floorGear.resetGearEncoder();
-		Robot.floorGear.getGearPIDSetPoint(); 
-		Robot.floorGear.enableGearPID();
+//		Robot.floorGear.getGearPIDSetPoint(); 
 		Robot.floorGear.setGearEncoderPIDSetpoint(setPoint);
 		Robot.floorGear.setMaxGearCollectorPIDOutput(speed);
-		Robot.floorGear.ArmDown();
+		Robot.floorGear.enableGearPID();
+//		Robot.floorGear.ArmDown();
 		
 	}
 
 	@Override
 	protected void execute() {
 		double output = Robot.floorGear.getGearPIDOutput(); 
+		//double output = Robot.floorGear.getGearPIDSetPoint();
 		Robot.floorGear.setGearMotor(output);
 		
 		
@@ -41,7 +42,7 @@ public MoveGearCollectorOutCommand(int setPoint, int speed) {
 		double error = Math.abs(Robot.floorGear.getGearPIDError()); 
 		
 		//Encoders Only:
-		//return error < 100; 
+		return error < 10; 
 		
 		/*//LimitSwitch only:
 		 if (!Robot.floorGear.getGearLimitSwitchState() == true) {
@@ -54,7 +55,7 @@ public MoveGearCollectorOutCommand(int setPoint, int speed) {
 		return (error < 100 | Robot.floorGear.getGearLimitSwitchState());  */
 		 
 		//Testing Purposes:
-		return false;
+		//return false;
 	}
 
 	@Override

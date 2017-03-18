@@ -4,6 +4,7 @@ import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
+import com.walpole.frc.team.robot.lib.RebelDrive;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -17,6 +18,7 @@ public class FloorGear extends Subsystem {
 	
 	private Victor gearMotor;
 	private Victor collector;
+	
 	
 	private double gearEncoderP; 
 	private double gearEncoderI; 
@@ -59,6 +61,7 @@ public class FloorGear extends Subsystem {
 	public void setGearMotor (double power) { 
 		gearMotor.set(power);
 	}
+	
 	public void collectorIn() {
 	    collector.set(Constants.FLOOR_GEAR_LEVER_SPEED);
 	}
