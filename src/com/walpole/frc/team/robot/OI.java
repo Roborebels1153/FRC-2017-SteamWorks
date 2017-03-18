@@ -4,6 +4,8 @@ package com.walpole.frc.team.robot;
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
+import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
+import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
 import com.walpole.frc.team.robot.commands.GearCollectorOut;
@@ -15,6 +17,7 @@ import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 
 import com.walpole.frc.team.robot.commands.SetShooterDistance;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
+import com.walpole.frc.team.robot.commands.ShooterStopCommand;
 import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
 import com.walpole.frc.team.robot.commands.TurnLightOnCommand;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
@@ -81,7 +84,11 @@ public OI() {
 	drRT.whenPressed(new TurboModeOn());
 	drRT.whenReleased(new TurboModeOff());
 	
+	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
+	opTriggerL.whenReleased(new ConveyerOffCommand());
 	
+	opTriggerR.whenPressed(new ShooterShootCommand());
+	opTriggerR.whenReleased(new ShooterStopCommand());
 	
 	
 	opA.whenPressed(new GearCollectorIn());

@@ -34,6 +34,8 @@ import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.FloorGear;
 import com.walpole.frc.team.robot.subsystems.Gear;
+import com.walpole.frc.team.robot.subsystems.Shooter;
+
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -66,6 +68,7 @@ public class Robot extends IterativeRobot {
 	public static final Climb climb = new Climb();
 	//public static final Gear gear = new Gear();
 	public static final FloorGear floorGear = new FloorGear();
+	public static final Shooter shooter = new Shooter();
 	public static OI oi = new OI();
 	
 	private final Object imgLock = new Object();  
@@ -144,10 +147,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
 		
 		//Shooter Values
-//		SmartDashboard.putNumber("RPS", countRPM.getRate()/60);
-//		SmartDashboard.putNumber("RPM", countRPM.getRate());
-//		SmartDashboard.putNumber("PID Error", shooter.getShooterPIDError());
-//		SmartDashboard.putBoolean("Light Sensor", countRPM.getLightSensor());
+		SmartDashboard.putNumber("RPS", Robot.shooter.getRPS());
+		SmartDashboard.putNumber("RPM", Robot.shooter.getRPS() * 60);
+		SmartDashboard.putNumber("Shooter Error", shooter.shooterPIDError());
 	}
 	
 //	private void updateAllianceColor() {
