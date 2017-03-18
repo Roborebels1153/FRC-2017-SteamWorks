@@ -7,7 +7,7 @@ import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
-import com.walpole.frc.team.robot.commands.MoveGearCollectorOutCommand;
+import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutCommand(20, 0.7));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(20, 0.7));
     }    
 	
     

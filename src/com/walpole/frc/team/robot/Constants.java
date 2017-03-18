@@ -34,6 +34,11 @@ public class Constants {
     public static double encoderI = 0;
     public static double encoderD = 0.06882; 
     
+    public static double gearEncoderP = 0.1; 
+    public static double gearEncoderI = 0; 
+    public static double gearEncoderD = 0.02; 
+    
+    
    
     // Navx-Micro Gyro
     public static double gyroP = 0.05;
