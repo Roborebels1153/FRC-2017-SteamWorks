@@ -18,10 +18,7 @@ public class Robot extends IterativeRobot {
 	private Command autonomousCommand;
 	private SendableChooser<Command> chooser;
 	
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
+	@Override
 	public void robotInit() {
 		prefs = Preferences.getInstance();
 		oi = new OI();
@@ -65,6 +62,7 @@ public class Robot extends IterativeRobot {
 		updateDashboard();
 	}
 	
+	@Override
 	public void teleopInit() {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
