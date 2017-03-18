@@ -18,7 +18,7 @@ public class Drive10FeetShiftLow extends CommandGroup {
 	//ShiftHigh is actually ShiftLow due to pneumatics wiring
 	addSequential(new ShiftHighCommand()); 
 	//addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new DriveForwardWithGyroEncoder(distance, 3)); 
+	addSequential(new DriveForwardWithGyroEncoder(distance, 0.7, 3)); 
 	addSequential(new GearCollectorOut()); 
     }
 
