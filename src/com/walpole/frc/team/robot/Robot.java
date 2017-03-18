@@ -1,36 +1,21 @@
 package com.walpole.frc.team.robot;
 
-import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
-import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
-import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 //import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
-import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
-import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
-import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
-import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
-import com.walpole.frc.team.robot.commands.ShiftLowCommand;
-import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
-import edu.wpi.cscore.AxisCamera;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -78,7 +63,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 	oi = new OI();
 	chooser = new SendableChooser<Command>();
-	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 
 	chooser.addObject("Blue Red Center Deliver A Gear", new BlueRedCenterScoreAGear());
@@ -137,10 +121,6 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit(){
-	
-    	
-//    	new RetractGearPusherCommand();
-
     }
 	
 	public void disabledPeriodic() {

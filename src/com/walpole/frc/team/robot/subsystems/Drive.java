@@ -1,17 +1,10 @@
 package com.walpole.frc.team.robot.subsystems;
 
-import com.walpole.frc.team.robot.subsystems.Drive;
-
 import com.walpole.frc.team.robot.lib.RebelDrive;
-import com.walpole.frc.team.robot.lib.RebelGyro;
 import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.Constants;
-import com.walpole.frc.team.robot.Robot;
 import com.walpole.frc.team.robot.RobotMap;
-
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -23,7 +16,6 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Subsystem {
 

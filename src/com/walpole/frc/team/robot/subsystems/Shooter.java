@@ -1,9 +1,6 @@
 package com.walpole.frc.team.robot.subsystems;
 
 import com.walpole.frc.team.robot.RobotMap;
-import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
-import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
-
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -14,16 +11,11 @@ public class Shooter extends Subsystem {
 	
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
-		
-    static double shooterShortP = 0.2;
-    static double shooterShortI = 0;
-    static double shooterShortD = 0;
-    static double shooterShortF = 0.0001;
 	    
-    static double shooterFarP = 0.3;
-    static double shooterFarI = 0;
-    static double shooterFarD = 0;
-    static double shooterFarF = 0.00005;
+    static double shooterP = 0.3;
+    static double shooterI = 0;
+    static double shooterD = 0;
+    static double shooterF = 0.00005;
     
 	private PIDController shooterPID;
 	
@@ -39,7 +31,7 @@ public class Shooter extends Subsystem {
 		shooterCounter.setMaxPeriod(0.01);
 		shooterCounter.setPIDSourceType(PIDSourceType.kRate);
 
-		shooterPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, shooterCounter, shooterMotor);
+		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, shooterCounter, shooterMotor);
 		shooterPID.setSetpoint(3500/60);
 		shooterPID.setContinuous(false);
     	shooterPID.setOutputRange(0, 0.8);
@@ -89,15 +81,5 @@ public class Shooter extends Subsystem {
     public void setShooterSpeed(double speed) {
     	shooterMotor.set(speed);
     }
-
-    
-//    public Value getLight() { return light.get(); }
-//    public void turnLightOn() { light.set(Value.kForward); }
-//    public void turnLightOff() { light.set(Value.kReverse); }
-   
-//    public double getShooterPIDError() {
-//    	return getPID().getError();
-//    }
-    
 }
 
