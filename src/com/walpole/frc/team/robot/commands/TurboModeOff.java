@@ -1,27 +1,21 @@
-
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  */
-public class ExtendGearPusherCommand extends Command {
+public class TurboModeOff extends Command {
 
-    public ExtendGearPusherCommand() {
-        //requires(Robot.gear);
+    public TurboModeOff() {
+        requires(Robot.drive);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	//Robot.gear.fireGearPusher();
-    	
+    	Robot.drive.turboOff();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -30,7 +24,7 @@ public class ExtendGearPusherCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
@@ -40,6 +34,5 @@ public class ExtendGearPusherCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-//    	Robot.gear.retractGearPusher();
     }
 }

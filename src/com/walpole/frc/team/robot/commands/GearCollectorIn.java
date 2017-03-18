@@ -4,15 +4,15 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class FireBallFlapperCommand extends Command {
+public class GearCollectorIn extends Command {
 
-    public FireBallFlapperCommand() {
-//        requires(Robot.gear);
+    public GearCollectorIn() {
+        requires(Robot.floorGear);
     }
 
     @Override
     protected void initialize() {
-//    	Robot.gear.fireBallFlapper();
+	Robot.floorGear.collectorIn();
     }
 
     @Override
@@ -21,7 +21,7 @@ public class FireBallFlapperCommand extends Command {
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override

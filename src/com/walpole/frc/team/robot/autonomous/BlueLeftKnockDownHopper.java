@@ -21,10 +21,10 @@ public class BlueLeftKnockDownHopper extends CommandGroup {
 	
 	//Need command that retracts the top plate of the gear tray 
 //	addSequential(new ExtendGearPusherCommand()); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesToDrive));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToDrive, 2));
 	//This wait command is for testing purposes, once we perfected autonomous, we will no longer need this 
 	addSequential(new TurnWithGyroCommand(degrees)); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesToPushPad));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToPushPad, 2));
 	//This wait command is for testing purposes, once we perfected autonomous, we will no longer need this 
 	addSequential(new TurnWithGyroCommand(degrees));
 	

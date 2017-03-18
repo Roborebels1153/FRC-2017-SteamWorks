@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RetractBallFlapperCommand extends Command {
 
 	public RetractBallFlapperCommand() {
-		requires(Robot.gear);
+//		requires(Robot.gear);
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.gear.retractBallFlapper();
+//		Robot.gear.retractBallFlapper();
 	}
 
 	@Override

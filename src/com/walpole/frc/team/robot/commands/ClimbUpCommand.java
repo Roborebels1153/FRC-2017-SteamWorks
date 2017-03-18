@@ -20,17 +20,21 @@ public class ClimbUpCommand extends Command {
 	protected void execute() {
 	}
 
-	@Override
-	protected boolean isFinished() {
-		// return false;
-		// Stop climbing when the limit switch is hit
-		return Robot.climb.getLimitSwitchState();
-	}
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+    	if(!Robot.climb.getLimitSwitchState() | !Robot.climb.getOtherLimitSwitchState() == true) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+//    	return false;
+    }
 
-	@Override
-	protected void end() {
-		Robot.climb.stopClimb();
-	}
+    // Called once after isFinished returns true
+    protected void end() {
+	Robot.climb.stopClimb(); // calling the stopClimb method
+    	
+    }
 
 	@Override
 	protected void interrupted() {

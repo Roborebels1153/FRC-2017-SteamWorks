@@ -5,11 +5,13 @@ import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopCommand;
+import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand; 
+import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
+import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
-
 /**
  * Red Alliance Wall, Retrieval Zone Side
  * 
@@ -24,7 +26,7 @@ public class RedLeftScoreAGear extends CommandGroup {
     private static final  double speedToAirShip = 0.5; 
     private static final double speedForward = 0.6; 
     private static final double speedToTurn = 0.5; 
-    
+
     public RedLeftScoreAGear() {
 	super();
 	
@@ -34,6 +36,12 @@ public class RedLeftScoreAGear extends CommandGroup {
 	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));  
 	addSequential(new StopCommand()); 
-	addSequential(new ReleaseGearCommand()); 	
+	addSequential(new ReleaseGearCommand());
+	addSequential(new ShiftHighCommand()); 
+	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 3));
+	addSequential(new TurnWithGyroCommand(degreesToTurn));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2));  
+	addSequential(new WaitCommand(1)); 
+	addSequential(new ReleaseGearCommand());
     }
 }

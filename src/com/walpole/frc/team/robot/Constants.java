@@ -1,10 +1,13 @@
 package com.walpole.frc.team.robot;
 
 public class Constants {
-	
+
 	// Speeds used to control the robot in Tele-Op mode (Brigham)
 	public static final double TELE_DRIVE_SPEED = 0.8;
 	public static final double TELE_TURN_SPEED = 0.75;
+    public static double FLOOR_GEAR_LEVER_SPEED = 1;
+    public static double FLOOR_GEAR_COLLECTOR_SPEED = 1;
+    public static double FLOOR_GEAR_COLLECTOR_PASSIVE_SPEED = 0.275;
 
     // Gear Ratios for 2017 Prototype (1154)
     /* public static int WHEEL_DIAMETER = 4;
@@ -34,6 +37,8 @@ public class Constants {
     public static double encoderP = 0.017; 
     public static double encoderI = 0;
     public static double encoderD = 0.06882; 
+    
+   
     // Navx-Micro Gyro
     public static double gyroP = 0.05;
     public static double gyroI = 0;

@@ -1,6 +1,7 @@
 package com.walpole.frc.team.robot.autonomous;
 
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
+import com.walpole.frc.team.robot.commands.GearCollectorOut;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopCommand;
@@ -18,10 +19,10 @@ public class Drive10FeetShiftLow extends CommandGroup {
     
     public Drive10FeetShiftLow() { 
 	super(); 
-	//ShiftHigh is actually ShiftLow due to pneumatics wiring
-	addSequential(new ShiftLowCommand()); 
-	addSequential(new DriveForwardWithGyroEncoder(distance, speed)); 
-	addSequential(new StopCommand()); 
+	addSequential(new ShiftHighCommand()); 
+	//addSequential(new WaitCommand(secondsToWait)); 
+	addSequential(new DriveForwardWithGyroEncoder(distance, 3)); 
+	addSequential(new GearCollectorOut()); 
     }
 
 }

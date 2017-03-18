@@ -11,7 +11,7 @@ public class CrossGreenLine extends CommandGroup {
     public CrossGreenLine() { 
 	super(); 
 	
-	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship)); 
+	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, 3)); 
 	addSequential(new StopCommand()); 
     }
 

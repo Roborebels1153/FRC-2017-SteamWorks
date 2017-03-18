@@ -19,10 +19,10 @@ public class RedRightKnockDownHopper extends CommandGroup {
 		super();
 		
 		// TODO Need command that retracts the top plate of the gear tray
-		addSequential(new DriveForwardWithGyroEncoder(inchesToDrive));
+		addSequential(new DriveForwardWithGyroEncoder(inchesToDrive ,2));
 		addSequential(new WaitCommand(secondsToWait));
 		addSequential(new TurnWithGyroCommand(degrees));
-		addSequential(new DriveForwardWithGyroEncoder(inchesToPushPad));
+		addSequential(new DriveForwardWithGyroEncoder(inchesToPushPad ,2));
 		addSequential(new WaitCommand(secondsToWaitTwo));
 		addSequential(new TurnWithGyroCommand(degrees));
 	}

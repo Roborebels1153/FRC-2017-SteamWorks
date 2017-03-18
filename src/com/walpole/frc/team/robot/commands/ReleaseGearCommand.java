@@ -6,30 +6,35 @@ import com.walpole.frc.team.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ReleaseGearCommand extends Command {
-
+	
 	public ReleaseGearCommand() {
-		requires(Robot.gear);
+		//requires(Robot.gear);
 	}
 
-	@Override
 	protected void initialize() {
-		Robot.gear.retractGearRetainer();
+			
+		//Robot.gear.retractGearRetainer();	
 	}
 
-	@Override
-	protected void execute() {
-	}
+    	// Called repeatedly when this Command is scheduled to run
+    	protected void execute() {
+    		
+    		
+    	}
 
-	@Override
-	protected boolean isFinished() {
-		return true;
-	}
+    	// Make this return true when this Command no longer needs to run execute()
+    	protected boolean isFinished() {
+        return true; 
+    	}
 
-	@Override
-	protected void end() {
-	}
+    	// Called once after isFinished returns true
+    	protected void end() {
+    	    
+    	}
 
-	@Override
-	protected void interrupted() {
-	}
+    	// Called when another command which requires one or more of the same
+    	// subsystems is scheduled to run
+    	protected void interrupted() {
+    
+    	}
 }

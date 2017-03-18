@@ -6,32 +6,38 @@ import com.walpole.frc.team.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class RetainGearCommand extends Command {
-
+	
 	public RetainGearCommand() {
-		requires(Robot.gear);
+		//requires(Robot.gear);
 	}
 
-	@Override
 	protected void initialize() {
-		// Robot.gear.retractGearRetainer();
-		Robot.gear.keepGear();
-	}
+//		Robot.gear.retractGearRetainer();
+		//Robot.gear.keepGear();
+    	 
+    }
 
-	@Override
-	protected void execute() {
-	}
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+    	
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return false; 
+    }
 
-	@Override
-	protected void end() {
-		// Robot.gear.keepGear();
-	}
+    // Called once after isFinished returns true
+    protected void end() {
+//    	Robot.gear.keepGear();
+    	        
+    }
 
-	@Override
-	protected void interrupted() {
-	}
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
+    	
+
+    }
+
 }
