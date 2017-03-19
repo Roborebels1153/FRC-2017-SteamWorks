@@ -42,9 +42,9 @@ public class FloorGear extends Subsystem {
 	}
 	
 	private void loadGearPIDValues() { 
-		gearEncoderP = Robot.prefs.getDouble("gear encoderP", gearEncoderP); 
-		gearEncoderI = Robot.prefs.getDouble("gear encoderI", gearEncoderI); 
-		gearEncoderD = Robot.prefs.getDouble("gear encoderD", gearEncoderD);
+		gearEncoderP = Robot.prefs.getDouble("gearEncoderP", gearEncoderP); 
+		gearEncoderI = Robot.prefs.getDouble("gearEncoderI", gearEncoderI); 
+		gearEncoderD = Robot.prefs.getDouble("gearEncoderD", gearEncoderD);
 	}
 	
 	public void updateGearPIDControllers() { 

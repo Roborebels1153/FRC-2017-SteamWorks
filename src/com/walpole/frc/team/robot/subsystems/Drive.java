@@ -93,7 +93,7 @@ public class Drive extends Subsystem {
 	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
-	leftEncoder.setReverseDirection(true);
+	leftEncoder.setReverseDirection(false); // TODO:This is set false to work on Prototype Robot, might have to change to true on FINAL
 	rightEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
 	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
@@ -126,9 +126,10 @@ public class Drive extends Subsystem {
 	encoderI = Robot.prefs.getDouble("encoderI", encoderI);
 	encoderD = Robot.prefs.getDouble("encoderD", encoderD);
 
-	gyroP = Robot.prefs.getDouble("gyroP", Constants.gyroP);
-	gyroI = Robot.prefs.getDouble("gyroI", Constants.gyroI);
-	gyroD = Robot.prefs.getDouble("gyroD", Constants.gyroD);
+	gyroP = Robot.prefs.getDouble("gyroP", gyroP);
+	gyroI = Robot.prefs.getDouble("gyroI", gyroI);
+	gyroD = Robot.prefs.getDouble("gyroD", gyroD);
+
     }
 
     /**
@@ -229,7 +230,7 @@ public class Drive extends Subsystem {
 
     public int getLeftEncoderCount() {
 	//we are negating this as it shows up as a negative on the SmartDashboard
-	return -leftEncoder.get();
+	return leftEncoder.get();
     }
 
     public double getGyroAngle() {

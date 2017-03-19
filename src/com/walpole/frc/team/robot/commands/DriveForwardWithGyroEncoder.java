@@ -71,12 +71,14 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	if ((leftMotorPower <= 0.1 && error <= 1200) | System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
+    	/*if ((leftMotorPower <= 0.1 && error <= 1200) | System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
     		return true;
     	} else {
     		return false; 
-    	}
+    	}*/
+    	return leftMotorPower <= 0.1 && error <= 1200;
     }
+    
 
     // Called once after isFinished returns true
     protected void end() {

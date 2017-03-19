@@ -9,6 +9,7 @@ import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
+import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.FloorGear;
@@ -60,16 +61,16 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
 	//chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
 	//chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-	//chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
-	//chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
+	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
+	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
 	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(140, 0.7));
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(20, 0.7));
     }    
 	
     
