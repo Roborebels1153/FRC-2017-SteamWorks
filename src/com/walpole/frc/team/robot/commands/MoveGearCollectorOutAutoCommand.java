@@ -32,7 +32,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		double output = Robot.floorGear.getGearPIDOutput(); 
 		//double output = Robot.floorGear.getGearPIDSetPoint();
 		Robot.floorGear.setGearMotor(output);
-		
+		      
 		Robot.floorGear.collectorOut();
 		
 		
@@ -46,6 +46,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		//Encoders Only:
 		return error < 10; 
 		
+		
 		/*//LimitSwitch only:
 		 if (!Robot.floorGear.getGearLimitSwitchState() == true) {
     		return true;
@@ -58,6 +59,9 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		 
 		//Testing Purposes:
 		//return false;
+		
+		//return true; 
+		
 	}
 
 	@Override

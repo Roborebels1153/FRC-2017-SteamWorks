@@ -69,7 +69,8 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(140, 0.7));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(110, 0.7));
+	chooser.addObject("Move Gear Up", new MoveGearCollectorOutAutoCommand(0, 0.7));
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
     }    

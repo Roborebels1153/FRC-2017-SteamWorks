@@ -32,7 +32,8 @@ public class BlueLeftScoreAGear extends CommandGroup {
 	addSequential(new DriveForwardWithGyroEncoder(inchesForwardProto, speedForward, 3));
 	addSequential(new TurnWithGyroCommand(degreesToTurn));
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2));  
-	addSequential(new WaitCommand(secondsToWait)); 
+	addSequential(new WaitCommand(secondsToWait));
+	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed));
 	addSequential(new GearCollectorOut()); 
 	addSequential(new WaitCommand(3));
 	addSequential(new StopGearCollectorCommand());
