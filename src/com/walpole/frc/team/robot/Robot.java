@@ -78,6 +78,7 @@ public class Robot extends IterativeRobot {
     
     public static void updateDashboard() {
 	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitchState());
+	SmartDashboard.putBoolean("Other Limit Switch", climb.getOtherLimitSwitchState());
 	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
 	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
 	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());

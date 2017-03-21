@@ -30,12 +30,12 @@ public class Climb extends Subsystem {
     }
 
     public void climbUp() { // this method is for when the climber is climbing
-	if (getLimitSwitchState() == true) {
+	/*if (getLimitSwitchState() == true) {
 			climberVictor.set(-1);
 		} else if (getLimitSwitchState() == false) {
 			climberVictor.set(0);
-		}
-//    	climberVictor.set(1);
+		}*/
+    	climberVictor.set(-1);
 
 	}
 
