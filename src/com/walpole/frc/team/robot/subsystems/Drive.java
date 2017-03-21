@@ -236,6 +236,10 @@ public class Drive extends Subsystem {
     public double getGyroAngle() {
 	return gyro.getAngle();
     }
+    
+    public void calibrateGyro() {
+    	gyro.reset();
+    }
 
     public int getRightEncoderCount() {
 	return rightEncoder.get();

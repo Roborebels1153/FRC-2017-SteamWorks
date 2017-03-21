@@ -6,6 +6,7 @@ import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
+import com.walpole.frc.team.robot.commands.CalibrateGyro;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
@@ -99,7 +100,8 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Gear Encoder Value", floorGear.getGearEncoderCount());
 	SmartDashboard.putNumber("Gear PID Output", floorGear.getGearPIDOutput()); 
 	SmartDashboard.putNumber("Gear PID Error", floorGear.getGearPIDError()); 
-	SmartDashboard.putNumber("Gear Encoder Setpoint", floorGear.getGearPIDSetPoint()); 
+	SmartDashboard.putNumber("Gear Encoder Setpoint", floorGear.getGearPIDSetPoint());
+	SmartDashboard.putData("Calibrate Gyro", new CalibrateGyro());
     }
 
     /**
