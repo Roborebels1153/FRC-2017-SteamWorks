@@ -12,11 +12,11 @@ public class DriveForwardWithGyroEncoder extends Command {
     private long startTimeMillis;
     private double secondsToDrive;
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double secondsToDrive) {
+    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
 	requires(Robot.drive);
 	this.speed = 0.8;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
-	this.secondsToDrive = secondsToDrive;
+	//this.secondsToDrive = secondsToDrive;
     }
     
     public DriveForwardWithGyroEncoder(int inchesToDrive, double speed, double secondsToDrive) {
@@ -76,7 +76,7 @@ public class DriveForwardWithGyroEncoder extends Command {
     	} else {
     		return false; 
     	}*/
-    	return leftMotorPower <= 0.1 && error <= 1200;
+    	return leftMotorPower <= 0.1 && error <= 50; 
     }
     
 

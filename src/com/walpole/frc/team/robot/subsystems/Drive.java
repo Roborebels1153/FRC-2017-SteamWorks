@@ -96,7 +96,7 @@ public class Drive extends Subsystem {
 	leftEncoder.setReverseDirection(false); // TODO:This is set FALSE to work on Prototype Robot, change TRUE on FINAL
 	rightEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
-	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput); 
 	
 
 	//gyro = new RebelGyro();
@@ -176,7 +176,7 @@ public class Drive extends Subsystem {
     	previousJoystickValue = previousJoystickValue + changeInJoystick;
     	
 		double moveValue = speedMultiplyer * previousJoystickValue;
-		double rotateValue = 0.8 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		double rotateValue = 0.75 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
 		robotDrive.arcadeDrive(moveValue, rotateValue, true);
     	
     }
