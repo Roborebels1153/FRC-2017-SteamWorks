@@ -1,5 +1,11 @@
 package com.walpole.frc.team.robot;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
@@ -25,6 +31,8 @@ import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
+import com.walpole.frc.team.robot.subsystems.Vision;
+import com.walpole.frc.team.robot.vision.GripPipeline;
 
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -48,18 +56,18 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 public class Robot extends IterativeRobot {
     	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
 //	public static final Counter Counter = new Counter();
-	public static final Collector collector = new Collector();
+//	public static final Collector collector = new Collector();
 	public static final Shooter shooter = new Shooter();
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
-	public static final Gear gear = new Gear();
-//	public static final CountRPM countRPM = new CountRPM();
+//	public static final Gear gear = new Gear();
 	public static OI oi = new OI();
-	private static final int IMG_WIDTH = 640;
-	private static final int IMG_HEIGHT = 480; 
+	private static final int IMG_WIDTH = 320;
+	private static final int IMG_HEIGHT = 240; 
 	
 	private VisionThread visionThread;
-	private double centerX = 0.0;
+	private static Vision vision;
+	private static double centerX = 0.0;
 	private static double[] defaultValue = new double[0];
 	private static double[] areas = new double[0];
 	
@@ -68,18 +76,23 @@ public class Robot extends IterativeRobot {
 
     private Command autonomousCommand;
     private SendableChooser<Command> chooser;
-    static NetworkTable table;
 
-    /**
+
+
+	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    
+    public Vision getVision() {
+    	return vision;
+    }
     public void robotInit() {
 	oi = new OI();
 	chooser = new SendableChooser<Command>();
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
-
+	
 	chooser.addObject("Blue Red Center Deliver A Gear", new BlueRedCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
 	chooser.addObject("Blue Right Deliver A Gear", new BlueRightScoreAGear()); 
@@ -97,11 +110,24 @@ public class Robot extends IterativeRobot {
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
-	/*AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.63");
+	AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.69");
 	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	        
-	AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.70");
-	       cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);*/
+//	AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.70");
+//	       cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	
+	visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
+        if (!pipeline.filterContoursOutput().isEmpty()) {
+            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+            synchronized (imgLock) {
+                centerX = r.x + (r.width / 2);
+            }
+        }
+    });
+	
+    visionThread.start();
+    
+    vision = new Vision(NetworkTable.getTable("GRIP/myCountoursReport"));        
     }    
 	
     
@@ -126,7 +152,15 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
 	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
 //	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+  	double[] centerX = vision.table.getNumberArray("centerX", defaultValue);
+	double[] centerY = vision.table.getNumberArray("centerY", defaultValue); 
+	try {
+		SmartDashboard.putString("centerX", Arrays.toString(centerX));
+    	SmartDashboard.putString("centerY", centerY.toString());
+	} catch (Exception e) {
+		SmartDashboard.putString("Center X and Center Y",  "Null Found");
     }
+}
 
     /**
      * This function is called once each time the robot enters Disabled mode.
@@ -134,8 +168,7 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit(){
-	
-    	
+
 //    	new RetractGearPusherCommand();
 
     }
@@ -156,7 +189,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	Robot.gear.keepGear();
+//    	Robot.gear.keepGear();
         autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -174,7 +207,7 @@ public class Robot extends IterativeRobot {
         
         // autonomousCommand = new ShootWithTimer();
 
-          //AUTONOMOUS MODES 
+          //AUTONOMOUS MODES FOR TESTIN' 
 //        autonomousCommand = new BlueRedCenterScoreAGear(); 
 //        autonomousCommand = new BlueLeftScoreAGear(); 
        // autonomousCommand = new BlueRightScoreAGear();
@@ -187,11 +220,11 @@ public class Robot extends IterativeRobot {
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.start();
-        	Robot.gear.fireGearPusher();
+//        	Robot.gear.fireGearPusher();
         } else {
             autonomousCommand = new DriveForwardWithEncoder(120);
             autonomousCommand.start();
-        	Robot.gear.fireGearPusher();
+//        	Robot.gear.fireGearPusher();
         }
     }
 
@@ -199,20 +232,22 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	vision.updateVisionDashboard();
 	Scheduler.getInstance().run();
         
         updateDashboard();
     }
 
     public void teleopInit() {
-    	Robot.gear.fireGearPusher();
-    	Robot.gear.keepGear();
+//    	Robot.gear.fireGearPusher();
+//    	Robot.gear.keepGear();
     	Robot.drive.resetEncoders(); 
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
     }
 
     /**
@@ -222,7 +257,9 @@ public class Robot extends IterativeRobot {
 	Scheduler.getInstance().run();
 	drive.drive(oi.getDriverJoystick());
 	updateDashboard();
-  //      Robot.shooter.turnLightOn();
+	vision.updateVisionDashboard();
+	
+	Robot.shooter.turnLightOn();
     }
 
     /**

@@ -10,13 +10,13 @@ public class ShooterSpeedCommand extends Command {
     public ShooterSpeedCommand(double speed) {
         // Use requires() here to declare subsystem dependencies
     	shootSpeed = speed;
-    	requires(Robot.shooter);
+//    	requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		Robot.shooter.setShooterSpeed(shootSpeed);
-		Robot.shooter.agitatorOff();
+//		Robot.shooter.setShooterSpeed(shootSpeed);
+//		Robot.shooter.agitatorOff();
     	
     }
 

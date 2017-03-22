@@ -9,8 +9,10 @@ import com.walpole.frc.team.robot.lib.DummyPIDOutput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,6 +20,8 @@ public class Shooter extends Subsystem {
 	
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
+	
+    private Relay light;
 	
 //	 private Solenoid indexer;
 	
@@ -54,6 +58,9 @@ public class Shooter extends Subsystem {
 	public Shooter() {
 		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
 		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
+		
+		light = new Relay(RobotMap.LIGHT);
+
 		
 
 //		shooterFarPID = new PIDController(shooterFarP, shooterFarI, shooterFarD, shooterFarF, Robot.countRPM, shooterMotor);
@@ -120,11 +127,23 @@ public class Shooter extends Subsystem {
     	shooterMotor.set(speed);
     }
 
-    
-//    public Value getLight() { return light.get(); }
-//    public void turnLightOn() { light.set(Value.kForward); }
-//    public void turnLightOff() { light.set(Value.kReverse); }
+    public Value getLight() {
+    	
+    	return light.get(); 
    
+    }
+    public void turnLightOn() {
+    	
+    	light.set(Value.kReverse); 
+    	
+    }
+    public void turnLightOff() {
+	  
+	  light.set(Value.kForward); 
+	  
+    }
+    
+//       
 //    public double getShooterPIDError() {
 //    	return getPID().getError();
 //    }

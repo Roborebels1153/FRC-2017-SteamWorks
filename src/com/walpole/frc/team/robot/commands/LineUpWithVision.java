@@ -4,19 +4,17 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterSpeedIncrement extends Command {
+/**
+ *
+ */
+public class LineUpWithVision extends Command {
 
-	
-    public ShooterSpeedIncrement() {
-        // Use requires() here to declare subsystem dependencies
-//    	requires(Robot.shooter);
-
-
+    public LineUpWithVision() {
+        requires(Robot.drive);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	Robot.shooter.shootWhenWeDontHaveALightSensor();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,7 +23,7 @@ public class ShooterSpeedIncrement extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+        return false;
     }
 
     // Called once after isFinished returns true

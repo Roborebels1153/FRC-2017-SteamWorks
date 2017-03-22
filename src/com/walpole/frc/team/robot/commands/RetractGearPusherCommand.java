@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RetractGearPusherCommand extends Command {
 
     public RetractGearPusherCommand() {
-       requires(Robot.gear);
+//       requires(Robot.gear);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gear.retractGearPusher();
+//    	Robot.gear.retractGearPusher();
     }
 
     // Called repeatedly when this Command is scheduled to run

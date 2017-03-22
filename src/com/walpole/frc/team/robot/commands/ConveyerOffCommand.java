@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ConveyerOffCommand extends Command {
 
     public ConveyerOffCommand() {
-        requires(Robot.shooter);
+//        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +19,7 @@ public class ConveyerOffCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.agitatorOff();
+//    	Robot.shooter.agitatorOff();
     }
 
     // Make this return true when this Command no longer needs to run execute()
