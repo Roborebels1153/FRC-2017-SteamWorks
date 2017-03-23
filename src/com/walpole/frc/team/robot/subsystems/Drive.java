@@ -93,10 +93,10 @@ public class Drive extends Subsystem {
 	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
-	leftEncoder.setReverseDirection(true);
+	leftEncoder.setReverseDirection(true); // TODO:This is set FALSE to work on Prototype Robot, change TRUE on FINAL
 	rightEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
-	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput); 
 	
 
 	//gyro = new RebelGyro();
@@ -126,9 +126,10 @@ public class Drive extends Subsystem {
 	encoderI = Robot.prefs.getDouble("encoderI", encoderI);
 	encoderD = Robot.prefs.getDouble("encoderD", encoderD);
 
-	gyroP = Robot.prefs.getDouble("gyroP", Constants.gyroP);
-	gyroI = Robot.prefs.getDouble("gyroI", Constants.gyroI);
-	gyroD = Robot.prefs.getDouble("gyroD", Constants.gyroD);
+	gyroP = Robot.prefs.getDouble("gyroP", gyroP);
+	gyroI = Robot.prefs.getDouble("gyroI", gyroI);
+	gyroD = Robot.prefs.getDouble("gyroD", gyroD);
+
     }
 
     /**
@@ -148,7 +149,7 @@ public class Drive extends Subsystem {
 
     public void drive(Joystick joystick) {
 		double moveValue = 1 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
-		double rotateValue = 0.7 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		double rotateValue = 0.75 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
 		robotDrive.arcadeDrive(moveValue, rotateValue, true);
     }
     
@@ -175,7 +176,7 @@ public class Drive extends Subsystem {
     	previousJoystickValue = previousJoystickValue + changeInJoystick;
     	
 		double moveValue = speedMultiplyer * previousJoystickValue;
-		double rotateValue = 0.8 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		double rotateValue = 0.75 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
 		robotDrive.arcadeDrive(moveValue, rotateValue, true);
     	
     }
@@ -229,11 +230,15 @@ public class Drive extends Subsystem {
 
     public int getLeftEncoderCount() {
 	//we are negating this as it shows up as a negative on the SmartDashboard
-	return -leftEncoder.get();
+	return leftEncoder.get();
     }
 
     public double getGyroAngle() {
 	return gyro.getAngle();
+    }
+    
+    public void calibrateGyro() {
+    	gyro.reset();
     }
 
     public int getRightEncoderCount() {
@@ -417,4 +422,3 @@ public class Drive extends Subsystem {
     }
     
 }
-   

@@ -36,15 +36,15 @@ public class FloorGear extends Subsystem {
 		collector = new Victor(RobotMap.GEAR_MOTOR_COLLECTOR);
 		gearEncoder = new Encoder(RobotMap.GEAR_ENCODER_A, RobotMap.GEAR_ENCODER_B, false, EncodingType.k4X);
 		gearEncoderOutput = new DummyPIDOutput();
-		gearPID = new PIDController(gearEncoderP, gearEncoderI, gearEncoderD, gearEncoder, gearEncoderOutput);
+		gearPID = new PIDController(Constants.gearEncoderP, Constants.gearEncoderI, Constants.gearEncoderD, gearEncoder, gearEncoderOutput);
 		gearLimitSwitch = new DigitalInput (RobotMap.GEAR_LIMIT_SWITCH);
 		gearLimitSwitchTwo = new DigitalInput (RobotMap.GEAR_LIMIT_SWITCH_TWO); 
 	}
 	
 	private void loadGearPIDValues() { 
-		gearEncoderP = Robot.prefs.getDouble("gear encoderP", gearEncoderP); 
-		gearEncoderI = Robot.prefs.getDouble("gear encoderI", gearEncoderI); 
-		gearEncoderD = Robot.prefs.getDouble("gear encoderD", gearEncoderD);
+		gearEncoderP = Robot.prefs.getDouble("gearEncoderP", gearEncoderP); 
+		gearEncoderI = Robot.prefs.getDouble("gearEncoderI", gearEncoderI); 
+		gearEncoderD = Robot.prefs.getDouble("gearEncoderD", gearEncoderD);
 	}
 	
 	public void updateGearPIDControllers() { 

@@ -4,12 +4,12 @@ import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveGearCollectorOutCommand extends Command {
+public class MoveGearCollectorOutAutoCommand extends Command {
 	
 	private double speed;
 	private double setPoint;
 	
-public MoveGearCollectorOutCommand(int setPoint, double speed) {
+public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 	requires(Robot.floorGear); 
 	this.speed = speed; 
 	this.setPoint = setPoint; 
@@ -32,6 +32,8 @@ public MoveGearCollectorOutCommand(int setPoint, double speed) {
 		double output = Robot.floorGear.getGearPIDOutput(); 
 		//double output = Robot.floorGear.getGearPIDSetPoint();
 		Robot.floorGear.setGearMotor(output);
+		      
+		Robot.floorGear.collectorOut();
 		
 		
 	}
@@ -43,6 +45,7 @@ public MoveGearCollectorOutCommand(int setPoint, double speed) {
 		
 		//Encoders Only:
 		return error < 10; 
+		
 		
 		/*//LimitSwitch only:
 		 if (!Robot.floorGear.getGearLimitSwitchState() == true) {
@@ -56,6 +59,9 @@ public MoveGearCollectorOutCommand(int setPoint, double speed) {
 		 
 		//Testing Purposes:
 		//return false;
+		
+		//return true; 
+		
 	}
 
 	@Override

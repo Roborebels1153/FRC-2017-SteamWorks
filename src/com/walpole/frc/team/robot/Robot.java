@@ -27,9 +27,11 @@ import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
+import com.walpole.frc.team.robot.commands.CalibrateGyro;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
-import com.walpole.frc.team.robot.commands.MoveGearCollectorOutCommand;
+import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
+import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
 import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.FloorGear;
@@ -97,80 +99,87 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
 	//chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
 	//chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-	//chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
-	//chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
+	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
+	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
 	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	//chooser.addObject("Drive And Turn", new DriveAndTurn());
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(110, 0.7));
+	chooser.addObject("Move Gear Up", new MoveGearCollectorOutAutoCommand(0, 0.7));
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutCommand(20, 0.7));
 	
 //	AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-normal","10.11.53.3");
 //    camera.setResolution(IMG_WIDTH, IMG_HEIGHT); 
 //    
 // AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.53.4");
 // 	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-    }    
+    }    	
+    
+    public static void updateDashboard() {
+    	
+    // Climber Values
+	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitchState());
+	SmartDashboard.putBoolean("Other Limit Switch", climb.getOtherLimitSwitchState());
 	
-
-	private void updateDashboard() {
-		SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitchState());
-		
-		// Motor Values
-		SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
-		SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
-		
-		// Gyro Values
-		SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
-		SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
-		SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
-		SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
-		SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
-		SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
-		
-		// General Encoder Values
-		SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
-		
-		// Left Encoder Values
-		SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
-		SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
-		SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
-		SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
-		
-		// Right Encoder Values
-		SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
-		SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
-		SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
-		SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
-		
-		//Shooter Values
-		SmartDashboard.putNumber("RPS", Robot.shooter.getRPS());
-		SmartDashboard.putNumber("RPM", Robot.shooter.getRPS() * 60);
-		SmartDashboard.putNumber("Shooter Error", shooter.shooterPIDError());
-	}
+	//Drive Values
 	
-//	private void updateAllianceColor() {
-//		DriverStation.Alliance newAlliance = ds.getAlliance();
-//		if (alliance == DriverStation.Alliance.Invalid && newAlliance != DriverStation.Alliance.Invalid) {
-//			alliance = newAlliance;
-//			if (alliance == DriverStation.Alliance.Red) {
-//				// We are Red
-//				Robot.drive.setLEDred();
-//			} else if (alliance == DriverStation.Alliance.Blue) {
-//				// We are Blue
-//				Robot.drive.setLEDBlue();
-//			}
-//		}
-//	}
+		//Left Encoder Values
+	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
+	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
+	SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
+	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
+	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
 
-	@Override
-	public void disabledInit() {
-	}
+		//Right Encoder Values
+	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
+	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
+	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
+	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
+	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
 
-	@Override
+	//Gyro Values
+	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
+	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
+	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
+	//SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
+	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
+	SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
+	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
+	
+	//General Values
+	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
+
+	//Gear Values
+	SmartDashboard.putNumber("Motor Power", floorGear.getGearMotorValue());
+	SmartDashboard.putNumber("Gear Encoder Value", floorGear.getGearEncoderCount());
+	SmartDashboard.putNumber("Gear PID Output", floorGear.getGearPIDOutput()); 
+	SmartDashboard.putNumber("Gear PID Error", floorGear.getGearPIDError()); 
+	SmartDashboard.putNumber("Gear Encoder Setpoint", floorGear.getGearPIDSetPoint());
+	SmartDashboard.putData("Calibrate Gyro", new CalibrateGyro());
+	
+	//Shooter Values
+	SmartDashboard.putNumber("RPS", Robot.shooter.getRPS());
+	SmartDashboard.putNumber("RPM", Robot.shooter.getRPS() * 60);
+	SmartDashboard.putNumber("Shooter Error", shooter.shooterPIDError());
+	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+
+    }
+
+    /**
+     * This function is called once each time the robot enters Disabled mode.
+     * You can use it to reset any subsystem information you want to clear when
+     * the robot is disabled.
+     */
+    public void disabledInit(){
+	
+    	
+//    	new RetractGearPusherCommand();
+
+    }
+	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		updateDashboard();
