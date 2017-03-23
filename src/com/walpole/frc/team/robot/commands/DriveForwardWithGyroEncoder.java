@@ -45,7 +45,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	double leftOutput = Robot.drive.getLeftPIDOutput();
 	double rightOutput = Robot.drive.getRightPIDOutput();
 	double gyroOutput = Robot.drive.getGyroPIDOutput(); 
-	double driveOutput = (leftOutput + rightOutput) / 2;
+	double driveOutput = (leftOutput + rightOutput); 
 	
 	//The 
 	Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);
@@ -71,12 +71,12 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	/*if ((leftMotorPower <= 0.1 && error <= 1200) | System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
+    	if ((leftMotorPower <= 0.1 && error <= 50) | System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
     		return true;
     	} else {
     		return false; 
-    	}*/
-    	return leftMotorPower <= 0.1 && error <= 50; 
+    	}
+    	//return leftMotorPower <= 0.1 && error <= 50; 
     }
     
 

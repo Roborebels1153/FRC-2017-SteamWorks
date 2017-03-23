@@ -93,7 +93,7 @@ public class Drive extends Subsystem {
 	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
-	leftEncoder.setReverseDirection(false); // TODO:This is set FALSE to work on Prototype Robot, change TRUE on FINAL
+	leftEncoder.setReverseDirection(true); // TODO:This is set FALSE to work on Prototype Robot, change TRUE on FINAL
 	rightEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
 	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput); 
