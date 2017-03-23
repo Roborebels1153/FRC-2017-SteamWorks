@@ -1,6 +1,10 @@
 package com.walpole.frc.team.robot;
 
 public class Constants {
+    
+    public static double FLOOR_GEAR_LEVER_SPEED = 1;
+    public static double FLOOR_GEAR_COLLECTOR_SPEED = 1;
+    public static double FLOOR_GEAR_COLLECTOR_PASSIVE_SPEED = 0.275;
 
     // Gear Ratios for 2017 Prototype (1154)
    /* public static int WHEEL_DIAMETER = 4;
@@ -11,7 +15,9 @@ public class Constants {
     public static double inchesPerTick = WHEEL_DIAMETER * Math.PI / (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV);
     public static double ticksPerInch = (ENCODER_COUNTS_PER_REV * TICKS_PER_ENCODER_REV) / (WHEEL_DIAMETER * Math.PI);
     */
-    public static double ticksPerInch = 73.825; 
+   // public static double ticksPerInch = 73.825; //73.825 is the ticksPerInch for the Prototype before the gear box changes
+    public static double ticksPerInch = 58.75; //ticksPerInch after gear ratio changes
+  
     // Gear Ratios for 2016 Final Bot (1156)
     /*public static int WHEEL_DIAMETER = 10;
     public static double ENCODER_COUNTS_PER_REV = 8.5;
@@ -29,6 +35,13 @@ public class Constants {
     public static double encoderP = 0.017;
     public static double encoderI = 0;
     public static double encoderD = 0.06882; 
+    
+    public static double gearEncoderP = 0.1; 
+    public static double gearEncoderI = 0; 
+    public static double gearEncoderD = 0.02; 
+    
+    
+   
     // Navx-Micro Gyro
     public static double gyroP = 0.05;
     public static double gyroI = 0;

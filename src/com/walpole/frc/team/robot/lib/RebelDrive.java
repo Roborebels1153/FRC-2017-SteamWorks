@@ -22,13 +22,16 @@ public class RebelDrive extends RobotDrive {
 	lowSpeedNic = new NegInertiaCalc(2);
 	highSpeedNic = new NegInertiaCalc(4);
     }
+    /**
+    *Allegedly Uses the NegitiveInertiaClass to control the Robot's Speed
+    */
 
     public void arcadeDrive(GenericHID stick, Shifter gear) {
 
 	if (Shifter.Low.equals(gear)) {
 	    arcadeDrive(stick.getY(), stick.getRawAxis(4));
 	} else {
-	    arcadeDrive(stick.getY(), highSpeedNic.calculate(stick.getRawAxis(4)), true);
+	    arcadeDrive(highSpeedNic.calculate(stick.getRawAxis(1)), highSpeedNic.calculate(stick.getRawAxis(4)), true);
 	}
     }
 
