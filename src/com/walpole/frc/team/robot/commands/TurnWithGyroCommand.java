@@ -1,5 +1,6 @@
 package com.walpole.frc.team.robot.commands;
 
+import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,6 +15,12 @@ public class TurnWithGyroCommand extends Command {
 	this.degreesToTurn = degreesToTurn;
 	this.speedTurn = 0.6;
     }
+    
+    public TurnWithGyroCommand(double degreesToTurn, double speed) {
+  	requires(Robot.drive);
+  	this.degreesToTurn = degreesToTurn; 
+  	this.speedTurn = speed;
+      }
 
     protected void initialize() {
 	Robot.drive.disableDrivePID();

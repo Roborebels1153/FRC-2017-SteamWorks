@@ -1,3 +1,4 @@
+
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
@@ -7,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RetainGearCommand extends Command {
 	
 	public RetainGearCommand() {
-		requires(Robot.gear);
+		//requires(Robot.gear);
 	}
 
 	protected void initialize() {
 //		Robot.gear.retractGearRetainer();
-		Robot.gear.keepGear();
+		//Robot.gear.keepGear();
     	 
     }
 

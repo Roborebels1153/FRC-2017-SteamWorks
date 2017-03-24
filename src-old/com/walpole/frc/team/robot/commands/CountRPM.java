@@ -1,31 +1,42 @@
-package com.walpole.frc.team.robot.commands;
+/*package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterSpeedIncrement extends Command {
-
+*//**
+ *
+ *//*
+public class CountRPM extends Command {
 	
-    public ShooterSpeedIncrement() {
-        // Use requires() here to declare subsystem dependencies
-    	requires(Robot.shooter);
+	private double runCount;
+	
+	private double timer;
 
-
+    public CountRPM( double runCount) {
+        requires(Robot.Counter);
+        this.runCount = runCount * 50;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.shootWhenWeDontHaveALightSensor();
+    	Robot.Counter.reset();
+    	timer = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	timer++;
+        	
+    	if(Robot.Counter.getLightSensor() == true) {
+    		Robot.Counter.increment(); 
+    	} 
     }
+    			
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+        return timer > runCount;
     }
 
     // Called once after isFinished returns true
@@ -36,4 +47,4 @@ public class ShooterSpeedIncrement extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-}
+}*/

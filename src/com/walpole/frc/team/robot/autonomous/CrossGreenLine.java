@@ -1,18 +1,18 @@
+
 package com.walpole.frc.team.robot.autonomous;
-
-import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
+import com.walpole.frc.team.robot.commands.StopCommand;
 
 public class CrossGreenLine extends CommandGroup {
     
-    int secondsToAirship = 7; 
-    
-    
+    int inchesToAirship = 94; 
+   
     public CrossGreenLine() { 
 	super(); 
 	
-	addSequential(new DriveForwardWithSeconds(secondsToAirship)); 
+	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, 3)); 
+	addSequential(new StopCommand()); 
     }
 
 }

@@ -1,3 +1,4 @@
+
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
@@ -7,12 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReleaseGearCommand extends Command {
 	
 	public ReleaseGearCommand() {
-		requires(Robot.gear);
+		//requires(Robot.gear);
 	}
 
 	protected void initialize() {
 			
-		Robot.gear.retractGearRetainer();	
+		//Robot.gear.retractGearRetainer();	
 	}
 
     	// Called repeatedly when this Command is scheduled to run
@@ -36,5 +37,4 @@ public class ReleaseGearCommand extends Command {
     	protected void interrupted() {
     
     	}
-	
 }
