@@ -7,8 +7,6 @@ import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
 import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
-import com.walpole.frc.team.robot.autonomous.DeliverAGearLeft;
-import com.walpole.frc.team.robot.autonomous.DeliverAGearRight;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightKnockDownHopper;
@@ -90,7 +88,7 @@ public class Robot extends IterativeRobot {
 	oi = new OI();
 	chooser = new SendableChooser<Command>();
 	// chooser.addObject("My Auto", new MyAutoCommand());
-	SmartDashboard.putData("Auto mode", chooser);
+	
 
 	chooser.addObject("Blue Red Center Deliver A Gear", new BlueRedCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
@@ -107,7 +105,7 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(110, 0.7));
-	chooser.addObject("Move Gear Up", new MoveGearCollectorOutAutoCommand(0, 0.7));
+	//chooser.addObject("Move Gear Up", new MoveGearCollectorOutAutoCommand(0, 0.7));
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
@@ -116,6 +114,7 @@ public class Robot extends IterativeRobot {
 //    
 // AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.53.4");
 // 	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	SmartDashboard.putData("Auto mode", chooser);
     }    	
     
     public static void updateDashboard() {

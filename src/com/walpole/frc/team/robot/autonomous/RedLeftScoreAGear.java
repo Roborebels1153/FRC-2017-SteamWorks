@@ -6,6 +6,7 @@ import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopCommand;
+import com.walpole.frc.team.robot.commands.StopGearCollectorCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
@@ -26,24 +27,19 @@ public class RedLeftScoreAGear extends CommandGroup {
     private static final double speedToTurn = 0.5; 
     private static final  double speedToAirShip = 0.6; 
     private static final int encoderTicksDown = 140; 
-    private static final double armSpeed = 0.7;
+    private static final double armSpeed = 0.5;
 
     public RedLeftScoreAGear() {
 	super();
 	
 	//addSequential(new ExtendGearPusherCommand());
-	addSequential(new ShiftLowCommand()); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward));
-	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
-	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip));  
-	addSequential(new StopCommand()); 
-	addSequential(new ReleaseGearCommand());
 	addSequential(new ShiftHighCommand()); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 3));
-	addSequential(new TurnWithGyroCommand(degreesToTurn));
-	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2));  
-	addSequential(new WaitCommand(1)); 
+	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 5));
+	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 3));  
 	//addSequential(new ReleaseGearCommand()); 
-	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
+	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed));
+	addSequential(new WaitCommand(3)); 
+	addSequential(new StopGearCollectorCommand());
     }
 }

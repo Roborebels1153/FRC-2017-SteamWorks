@@ -8,7 +8,7 @@ import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopCommand;
-
+import com.walpole.frc.team.robot.commands.StopGearCollectorCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -19,7 +19,7 @@ public class BlueRedCenterScoreAGear extends CommandGroup {
     private static final double speedForward = 0.6; 
     private static final int secondsToWait = 1; 
     private static final int encoderTicksDown = 140; 
-    private static final double armSpeed = 0.7; 
+    private static final double armSpeed = 0.5; 
     public BlueRedCenterScoreAGear() {
 	super();
 //	addSequential(new ExtendGearPusherCommand()); 
@@ -29,6 +29,8 @@ public class BlueRedCenterScoreAGear extends CommandGroup {
 	//addSequential(new ReleaseGearCommand());
 	//addSequential(new GearCollectorOut()); 
 	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
+	addSequential(new WaitCommand(3));
+	addSequential(new StopGearCollectorCommand());
     }
 }                                                                                                   
 

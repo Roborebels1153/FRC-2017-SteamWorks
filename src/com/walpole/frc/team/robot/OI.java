@@ -69,20 +69,20 @@ public class OI {
 public OI() {
 	opBumperL.whileHeld(new ReleaseGearCommand());
 	opBumperL.whenReleased(new RetainGearCommand());
-	opBumperR.whenReleased(new ExtendGearPusherCommand());
+	//opBumperR.whenReleased(new ExtendGearPusherCommand());
 	opBumperR.whileHeld(new RetractGearPusherCommand());
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
 
 	//drRB.whenPressed(new ClimbWithoutLimitSwitch());     // when right bumper is held, robot motor will spin in one direction
-	drRB.whenReleased(new StopClimbCommand()); 
-	drRB.whenPressed(new ClimbUpCommand());     // when right bumper is held, robot motor will spin in one direction
+	opBumperR.whenReleased(new StopClimbCommand()); 
+	opBumperR.whenPressed(new ClimbUpCommand());     // when right bumper is held, robot motor will spin in one direction
 
 	// when right bumper is released, robot motor will stop spinning
 
-	drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
-	drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
+	opBumperL.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
+	opBumperL.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
 	
 	drRT.whenPressed(new TurboModeOn());
 	drRT.whenReleased(new TurboModeOff());
