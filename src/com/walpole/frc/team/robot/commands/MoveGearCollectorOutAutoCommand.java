@@ -66,6 +66,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 
 	@Override
 	protected void end() {
+		Robot.floorGear.disableGearPID();
 		
 	}
 

@@ -27,8 +27,8 @@ public class BlueRightScoreAGear extends CommandGroup {
     private static final int secondsToWait = 2; 
    // private static final int inchesBack = 60; 
 
-    private static final  double speedToAirShip = 0.6; 
-    private static final  double speedForward = 0.7; 
+    private static final  double speedToAirShip = 0.5; 
+    private static final  double speedForward = 0.4; 
     private static final int encoderTicksDown = 140;
     private static final double armSpeed = 0.5; 
     public BlueRightScoreAGear() {

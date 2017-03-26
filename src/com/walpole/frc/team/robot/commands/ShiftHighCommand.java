@@ -13,11 +13,12 @@ public class ShiftHighCommand extends Command {
 
 	@Override
 	protected void initialize() {
+		Robot.drive.shiftHigh();
+
 	}
 	
 	@Override
 	protected void execute() {
-		Robot.drive.shiftHigh();
 	}
 
 	@Override

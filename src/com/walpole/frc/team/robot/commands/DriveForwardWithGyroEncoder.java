@@ -45,7 +45,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	double leftOutput = Robot.drive.getLeftPIDOutput();
 	double rightOutput = Robot.drive.getRightPIDOutput();
 	double gyroOutput = Robot.drive.getGyroPIDOutput(); 
-	double driveOutput = (leftOutput + rightOutput); 
+	double driveOutput = (leftOutput + rightOutput) / 2;
 	
 	//The 
 	Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);

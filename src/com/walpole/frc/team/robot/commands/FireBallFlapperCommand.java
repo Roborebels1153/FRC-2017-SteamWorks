@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FireBallFlapperCommand extends Command {
 
     public FireBallFlapperCommand() {
-//        requires(Robot.gear);
+        requires(Robot.floorGear);
     }
 
     @Override
     protected void initialize() {
-//    	Robot.gear.fireBallFlapper();
+    	Robot.floorGear.fireBallFlapper();
     }
 
     @Override

@@ -110,7 +110,7 @@ public class Drive extends Subsystem {
 	}
 	gyroOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
-	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
+	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput);
 	gyroPID.setOutputRange(-1, 1);
 	gyroPID.setInputRange(-180, 180);
 	gyroPID.setContinuous();
@@ -138,9 +138,9 @@ public class Drive extends Subsystem {
     public void updatePIDControllers() {
 	loadPIDValues();
 
-	leftEncoderPID.setPID(encoderP, encoderI, encoderD); 
-	rightEncoderPID.setPID(encoderP, encoderI, encoderD); 
-	gyroPID.setPID(gyroP, gyroI, gyroD);
+	/*leftEncoderPID.setPID(encoderP, encoderI, encoderD); 
+	rightEncoderPID.setPID(encoderP, encoderI, encoderD); */
+	//gyroPID.setPID(gyroP, gyroI, gyroD);
     }
 
     @Override
@@ -196,7 +196,7 @@ public class Drive extends Subsystem {
     public void Nitro(Joystick joystick) {
     	//double moveValue = speed;
     	double moveValue = 1 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
-    	double rotateValue = 0.7 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+    	double rotateValue = 0.8 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
     	robotDrive.arcadeDrive(moveValue, rotateValue, true); 
     }
     

@@ -7,6 +7,7 @@ import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
 import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
 import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
 import com.walpole.frc.team.robot.commands.GearCollectorOut;
 import com.walpole.frc.team.robot.commands.GearCollectorIn;
@@ -70,7 +71,7 @@ public OI() {
 	opBumperL.whileHeld(new ReleaseGearCommand());
 	opBumperL.whenReleased(new RetainGearCommand());
 	//opBumperR.whenReleased(new ExtendGearPusherCommand());
-	opBumperR.whileHeld(new RetractGearPusherCommand());
+//	opBumperR.whileHeld(new RetractGearPusherCommand());
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
@@ -84,11 +85,13 @@ public OI() {
 	opBumperL.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
 	opBumperL.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
 	
+	
+	
 	drRT.whenPressed(new TurboModeOn());
 	drRT.whenReleased(new TurboModeOff());
 	
-	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
-	opTriggerL.whenReleased(new ConveyerOffCommand());
+	opTriggerL.whileHeld(new FireBallFlapperCommand()); // This is a test
+	opTriggerL.whenReleased(new RetractBallFlapperCommand());
 	
 	opTriggerR.whenPressed(new ShooterShootCommand());
 	opTriggerR.whenReleased(new ShooterStopCommand());

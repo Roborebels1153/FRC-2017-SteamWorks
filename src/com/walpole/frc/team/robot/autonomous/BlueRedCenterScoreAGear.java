@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueRedCenterScoreAGear extends CommandGroup {
 
-    private static final int inchesToAirShip = 78;
-    private static final double speedForward = 0.6; 
-    private static final int secondsToWait = 1; 
+    private static final int inchesToAirShip = 81;
+    private static final double speedForward = 0.5; 
+    private static final int secondsToWait = 1;
     private static final int encoderTicksDown = 140; 
     private static final double armSpeed = 0.5; 
     public BlueRedCenterScoreAGear() {

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -30,6 +31,9 @@ public class FloorGear extends Subsystem {
 	
 	private DigitalInput gearLimitSwitch;
 	private DigitalInput gearLimitSwitchTwo; 
+	
+	private Solenoid ballIntakeFlapper;
+
 
 	public FloorGear() {
 		gearMotor = new Victor(RobotMap.GEAR_MOTOR);
@@ -39,6 +43,16 @@ public class FloorGear extends Subsystem {
 		gearPID = new PIDController(Constants.gearEncoderP, Constants.gearEncoderI, Constants.gearEncoderD, gearEncoder, gearEncoderOutput);
 		gearLimitSwitch = new DigitalInput (RobotMap.GEAR_LIMIT_SWITCH);
 		gearLimitSwitchTwo = new DigitalInput (RobotMap.GEAR_LIMIT_SWITCH_TWO); 
+		
+		ballIntakeFlapper = new Solenoid(RobotMap.BALL_INTAKE_SOLENOID);
+
+		init();
+		
+	}
+	
+	private void init() {
+		ballIntakeFlapper.set(false);
+
 	}
 	
 	private void loadGearPIDValues() { 
@@ -149,6 +163,17 @@ public class FloorGear extends Subsystem {
 			
 		}
 		
+	}
+	
+public void retractBallFlapper() {
+		
+		ballIntakeFlapper.set(false);
+		
+	}
+	
+	public void fireBallFlapper() {
+		
+		ballIntakeFlapper.set(true);
 	}
 	
 }

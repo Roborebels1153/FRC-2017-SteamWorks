@@ -181,6 +181,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 		updateDashboard();
 //		
 //		updateAllianceColor();
