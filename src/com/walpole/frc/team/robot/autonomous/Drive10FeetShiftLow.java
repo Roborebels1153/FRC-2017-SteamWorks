@@ -15,7 +15,9 @@ public class Drive10FeetShiftLow extends CommandGroup {
     
     private static final int distance = 120; 
     private static final double secondsToWait = 2; 
-    private static final double speed = 0.5; 
+    private static final double speed = 0.5;
+    //Testing
+    private double armSpeed = 0.5;
     
     
     public Drive10FeetShiftLow() { 
@@ -24,7 +26,8 @@ public class Drive10FeetShiftLow extends CommandGroup {
 	addSequential(new ShiftHighCommand()); 
 	//addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new DriveForwardWithGyroEncoder(distance, 0.6, 5)); 
-	addSequential(new WaitCommand(1));
+	addSequential(new WaitCommand(3));
+//	addSequential(new MoveGearCollectorOutAutoCommand(0, armSpeed, 1.5));
 	addSequential(new MoveGearCollectorOutAutoCommand(140, 0.4));
 	//addSequential(new GearCollectorOut()); 
 	addSequential(new WaitCommand(3));

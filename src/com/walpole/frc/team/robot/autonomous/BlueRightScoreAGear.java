@@ -23,24 +23,27 @@ public class BlueRightScoreAGear extends CommandGroup {
 
     private static final int inchesForward = 72;
     private static final int degreesToTurn = -60;
-    private static final int inchesToAirship = 78;
+    private static final int inchesToAirship = 76;
     private static final int secondsToWait = 2; 
    // private static final int inchesBack = 60; 
 
-    private static final  double speedToAirShip = 0.5; 
-    private static final  double speedForward = 0.4; 
+    private static final  double speedToAirShip = 0.6; 
+    private static final  double speedForward = 0.5; 
     private static final int encoderTicksDown = 140;
     private static final double armSpeed = 0.5; 
+    private static final double speedToTurn = 0.5; 
     public BlueRightScoreAGear() {
 	super();
 	//addSequential(new ExtendGearPusherCommand());
 	addSequential(new ShiftHighCommand());
 	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 3));
-	addSequential(new TurnWithGyroCommand(degreesToTurn));
-	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2));  
+	addSequential(new WaitCommand(1));
+	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+//	addSequential(new MoveGearCollectorOutAutoCommand(0, -0.5, 1.5));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2)); 
 	addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed));
-	addSequential(new WaitCommand(3)); 
+	addSequential(new WaitCommand(1)); 
 	addSequential(new StopGearCollectorCommand());
 	    }
 }

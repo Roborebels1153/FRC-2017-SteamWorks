@@ -12,6 +12,7 @@ public class TurnWithGyroCommand extends Command {
 
     public TurnWithGyroCommand(double degreesToTurn) {
 	requires(Robot.drive);
+	requires(Robot.floorGear);
 	this.degreesToTurn = degreesToTurn;
 	this.speedTurn = 0.6;
     }
@@ -27,6 +28,7 @@ public class TurnWithGyroCommand extends Command {
 	Robot.drive.setTurnPIDSetpoint(degreesToTurn);
 	Robot.drive.setMaxGyroOutput(speedTurn);
 	Robot.drive.enableGyroPID();
+	Robot.floorGear.setMotorValue(-0.5);
     }
 
     protected void execute() {
@@ -52,6 +54,7 @@ public class TurnWithGyroCommand extends Command {
 
     protected void end() {
 	Robot.drive.disableGyroPID();
+	Robot.floorGear.setMotorValue(0);
     }
 
     protected void interrupted() {

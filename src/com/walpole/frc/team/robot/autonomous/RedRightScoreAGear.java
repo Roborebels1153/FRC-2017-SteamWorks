@@ -29,6 +29,7 @@ public class RedRightScoreAGear extends CommandGroup {
     private static final  double speedToAirShip = 0.4; 
     private static final int encoderTicksDown = 140; 
     private static final double armSpeed = 0.5; 
+    private static final double speedToTurn= 0.5; 
     
     public RedRightScoreAGear() {
 	super();
@@ -37,12 +38,14 @@ public class RedRightScoreAGear extends CommandGroup {
 
 	addSequential(new ShiftHighCommand()); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 3));
-	addSequential(new TurnWithGyroCommand(degreesToTurn));
+	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+//	addSequential(new MoveGearCollectorOutAutoCommand(0, -0.5, 1.5));
+	addSequential(new WaitCommand(1));
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2));  
-	addSequential(new WaitCommand(secondsToWait)); 
+	addSequential(new WaitCommand(secondsToWait));
 	//addSequential(new ReleaseGearCommand()); 
 	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
-	addSequential(new WaitCommand(3));
+	addSequential(new WaitCommand(1));
 	addSequential(new StopGearCollectorCommand());
 	
     }

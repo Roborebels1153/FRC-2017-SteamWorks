@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueLeftScoreAGear extends CommandGroup {
     private static final int inchesForward = 72;
-    private static final int inchesForwardProto = 65; //Distance manipulated for PROTOTYPE Robot
+   // private static final int inchesForwardProto = 65; //Distance manipulated for PROTOTYPE Robot
     private static final int degreesToTurn = 60;
     private static final int inchesToAirship = 78;
     private static final int secondsToWait = 1; 
@@ -24,18 +24,21 @@ public class BlueLeftScoreAGear extends CommandGroup {
     private static final  double speedToAirShip = 0.4; 
     private static final int encoderTicksDown = 140;            
     private static final double armSpeed = 0.4; 
+    private static final double speedToTurn = 0.5; 
     
     public BlueLeftScoreAGear() {
 	super();
 	
 	addSequential(new ShiftHighCommand()); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesForwardProto, speedForward, 5));
-	addSequential(new TurnWithGyroCommand(degreesToTurn));
+	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 5));
+	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+//	addSequential(new MoveGearCollectorOutAutoCommand(0, -0.5, 1.5));
+	addSequential(new WaitCommand(1));
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 3));  
 	addSequential(new WaitCommand(secondsToWait));
 	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed));
 	//addSequential(new GearCollectorOut()); 
-	addSequential(new WaitCommand(3));
+	addSequential(new WaitCommand(1));
 	addSequential(new StopGearCollectorCommand());
 	//addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
 	

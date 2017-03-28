@@ -176,5 +176,9 @@ public void retractBallFlapper() {
 		ballIntakeFlapper.set(true);
 	}
 	
+	public void setMotorValue(double speed) {
+		gearMotor.set(speed);
+	}
+	
 }
 	

@@ -35,11 +35,13 @@ public class RedLeftScoreAGear extends CommandGroup {
 	//addSequential(new ExtendGearPusherCommand());
 	addSequential(new ShiftHighCommand()); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 5));
+	addSequential(new WaitCommand(1));
 	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+//	addSequential(new MoveGearCollectorOutAutoCommand(0, armSpeed, 1.5));
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 3));  
+	addSequential(new WaitCommand(1)); 
 	//addSequential(new ReleaseGearCommand()); 
 	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed));
-	addSequential(new WaitCommand(3)); 
 	addSequential(new StopGearCollectorCommand());
     }
 }

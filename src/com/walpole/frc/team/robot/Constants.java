@@ -32,7 +32,7 @@ public class Constants {
     // PID Constants for 2017 FINAL Robot (1153)
     public static double encoderP = 0.09;
     public static double encoderI = 0;
-    public static double encoderD = 0.09;
+    public static double encoderD = 0.1;
     
   /*  // PID Constants for 2017 PROTOTYPE Robot(1154)
     public static double encoderP = 0.05; 
