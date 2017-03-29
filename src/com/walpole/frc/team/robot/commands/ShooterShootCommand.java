@@ -9,18 +9,22 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShooterShootCommand extends Command {
 
-    public ShooterShootCommand() {
         // Use requires() here to declare subsystem dependencies
-       requires(Robot.shooter);
-
-
+	
+	public ShooterShootCommand() { 
+   
+		requires(Robot.shooter); 
+    	
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-    	}
+    
+    	
+    	
 //    	Robot.shooter.getPIDController().enable();
-//    	SmartDashboard.putBoolean("shooting", true);
+//    	SmartDashboard.putBoolean("shooting", true); 
+    
+    
     	
 
    

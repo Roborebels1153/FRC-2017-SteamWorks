@@ -10,7 +10,7 @@ import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
-import com.walpole.frc.team.robot.autonomous.RedRightKnockDownHopper;
+import com.walpole.frc.team.robot.autonomous.RedRightHopperShoot;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;

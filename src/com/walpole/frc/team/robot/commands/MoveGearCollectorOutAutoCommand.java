@@ -8,7 +8,6 @@ public class MoveGearCollectorOutAutoCommand extends Command {
 	
 	private double speed;
 	private double setPoint;
-//	private long startTimeMillis;
 	private double secondsArm;
 
 public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
@@ -18,17 +17,9 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 	
 }
 
-//public MoveGearCollectorOutAutoCommand(int setPoint, double speed, double secondsArm) {
-//	requires(Robot.floorGear); 
-//	this.secondsArm = secondsArm;
-//	this.speed = speed; 
-//	this.setPoint = setPoint; 
-//	
-//}
 
 	@Override
 	protected void initialize() {
-//		startTimeMillis = System.currentTimeMillis();
 
 		Robot.floorGear.resetGearEncoder();
 //		Robot.floorGear.getGearPIDSetPoint(); 
@@ -57,7 +48,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		
 		//Encoders Only:
 		return error < 10;
-				//|  System.currentTimeMillis() - startTimeMillis >= secondsArm * 1000;
+				
 		
 		
 		/*//LimitSwitch only:

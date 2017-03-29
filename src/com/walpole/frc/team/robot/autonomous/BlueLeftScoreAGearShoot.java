@@ -6,6 +6,9 @@ import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 //import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 //import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
+import com.walpole.frc.team.robot.commands.ShooterShootCommand;
+import com.walpole.frc.team.robot.commands.ShooterStopCommand;
+import com.walpole.frc.team.robot.commands.StopGearCollectorCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -26,24 +29,28 @@ public class BlueLeftScoreAGearShoot extends CommandGroup {
     private static final double degreesToTurnShoot = -165;
     private static final int inchesToBoiler = 5;
     private static final double speedToBoiler = 0.7;
+    private static final double speedToTurn = 0.5; 
+    private static final double degreesToTurnBack = 170; 
     
     public BlueLeftScoreAGearShoot() {
 	super();
 	
-	//addSequential(new ExtendGearPusherCommand());
 	addSequential(new ShiftHighCommand()); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 3));
-	//addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new TurnWithGyroCommand(degreesToTurn));
-	//addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 2));  
-	addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown,armSpeed));
-	//addSequential(new ReleaseGearCommand()); 
-	addSequential (new DriveForwardWithGyroEncoder (inchesBack, speedBack));
-	addSequential(new TurnWithGyroCommand(degreesToTurnShoot));
-	addSequential(new DriveForwardWithGyroEncoder(inchesToBoiler, speedToBoiler));
-	//TODO: add shooting command
+	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 5));
+	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+//	addSequential(new MoveGearCollectorOutAutoCommand(0, -0.5, 1.5));
+	addSequential(new WaitCommand(1));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 3));  
+	addSequential(new WaitCommand(secondsToWait));
+	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed));
+	addSequential(new WaitCommand(1));
+	addSequential(new StopGearCollectorCommand());
+	addSequential(new DriveForwardWithGyroEncoder(inchesBack, speedBack));
+	addSequential(new TurnWithGyroCommand(degreesToTurnBack));
+	addSequential(new DriveForwardWithGyroEncoder(inchesToBoiler, speedToBoiler)); 
+	addSequential(new ShooterShootCommand());
+	addSequential(new WaitCommand(8));
+	addSequential(new ShooterStopCommand());
 	
 	
     }
