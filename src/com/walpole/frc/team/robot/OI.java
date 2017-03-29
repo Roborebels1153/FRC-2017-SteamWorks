@@ -4,8 +4,6 @@ package com.walpole.frc.team.robot;
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
-import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
-import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
@@ -16,7 +14,6 @@ import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.RetractBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
 
-import com.walpole.frc.team.robot.commands.SetShooterDistance;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.ShooterStopCommand;
 import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
