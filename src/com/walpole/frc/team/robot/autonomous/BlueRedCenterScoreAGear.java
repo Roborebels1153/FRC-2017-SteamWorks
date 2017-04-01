@@ -15,20 +15,21 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueRedCenterScoreAGear extends CommandGroup {
 
-    private static final int inchesToAirShip = 80;
-    private static final double speedForward = 0.5; 
+    private static final int inchesToAirShip = 77;
+    private static final double speedForward = 0.4; 
     private static final int secondsToWait = 3;
-    private static final int encoderTicksDown = 140; 
-    private static final double armSpeed = 0.5; 
+    private static final int encoderTicksDown = 31; 
+    private static final double armSpeed = 0.4; 
     public BlueRedCenterScoreAGear() {
 	super();
 //	addSequential(new ExtendGearPusherCommand()); 
 	addSequential(new ShiftHighCommand()); 
+	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirShip, speedForward, 3)); 
 	addSequential(new WaitCommand(secondsToWait)); 
+	addSequential(new GearCollectorOut()); 
 	//addSequential(new ReleaseGearCommand());
 	//addSequential(new GearCollectorOut()); 
-	addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
 	addSequential(new WaitCommand(3));
 	addSequential(new StopGearCollectorCommand());
     }

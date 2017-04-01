@@ -36,7 +36,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		//double output = Robot.floorGear.getGearPIDSetPoint();
 		Robot.floorGear.setGearMotor(output);
 		      
-		Robot.floorGear.collectorOut();
+		//Robot.floorGear.collectorOut();
 		
 		
 	}
