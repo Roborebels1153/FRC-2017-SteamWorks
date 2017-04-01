@@ -6,7 +6,7 @@ import com.walpole.frc.team.robot.autonomous.BlueLeftKnockDownHopper;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
-import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
+import com.walpole.frc.team.robot.autonomous.Shoot;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
 import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	//chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(110, 0.7));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(50, 0.4));
 	//chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.5));
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
 
@@ -154,7 +154,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
 	
 	//General Values
-	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
+	SmartDashboard.putNumber("Target Tick Count(10ft)", Constants.ticksPerInch * 120);
 
 	//Gear Values
 	SmartDashboard.putNumber("Motor Power", floorGear.getGearMotorValue());
@@ -168,6 +168,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("RPS", Robot.shooter.getRPS());
 	SmartDashboard.putNumber("RPM", Robot.shooter.getRPS() * 60);
 	SmartDashboard.putNumber("Shooter Error", shooter.shooterPIDError());
+	SmartDashboard.putNumber("Shooter Motor Power", shooter.getShooterMotorPower());
 	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 
     }

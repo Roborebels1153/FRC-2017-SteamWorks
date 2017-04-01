@@ -30,18 +30,18 @@ public class Constants {
     // public static double ticksPerInch = 32.158; 
 
     // PID Constants for 2017 FINAL Robot (1153)
-    public static double encoderP = 0.09;
+    public static double encoderP = 0.05;
     public static double encoderI = 0;
-    public static double encoderD = 0.1;
-    
+    public static double encoderD = 0.0055;
+   
   /*  // PID Constants for 2017 PROTOTYPE Robot(1154)
     public static double encoderP = 0.05; 
     public static double encoderI = 0;
     public static double encoderD = 0; */
     
-    public static double gearEncoderP = 0.1; 
+    public static double gearEncoderP = 0.01; 
     public static double gearEncoderI = 0; 
-    public static double gearEncoderD = 0.07; 
+    public static double gearEncoderD = 0.01; 
     
     
    

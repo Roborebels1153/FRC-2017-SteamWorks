@@ -20,21 +20,18 @@ public class ShooterShootCommand extends Command {
     // Called just before this Command runs the first time
     
     	
-    	
-//    	Robot.shooter.getPIDController().enable();
-//    	SmartDashboard.putBoolean("shooting", true); 
-    
-    
-    	
+	protected void initialize() {
+		//Robot.shooter.shootingStartTime = System.currentTimeMillis();
+	}
 
    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.shoot();
-
-    	
-// the amazing variable names    	Robot.shooter.shootWhenWeDontHaveALightSensor();
+   //	Robot.shooter.shoot();
+    	Robot.shooter.shootWhenWeDontHaveALightSensor();
+    
+//  FOR TESTING RPM OF CERTAIN MOTOR POWER 	Robot.shooter.shootWhenWeDontHaveALightSensor();
     }
 
     // Make this return true when this Command no longer needs to run execute()

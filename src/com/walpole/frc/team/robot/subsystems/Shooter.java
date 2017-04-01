@@ -19,6 +19,8 @@ public class Shooter extends Subsystem {
     
 	private PIDController shooterPID;
 	
+	//public long shootingStartTime = System.currentTimeMillis();
+	
 	private Counter shooterCounter = new Counter(RobotMap.LIGHT_SENSOR);
 	
 	public Shooter() {
@@ -50,9 +52,9 @@ public class Shooter extends Subsystem {
     }
     public void shoot() {
     	shooterPID.enable();
-    	if (shooterPID.getError() < 2.5 && shooterPID.getError() > -2.5) {
+    	if (shooterPID.getError() < 2.5 && shooterPID.getError() > -2.5) { //&& shootingStartTime > 1000 + System.currentTimeMillis()) {
     		agitatorOn();
-    	} else {
+    	} else { 
     		agitatorOff();
     	} 
     }
@@ -62,7 +64,8 @@ public class Shooter extends Subsystem {
     }
     
     public void shootWhenWeDontHaveALightSensor() {
-    	shooterMotor.set(.8);
+    	agitatorMotor.set(-1);
+    	shooterMotor.set(1);
     }
     
     public void stopShooting() {
@@ -80,5 +83,9 @@ public class Shooter extends Subsystem {
     
     public void setShooterSpeed(double speed) {
     	shooterMotor.set(speed);
+    }
+    
+    public double getShooterMotorPower() {
+    	return shooterMotor.get();
     }
 }

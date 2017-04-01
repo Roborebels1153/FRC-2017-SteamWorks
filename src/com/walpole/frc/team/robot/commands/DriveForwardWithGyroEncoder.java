@@ -38,6 +38,8 @@ public class DriveForwardWithGyroEncoder extends Command {
 	
 	Robot.drive.enableGyroPID();
 	Robot.drive.enableDrivePID();
+	
+	Robot.floorGear.setMotorValue(-0.4);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -71,7 +73,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	if ((leftMotorPower <= 0.1 && error <= 50) | System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
+    	if ((leftMotorPower <= 0.1 && error <= 50) || System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
     		return true;
     	} else {
     		return false; 
