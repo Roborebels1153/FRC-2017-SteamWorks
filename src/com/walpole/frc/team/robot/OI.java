@@ -8,6 +8,7 @@ import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
 import com.walpole.frc.team.robot.commands.GearCollectorOut;
+import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorIn;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
@@ -73,14 +74,14 @@ public OI() {
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
 
-	//drRB.whenPressed(new ClimbWithoutLimitSwitch());     // when right bumper is held, robot motor will spin in one direction
-	opBumperR.whenReleased(new StopClimbCommand()); 
-	opBumperR.whenPressed(new ClimbUpCommand());     // when right bumper is held, robot motor will spin in one direction
+	//drRB.whenPressed(new ClimbWithoutLimitSwitch());    
+	opBumperR.whenReleased(new StopClimbCommand()); //Changed to BumperL due to change in climb motor for PROTO 
+	opBumperR.whenPressed(new ClimbUpCommand());     
 
 	// when right bumper is released, robot motor will stop spinning
 
-	opBumperL.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
-	opBumperL.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
+	opBumperL.whileHeld(new ClimbDownCommand());  //Changed to BumperR due to change in climb motor for PROTO   
+	opBumperL.whenReleased(new StopClimbCommand());   
 	
 	
 	
@@ -98,6 +99,9 @@ public OI() {
 	opA.whenReleased(new GearCollectorOff());
 	opB.whenPressed(new GearCollectorOut());
 	opB.whenReleased(new GearCollectorOff());
+
+	opY.whenPressed(new MoveGearCollectorOutAutoCommand(31, 0.4));
+
 	}
 
 	public Joystick getDriverJoystick() {

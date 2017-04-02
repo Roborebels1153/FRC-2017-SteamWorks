@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class Drive10FeetShiftLow extends CommandGroup {
 
     
-    private static final int distance = 50; 
+    private static final int distance = 120; 
     private static final double secondsToWait = 2; 
     private static final double speed = 0.5;
     //Testing
@@ -25,7 +25,7 @@ public class Drive10FeetShiftLow extends CommandGroup {
 	//ShiftHigh is actually ShiftLow due to pneumatics wiring
 	addSequential(new ShiftHighCommand()); 
 	//addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new DriveForwardWithGyroEncoder(distance, 0.4, 5)); 
+	addSequential(new DriveForwardWithGyroEncoder(distance, 0.4, 15)); 
 	addSequential(new WaitCommand(2));
 //	addSequential(new MoveGearCollectorOutAutoCommand(0, armSpeed, 1.5));
 	addSequential(new MoveGearCollectorOutAutoCommand(50, 0.4));

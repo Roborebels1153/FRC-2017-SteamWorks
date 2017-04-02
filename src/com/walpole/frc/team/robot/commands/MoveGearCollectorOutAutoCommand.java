@@ -47,7 +47,11 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		double error = Math.abs(Robot.floorGear.getGearPIDError()); 
 		
 		//Encoders Only:
-		return error < 10;
+		if(error < 10) { 
+			Robot.floorGear.setGearMotor(-0.1);
+			//Robot.floorGear.collectorOut();
+		}
+		return false;
 				
 		
 		

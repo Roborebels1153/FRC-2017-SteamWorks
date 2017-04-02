@@ -14,7 +14,7 @@ public class DriveForwardWithGyroEncoder extends Command {
     
     public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
 	requires(Robot.drive);
-	this.speed = 0.8;
+	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
 	//this.secondsToDrive = secondsToDrive;
     }
@@ -30,16 +30,21 @@ public class DriveForwardWithGyroEncoder extends Command {
     protected void initialize() {
 	Robot.drive.setMaxGyroOutput(0.8);
 	Robot.drive.setTurnPIDSetpoint(Robot.drive.getGyroYaw());
-	startTimeMillis = System.currentTimeMillis();
+	//startTimeMillis = System.currentTimeMillis();
+	
+	Robot.drive.disableDrivePID();
+	Robot.drive.disableGyroPID();
 	
 	Robot.drive.resetEncoders();
 	Robot.drive.setMaxDrivePIDOutput(speed);
 	Robot.drive.setDrivePIDSetPoint(setPoint);
 	
-	Robot.drive.enableGyroPID();
-	Robot.drive.enableDrivePID();
+	
 	
 	Robot.floorGear.setMotorValue(-0.4);
+	
+	Robot.drive.enableGyroPID();
+	Robot.drive.enableDrivePID();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,27 +63,14 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	// double leftMotorPower = Robot.driveSubsystem.getLeftMotorPower();
-	// double leftError = Robot.driveSubsystem.getLeftPIDError();
-	// boolean leftMotorFinished = leftMotorPower <= 0.1 && leftError <= 50;
-	//
-	// double rightMotorPower = Robot.driveSubsystem.getRightMotorPower();
-	// double rightError = Robot.driveSubsystem.getRightPIDError();
-	// boolean rightMotorFinished = rightMotorPower <= 0.1 && rightError <=
-	// 50;
-	//
-	// return leftMotorFinished && rightMotorFinished;
-	//return Robot.driveSubsystem.isOnTarget();
-	// This is a new command that finishes DriveForwardWithEncoder when the
-	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	if ((leftMotorPower <= 0.1 && error <= 50) || System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
-    		return true;
-    	} else {
-    		return false; 
-    	}
-    	//return leftMotorPower <= 0.1 && error <= 50; 
+//    	if ((leftMotorPower <= 0.1 && error <= 50) || System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
+//    		return true;
+//    	} else {
+//    		return false; 
+//    	}
+    	return leftMotorPower <= 0.1 && error <= 50; 
     }
     
 

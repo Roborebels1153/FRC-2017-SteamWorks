@@ -34,15 +34,11 @@ public class Constants {
 //    public static double encoderI = 0;
 //    public static double encoderD = 0.0055;
     
-    
-    public static double encoderP = 0.017; 
+    //PID CONSTANTS 2017 WORKED ON PROTOTYPE(UNH) 
+    public static double encoderP = 0.04; 
     public static double encoderI = 0;
-    public static double encoderD = 0.06882; 
+    public static double encoderD = 0.098; 
    
-  /*  // PID Constants for 2017 PROTOTYPE Robot(1154)
-    public static double encoderP = 0.05; 
-    public static double encoderI = 0;
-    public static double encoderD = 0; */
     
     public static double gearEncoderP = 0.01; 
     public static double gearEncoderI = 0; 

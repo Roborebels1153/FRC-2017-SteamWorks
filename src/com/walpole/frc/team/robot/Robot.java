@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(50, 0.4));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(31, 0.4));
 	//chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.5));
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
 
@@ -187,6 +187,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 		
 		updateDashboard();
 //		
