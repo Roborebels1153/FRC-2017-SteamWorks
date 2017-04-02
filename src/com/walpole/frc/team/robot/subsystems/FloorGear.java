@@ -70,7 +70,13 @@ public class FloorGear extends Subsystem {
 	
 	public void gear(Joystick joystick) {
 		double speed = Constants.FLOOR_GEAR_LEVER_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
-		gearMotor.set(speed);
+		if(Math.abs(joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y)) < 0.1) { 
+			gearMotor.set(-0.1);
+		} else { 
+			gearMotor.set(speed);		
+		}
+	
+			
 	}
 	
 	public void setGearMotor (double power) { 
