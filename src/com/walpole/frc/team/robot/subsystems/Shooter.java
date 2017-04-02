@@ -12,10 +12,10 @@ public class Shooter extends Subsystem {
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
 	    
-    static double shooterP = 0.3;
+    static double shooterP = 0.0002;
     static double shooterI = 0;
-    static double shooterD = 0;
-    static double shooterF = 0.00005;
+    static double shooterD = 0.001;
+    static double shooterF = 0.0205;
     
 	private PIDController shooterPID;
 	
@@ -34,7 +34,7 @@ public class Shooter extends Subsystem {
 		shooterCounter.setPIDSourceType(PIDSourceType.kRate);
 
 		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, shooterCounter, shooterMotor);
-		shooterPID.setSetpoint(2100/60);
+		shooterPID.setSetpoint(1900/60);
 		shooterPID.setContinuous(false);
     	shooterPID.setOutputRange(0, 0.8);
     	shooterPID.disable();

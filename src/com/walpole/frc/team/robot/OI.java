@@ -8,6 +8,7 @@ import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
 import com.walpole.frc.team.robot.commands.GearCollectorOut;
+import com.walpole.frc.team.robot.commands.GearInPositionCommand;
 import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorIn;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
@@ -33,6 +34,7 @@ import com.walpole.frc.team.robot.lib.RebelTrigger;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -101,6 +103,7 @@ public OI() {
 	opB.whenReleased(new GearCollectorOff());
 
 	opY.whenPressed(new MoveGearCollectorOutAutoCommand(31, 0.4));
+	//opX.whenPressed(new GearInPositionCommand()); 
 
 	}
 

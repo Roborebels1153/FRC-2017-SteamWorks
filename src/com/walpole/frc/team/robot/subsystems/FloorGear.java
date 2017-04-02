@@ -73,7 +73,7 @@ public class FloorGear extends Subsystem {
 		if(Math.abs(joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y)) < 0.1) { 
 			gearMotor.set(-0.1);
 		} else { 
-			gearMotor.set(speed);		
+		gearMotor.set(speed);		
 		}
 	
 			
@@ -93,6 +93,11 @@ public class FloorGear extends Subsystem {
 	
 	public void collectorOff() {
 	    collector.set(0);
+	} 
+	
+	public void stayInPosition() {
+		gearMotor.set(-0.1);
+		
 	}
 	
 	public double getCollectorMotorValue() {

@@ -28,8 +28,7 @@ public class ShooterShootCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-   //	Robot.shooter.shoot();
-    	Robot.shooter.shootWhenWeDontHaveALightSensor();
+    	Robot.shooter.shoot();
     
 //  FOR TESTING RPM OF CERTAIN MOTOR POWER 	Robot.shooter.shootWhenWeDontHaveALightSensor();
     }

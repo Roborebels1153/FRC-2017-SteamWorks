@@ -49,7 +49,7 @@ public class RobotMap {
 
 	public static int COLLECT_MOTOR = 8;
 	
-	public static int INDEXER_PISTON = 6;
+//	public static int INDEXER_PISTON = 6;
 	
 
 	public static int CLIMB_LIMIT_SWITCH = 8;
@@ -71,5 +71,5 @@ public class RobotMap {
 	public static int GEAR_ENCODER_B = 5;
 	
 	public static int GEAR_LIMIT_SWITCH = 10;
-	public static int GEAR_LIMIT_SWITCH_TWO = 11;
+	public static int GEAR_LIMIT_SWITCH_TWO = 11  ;
 }

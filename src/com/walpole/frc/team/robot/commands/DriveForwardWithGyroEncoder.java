@@ -14,6 +14,7 @@ public class DriveForwardWithGyroEncoder extends Command {
     
     public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
 	requires(Robot.drive);
+	requires(Robot.floorGear);
 	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
 	//this.secondsToDrive = secondsToDrive;
@@ -21,6 +22,7 @@ public class DriveForwardWithGyroEncoder extends Command {
     
     public DriveForwardWithGyroEncoder(int inchesToDrive, double speed, double secondsToDrive) {
 	requires(Robot.drive);
+	requires(Robot.floorGear);
 	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
 	this.secondsToDrive = secondsToDrive;
@@ -41,7 +43,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	
 	
 	
-	Robot.floorGear.setMotorValue(-0.4);
+	//Robot.floorGear.setMotorValue(-0.4);
 	
 	Robot.drive.enableGyroPID();
 	Robot.drive.enableDrivePID();
@@ -56,6 +58,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	
 	//The 
 	Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);
+	Robot.floorGear.stayInPosition();
 	//This makes it goes forward
 	//Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
 	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);

@@ -35,6 +35,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		double output = Robot.floorGear.getGearPIDOutput(); 
 		//double output = Robot.floorGear.getGearPIDSetPoint();
 		Robot.floorGear.setGearMotor(output);
+		//Robot.floorGear.setGearMotor(-0.1);
 		      
 		//Robot.floorGear.collectorOut();
 		
@@ -47,11 +48,12 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		double error = Math.abs(Robot.floorGear.getGearPIDError()); 
 		
 		//Encoders Only:
-		if(error < 10) { 
-			Robot.floorGear.setGearMotor(-0.1);
-			//Robot.floorGear.collectorOut();
-		}
-		return false;
+//		if(error < 10) { 
+//			Robot.floorGear.setGearMotor(-0.1);
+//			//Robot.floorGear.collectorOut();
+//		}
+		//return false; 
+		return error < 10; 
 				
 		
 		
@@ -75,6 +77,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 	@Override
 	protected void end() {
 		Robot.floorGear.disableGearPID();
+		Robot.floorGear.setGearMotor(-0.1);
 		
 	}
 

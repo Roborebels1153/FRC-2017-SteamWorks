@@ -115,7 +115,7 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
 //	AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-normal","10.11.53.3");
-//    camera.setResolution(IMG_WIDTH, IMG_HEIGHT); 
+//	camera.setResolution(IMG_WIDTH, IMG_HEIGHT); 
 //    
 // AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.53.4");
 // 	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
