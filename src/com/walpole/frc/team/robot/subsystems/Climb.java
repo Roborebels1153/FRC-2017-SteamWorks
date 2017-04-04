@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Climb extends Subsystem {
 	
     private SpeedController climberVictor;
-    private DigitalInput limitSwitch;
-    private DigitalInput limitSwitchClose;
+   // private DigitalInput limitSwitch;
+    //private DigitalInput limitSwitchClose;
     
     public Climb() {
 	climberVictor = new Victor(RobotMap.CLIMB_MOTOR); // we only need one
 							  // motor to climb (as
 							  // of now, we might
 							  // have to add things)
-	limitSwitch = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH);
-	limitSwitchClose = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH_CLOSER);
+	//limitSwitch = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH);
+	//limitSwitchClose = new DigitalInput(RobotMap.CLIMB_LIMIT_SWITCH_CLOSER);
     }
 
     @Override
@@ -51,12 +51,12 @@ public class Climb extends Subsystem {
     	climberVictor.set(-1);
     }
 
-    public boolean getLimitSwitchState() {
-	return limitSwitch.get();
-    }
+//    public boolean getLimitSwitchState() {
+//	return limitSwitch.get();
+//    }
     
-    public boolean getOtherLimitSwitchState() {
-    return limitSwitchClose.get();
-    }
+//    public boolean getOtherLimitSwitchState() {
+//    return limitSwitchClose.get();
+//    }
 }
 

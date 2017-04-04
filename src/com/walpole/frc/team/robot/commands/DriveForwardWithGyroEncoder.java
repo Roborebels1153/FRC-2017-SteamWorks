@@ -73,7 +73,8 @@ public class DriveForwardWithGyroEncoder extends Command {
 //    	} else {
 //    		return false; 
 //    	}
-    	return leftMotorPower <= 0.1 && error <= 50; 
+    	return leftMotorPower <= 0.1 && error <= 100; 
+    	//return false;
     }
     
 
@@ -82,6 +83,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	//Robot.driveSubsystem.stopDrive();
 	Robot.drive.disableDrivePID();
 	Robot.drive.disableGyroPID();
+	Robot.floorGear.setGearMotor(-0.1);
     }
 
     // Called when another command which requires one or more of the same

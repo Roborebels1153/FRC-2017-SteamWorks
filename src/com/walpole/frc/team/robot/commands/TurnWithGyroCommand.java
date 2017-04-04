@@ -56,7 +56,7 @@ public class TurnWithGyroCommand extends Command {
 
     protected void end() {
 	Robot.drive.disableGyroPID();
-	Robot.floorGear.setMotorValue(0);
+	Robot.floorGear.setMotorValue(-0.1);
     }
 
     protected void interrupted() {

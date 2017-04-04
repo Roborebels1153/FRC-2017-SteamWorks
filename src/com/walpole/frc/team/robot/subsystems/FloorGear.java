@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class FloorGear extends Subsystem {
@@ -34,6 +37,9 @@ public class FloorGear extends Subsystem {
 	
 	private Solenoid ballIntakeFlapper;
 
+	private DigitalInput gearLightSensor;
+	
+	private Relay gearLED;
 
 	public FloorGear() {
 		gearMotor = new Victor(RobotMap.GEAR_MOTOR);
@@ -47,12 +53,17 @@ public class FloorGear extends Subsystem {
 		
 		ballIntakeFlapper = new Solenoid(RobotMap.BALL_INTAKE_SOLENOID);
 
+		gearLightSensor = new DigitalInput (RobotMap.GEAR_LIGHT_SENSOR);
+		
+		gearLED = new Relay(RobotMap.LIGHT);
+		
 		init();
 		
 	}
 	
 	private void init() {
 		ballIntakeFlapper.set(false);
+		
 
 	}
 	
@@ -78,6 +89,29 @@ public class FloorGear extends Subsystem {
 	
 			
 	}
+	
+	public boolean getGearLightSensorState () {
+		return gearLightSensor.get();
+	}
+	
+	public void pickedUpGearLED() {
+		if (getGearLightSensorState()) {
+			gearLED.set(Value.kReverse);
+		} else {
+			gearLED.set(Value.kForward);
+	}
+}
+	
+	public void gearLEDOff() { 
+		gearLED.set(Value.kForward);
+	}
+	public void gearLEDOn() {
+		gearLED.set(Value.kReverse);
+	}
+	
+//	public void gearLEDState() {
+//		gearLED.get();
+//	}
 	
 	public void setGearMotor (double power) { 
 		gearMotor.set(power);

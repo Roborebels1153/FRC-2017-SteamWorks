@@ -13,6 +13,7 @@ public class GearCollectorIn extends Command {
     @Override
     protected void initialize() {
 	Robot.floorGear.collectorIn();
+	Robot.floorGear.setGearMotor(0);
     }
 
     @Override

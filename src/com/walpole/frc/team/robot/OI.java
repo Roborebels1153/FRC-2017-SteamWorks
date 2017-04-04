@@ -9,6 +9,9 @@ import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
 import com.walpole.frc.team.robot.commands.GearCollectorOut;
 import com.walpole.frc.team.robot.commands.GearInPositionCommand;
+import com.walpole.frc.team.robot.commands.GearLEDOffCommand;
+import com.walpole.frc.team.robot.commands.GearLEDPickUP;
+import com.walpole.frc.team.robot.commands.GearLEDUpdateStateCommand;
 import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorIn;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
@@ -54,6 +57,11 @@ public class OI {
     Button opX = new JoystickButton(opStick, 3);
     Button opY = new JoystickButton(opStick, 4);
     
+    Button drA = new JoystickButton(driverStick, 1);
+    Button drB = new JoystickButton(driverStick, 2);
+    Button drX = new JoystickButton(driverStick, 3);
+    Button drY = new JoystickButton(driverStick, 4);
+    
     Button opBumperL = new JoystickButton(opStick, 5);
     Button opBumperR = new JoystickButton(opStick, 6);
     
@@ -89,6 +97,9 @@ public OI() {
 	
 	drRT.whenPressed(new TurboModeOn());
 	drRT.whenReleased(new TurboModeOff());
+	
+	drA.whileHeld(new GearLEDOffCommand()); 
+	drA.whenReleased(new GearLEDPickUP());
 	
 	opTriggerL.whileHeld(new FireBallFlapperCommand()); // This is a test
 	opTriggerL.whenReleased(new RetractBallFlapperCommand());

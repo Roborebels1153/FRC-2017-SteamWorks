@@ -27,12 +27,12 @@ public class Drive10FeetShiftLow extends CommandGroup {
 	//addSequential(new WaitCommand(secondsToWait)); 
 	addSequential(new MoveGearCollectorOutAutoCommand(31, 0.4));
 	addSequential(new DriveForwardWithGyroEncoder(distance, 0.4, 15)); 
-	addSequential(new WaitCommand(2));
+	//addSequential(new WaitCommand(2));
 //	addSequential(new MoveGearCollectorOutAutoCommand(0, armSpeed, 1.5));
 	//addSequential(new MoveGearCollectorOutAutoCommand(50, 0.4));
-	addSequential(new GearCollectorOut()); 
-	addSequential(new WaitCommand(3));
-	addSequential(new StopGearCollectorCommand());
+//	addSequential(new GearCollectorOut()); 
+//	addSequential(new WaitCommand(3));
+//	addSequential(new StopGearCollectorCommand());
     }
 
 }

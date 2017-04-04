@@ -40,7 +40,7 @@ public class RobotMap {
 	public static int SHOOTER_MOTOR = 4;
 	public static int AGITATOR_MOTOR = 6;
 
-//	public static int LIGHT = 0;
+	public static int LIGHT = 0;
 	
 	public static final int LIGHT_SENSOR = 7;
 	
@@ -52,9 +52,9 @@ public class RobotMap {
 //	public static int INDEXER_PISTON = 6;
 	
 
-	public static int CLIMB_LIMIT_SWITCH = 8;
+	//public static int CLIMB_LIMIT_SWITCH = 8;
 	
-	public static int CLIMB_LIMIT_SWITCH_CLOSER = 9;
+	//public static int CLIMB_LIMIT_SWITCH_CLOSER = 9;
 	
 	public static final int CLIMB_MOTOR = 7;
 	// GEAR RELATED
@@ -72,4 +72,6 @@ public class RobotMap {
 	
 	public static int GEAR_LIMIT_SWITCH = 10;
 	public static int GEAR_LIMIT_SWITCH_TWO = 11  ;
+	
+	public static int GEAR_LIGHT_SENSOR = 8;
 }

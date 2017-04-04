@@ -35,9 +35,13 @@ public class Constants {
 //    public static double encoderD = 0.0055;
     
     //PID CONSTANTS 2017 WORKED ON PROTOTYPE(UNH) 
-    public static double encoderP = 0.04; 
+    public static double encoderP = 0.0168; 
     public static double encoderI = 0;
-    public static double encoderD = 0.098; 
+    public static double encoderD = 0.000275; 
+    
+//    public static double encoderP = 0.017; 
+//    public static double encoderI = 0; 
+//    public static double encoderD = 0.1;
    
     
     public static double gearEncoderP = 0.01; 
@@ -47,7 +51,7 @@ public class Constants {
     
    
     // Navx-Micro Gyro
-    public static double gyroP = 0.05;
+    public static double gyroP = 0.048;
     public static double gyroI = 0;
     public static double gyroD = 0.025;
     // Box Gyro
