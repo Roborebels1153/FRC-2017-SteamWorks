@@ -97,10 +97,12 @@ public class FloorGear extends Subsystem {
 	public void pickedUpGearLED() {
 		if (getGearLightSensorState()) {
 			gearLED.set(Value.kReverse);
+		} else if (Robot.oi.getOperatorJoystick().getRawButton(4) == true) {
+			gearLED.set(Value.kReverse);
 		} else {
 			gearLED.set(Value.kForward);
-	}
-}
+		}
+}                                                                       
 	
 	public void gearLEDOff() { 
 		gearLED.set(Value.kForward);

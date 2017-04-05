@@ -14,6 +14,7 @@ public class ShiftHighCommand extends Command {
 	@Override
 	protected void initialize() {
 		Robot.drive.shiftHigh();
+		Robot.floorGear.setMotorValue(-0.1);
 
 	}
 	

@@ -51,7 +51,7 @@ public class Constants {
     
    
     // Navx-Micro Gyro
-    public static double gyroP = 0.048;
+    public static double gyroP = 0.047;
     public static double gyroI = 0;
     public static double gyroD = 0.025;
     // Box Gyro

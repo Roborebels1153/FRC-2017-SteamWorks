@@ -43,7 +43,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	
 	
 	
-	//Robot.floorGear.setMotorValue(-0.4);
+	//Robot.floorGear.setMotorValue(-0.1);
 	
 	Robot.drive.enableGyroPID();
 	Robot.drive.enableDrivePID();

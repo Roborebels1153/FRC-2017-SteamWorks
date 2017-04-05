@@ -34,7 +34,7 @@ public class Shooter extends Subsystem {
 		shooterCounter.setPIDSourceType(PIDSourceType.kRate);
 
 		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, shooterCounter, shooterMotor);
-		shooterPID.setSetpoint(1900/60);
+		shooterPID.setSetpoint(2110/60);
 		shooterPID.setContinuous(false);
     	shooterPID.setOutputRange(0, 0.8);
     	shooterPID.disable();
@@ -52,7 +52,7 @@ public class Shooter extends Subsystem {
     }
     public void shoot() {
     	shooterPID.enable();
-    	if (shooterPID.getError() < 2.5 && shooterPID.getError() > -2.5) { //&& shootingStartTime > 1000 + System.currentTimeMillis()) {
+    	if (shooterPID.getError() < 3 && shooterPID.getError() > -3) { // && shootingStartTime > 300 + System.currentTimeMillis()) {
     		agitatorOn();
     	} else { 
     		agitatorOff();

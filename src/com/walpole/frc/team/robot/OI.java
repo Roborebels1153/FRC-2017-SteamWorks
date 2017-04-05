@@ -114,7 +114,7 @@ public OI() {
 	opB.whenReleased(new GearCollectorOff());
 
 	opY.whenPressed(new MoveGearCollectorOutAutoCommand(31, 0.4));
-	//opX.whenPressed(new GearInPositionCommand()); 
+	opX.whenPressed(new GearInPositionCommand()); 
 
 	}
 

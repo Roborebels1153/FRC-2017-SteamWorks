@@ -35,7 +35,7 @@ public class TurnWithGyroCommand extends Command {
     protected void execute() {
 	double gyroOutput = Robot.drive.getGyroPIDOutput();   
 	Robot.drive.setTurnSpeed(gyroOutput);
-	//Robot.floorGear.stayInPosition();
+	Robot.floorGear.stayInPosition();
     }
 
     /*public boolean withinTargetValue(double targetValue, double errorTolerance, double actualValue) {

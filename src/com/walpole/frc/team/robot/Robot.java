@@ -15,6 +15,7 @@ import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
+import com.walpole.frc.team.robot.commands.GearTrayWithJoysticks;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
@@ -105,7 +106,7 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(31, 0.4));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(40, 0.7));
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.4));
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
 
