@@ -28,7 +28,7 @@ public class RedRightHopperShoot extends CommandGroup {
 		addSequential(new WaitCommand(secondsToWaitTwo));
 		addSequential(new TurnWithGyroCommand(degrees));
 		addSequential(new DriveForwardWithGyroEncoder(5, 0.6));
-		addSequential(new ShooterShootCommand());
+		addSequential(new ShooterShootCommand(2));
 		addSequential(new WaitCommand(8)); 
 		addSequential(new ShooterStopCommand());
 	}

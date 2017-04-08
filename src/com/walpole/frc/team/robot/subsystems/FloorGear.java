@@ -82,8 +82,8 @@ public class FloorGear extends Subsystem {
 	public void gear(Joystick joystick) {
 		double speed = Constants.FLOOR_GEAR_LEVER_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
 		if(Math.abs(joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y)) < 0.1) { 
-			gearMotor.set(-0.1);
-		} else { 
+			gearMotor.set(-0.05); }		
+		else { 
 		gearMotor.set(speed);		
 		}
 	
@@ -94,10 +94,13 @@ public class FloorGear extends Subsystem {
 		return gearLightSensor.get();
 	}
 	
+	
 	public void pickedUpGearLED() {
 		if (getGearLightSensorState()) {
 			gearLED.set(Value.kReverse);
 		} else if (Robot.oi.getOperatorJoystick().getRawButton(4) == true) {
+			gearLED.set(Value.kReverse);
+		} else if (Robot.oi.getOperatorJoystick().getRawButton(2) == true) {
 			gearLED.set(Value.kReverse);
 		} else {
 			gearLED.set(Value.kForward);
@@ -107,6 +110,7 @@ public class FloorGear extends Subsystem {
 	public void gearLEDOff() { 
 		gearLED.set(Value.kForward);
 	}
+	
 	public void gearLEDOn() {
 		gearLED.set(Value.kReverse);
 	}

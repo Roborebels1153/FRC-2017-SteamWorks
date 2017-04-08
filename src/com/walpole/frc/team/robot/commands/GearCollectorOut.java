@@ -13,6 +13,7 @@ public class GearCollectorOut extends Command {
     @Override
     protected void initialize() {
 	Robot.floorGear.collectorOut();
+	Robot.floorGear.gearLEDOff();
     }
 
     @Override

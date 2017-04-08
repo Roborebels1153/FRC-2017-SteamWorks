@@ -9,11 +9,20 @@ public class MoveGearCollectorOutAutoCommand extends Command {
 	private double speed;
 	private double setPoint;
 	private double secondsArm;
+	private long startTimeMillis;
 
-public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
-	requires(Robot.floorGear); 
-	this.speed = speed; 
-	this.setPoint = setPoint; 
+	public MoveGearCollectorOutAutoCommand(int setPoint, double speed ) {
+		requires(Robot.floorGear); 
+		this.speed = speed; 
+		this.setPoint = setPoint;
+	}
+	
+	public MoveGearCollectorOutAutoCommand(int setPoint, double speed, double secondsArm) {
+		requires(Robot.floorGear); 
+		this.speed = speed; 
+		this.setPoint = setPoint; 
+		this.secondsArm = secondsArm;
+
 	
 }
 
@@ -21,20 +30,21 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 	@Override
 	protected void initialize() {
 
-		Robot.floorGear.resetGearEncoder();
+		//Robot.floorGear.resetGearEncoder();
 //		Robot.floorGear.getGearPIDSetPoint(); 
 		Robot.floorGear.setGearEncoderPIDSetpoint(setPoint);
 		Robot.floorGear.setMaxGearCollectorPIDOutput(speed);
 		Robot.floorGear.enableGearPID();
+		startTimeMillis = System.currentTimeMillis();
 //		Robot.floorGear.ArmDown();
 		
 	}
 
 	@Override
 	protected void execute() {
-		//double output = Robot.floorGear.getGearPIDOutput(); 
+		double output = Robot.floorGear.getGearPIDOutput(); 
 		//double output = Robot.floorGear.getGearPIDSetPoint();
-		Robot.floorGear.setGearMotor(0.4);
+		Robot.floorGear.setGearMotor(output);
 		//Robot.floorGear.setGearMotor(-0.1);
 		      
 		//Robot.floorGear.collectorOut();
@@ -46,6 +56,8 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 	protected boolean isFinished() {
 		
 		double error = Math.abs(Robot.floorGear.getGearPIDError()); 
+		return System.currentTimeMillis() - startTimeMillis >= secondsArm * 1000 || error < 10; 
+
 		
 		//Encoders Only:
 //		if(error < 10) { 
@@ -53,8 +65,7 @@ public MoveGearCollectorOutAutoCommand(int setPoint, double speed) {
 		
 //			//Robot.floorGear.collectorOut();
 //		}
-		//return false; 
-		return error < 10; 
+		//return false;  
 				
 		
 		

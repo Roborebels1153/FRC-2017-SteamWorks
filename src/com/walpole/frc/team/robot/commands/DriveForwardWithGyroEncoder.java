@@ -12,7 +12,7 @@ public class DriveForwardWithGyroEncoder extends Command {
     private long startTimeMillis;
     private double secondsToDrive;
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed) {
+    public DriveForwardWithGyroEncoder(double inchesToDrive, double speed) {
 	requires(Robot.drive);
 	requires(Robot.floorGear);
 	this.speed = speed;
@@ -20,7 +20,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	//this.secondsToDrive = secondsToDrive;
     }
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed, double secondsToDrive) {
+    public DriveForwardWithGyroEncoder(double inchesToDrive, double speed, double secondsToDrive) {
 	requires(Robot.drive);
 	requires(Robot.floorGear);
 	this.speed = speed;
@@ -83,7 +83,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	//Robot.driveSubsystem.stopDrive();
 	Robot.drive.disableDrivePID();
 	Robot.drive.disableGyroPID();
-	Robot.floorGear.setGearMotor(-0.1);
+//	Robot.floorGear.setGearMotor(-0.1);
     }
 
     // Called when another command which requires one or more of the same

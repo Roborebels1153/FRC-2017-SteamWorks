@@ -12,10 +12,10 @@ public class Shooter extends Subsystem {
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
 	    
-    static double shooterP = 0.0002;
+    static double shooterP = 0.00004;
     static double shooterI = 0;
-    static double shooterD = 0.001;
-    static double shooterF = 0.0205;
+    static double shooterD = 0.005;
+    static double shooterF = 0.0203;
     
 	private PIDController shooterPID;
 	
@@ -34,7 +34,7 @@ public class Shooter extends Subsystem {
 		shooterCounter.setPIDSourceType(PIDSourceType.kRate);
 
 		shooterPID = new PIDController(shooterP, shooterI, shooterD, shooterF, shooterCounter, shooterMotor);
-		shooterPID.setSetpoint(2110/60);
+		shooterPID.setSetpoint(3100/60);
 		shooterPID.setContinuous(false);
     	shooterPID.setOutputRange(0, 0.8);
     	shooterPID.disable();
@@ -52,7 +52,7 @@ public class Shooter extends Subsystem {
     }
     public void shoot() {
     	shooterPID.enable();
-    	if (shooterPID.getError() < 3 && shooterPID.getError() > -3) { // && shootingStartTime > 300 + System.currentTimeMillis()) {
+    	if (shooterPID.getError() < 5 && shooterPID.getError() > -5) { // && shootingStartTime > 300 + System.currentTimeMillis()) {
     		agitatorOn();
     	} else { 
     		agitatorOff();
@@ -64,13 +64,14 @@ public class Shooter extends Subsystem {
     }
     
     public void shootWhenWeDontHaveALightSensor() {
-    	agitatorMotor.set(-1);
+//    	agitatorMotor.set(-1);
     	shooterMotor.set(1);
     }
     
     public void stopShooting() {
     	shooterPID.disable();
     	agitatorOff();
+    	shooterMotor.set(0);
     }
     
     public void agitatorOn() {

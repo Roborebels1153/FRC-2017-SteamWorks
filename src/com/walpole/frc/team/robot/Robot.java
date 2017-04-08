@@ -1,6 +1,7 @@
 package com.walpole.frc.team.robot;
 
 
+import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
 import com.walpole.frc.team.robot.autonomous.BlueLeftKnockDownHopper;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
@@ -39,12 +40,16 @@ import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
 
 import edu.wpi.cscore.AxisCamera;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -80,6 +85,8 @@ public class Robot extends IterativeRobot {
     
     private DriverStation.Alliance alliance = DriverStation.Alliance.Invalid;
 	private VisionThread visionThread;
+	
+	public static AHRS gyro;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -89,8 +96,18 @@ public class Robot extends IterativeRobot {
     	prefs = Preferences.getInstance();;
 	oi = new OI();
 	chooser = new SendableChooser<Command>();
-	// chooser.addObject("My Auto", new MyAutoCommand());
 	
+//	new Thread(() -> {
+//		
+//		try {
+//		    gyro = new AHRS(SerialPort.Port.kUSB);
+//		} catch (RuntimeException ex) {
+//	            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+//		    // TODO Add global variable
+//		}
+//	}).start();
+	
+	// chooser.addObject("My Auto", new MyAutoCommand());
 
 	chooser.addObject("Blue Red Center Deliver A Gear", new BlueRedCenterScoreAGear());
 	chooser.addObject("Blue Left Deliver A Gear", new BlueLeftScoreAGear());
@@ -102,11 +119,11 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
 	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0, 0.5));
 	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
-	//chooser.addObject("Drive And Turn", new DriveAndTurn());
+	chooser.addObject("Drive And Turn", new DriveAndTurn());
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(40, 0.7));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(80, 0.5, 2));
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.4));
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
 
@@ -115,13 +132,19 @@ public class Robot extends IterativeRobot {
 	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
 	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
 	
-//	AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-normal","10.11.53.3");
-//	camera.setResolution(IMG_WIDTH, IMG_HEIGHT); 
-//    
+		
 // AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.53.4");
 // 	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 	SmartDashboard.putData("Auto mode", chooser);
-    }    	
+	
+	new Thread(() -> {
+		
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setVideoMode(VideoMode.PixelFormat.kMJPEG, 200, 160, 10);
+		
+	}).start();
+	
+    }   	
     
     public static void updateDashboard() {
     	
@@ -175,6 +198,8 @@ public class Robot extends IterativeRobot {
 	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 
     }
+    
+    
 
     /**
      * This function is called once each time the robot enters Disabled mode.
@@ -289,6 +314,10 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
 	LiveWindow.run();
+    }
+    
+    public AHRS getGyro() {
+    	return gyro;
     }
 
 	

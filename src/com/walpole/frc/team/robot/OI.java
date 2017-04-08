@@ -4,6 +4,8 @@ package com.walpole.frc.team.robot;
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
+import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
+import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
 import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.GearCollectorOff;
@@ -104,8 +106,10 @@ public OI() {
 	opTriggerL.whileHeld(new FireBallFlapperCommand()); // This is a test
 	opTriggerL.whenReleased(new RetractBallFlapperCommand());
 	
-	opTriggerR.whenPressed(new ShooterShootCommand());
+	opTriggerR.whenPressed(new ShooterShootCommand(2));
 	opTriggerR.whenReleased(new ShooterStopCommand());
+	
+	
 	
 	
 	opA.whenPressed(new GearCollectorIn());
@@ -115,6 +119,8 @@ public OI() {
 
 	opY.whenPressed(new MoveGearCollectorOutAutoCommand(31, 0.4));
 	opX.whenPressed(new GearInPositionCommand()); 
+	
+	opY.toggleWhenPressed(new GearLEDOffCommand());
 
 	}
 

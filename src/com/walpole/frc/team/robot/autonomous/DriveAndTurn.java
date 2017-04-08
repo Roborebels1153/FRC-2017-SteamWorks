@@ -2,6 +2,7 @@ package com.walpole.frc.team.robot.autonomous;
 
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
+import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.StopCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
@@ -23,11 +24,13 @@ public class DriveAndTurn extends CommandGroup {
 	
 	//addSequential(new DriveForwardWithGyroEncoder(inchesToDrive, speed));
 	//addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new TurnWithGyroCommand(degrees, 0.5)); 
-	addSequential(new WaitCommand(secondsToWait)); 
-	addSequential(new TurnWithGyroCommand(degreesNegative, 0.5)); 
+//	addSequential(new TurnWithGyroCommand(degrees, 0.5)); 
+//	addSequential(new WaitCommand(secondsToWait)); 
+//	addSequential(new TurnWithGyroCommand(degreesNegative, 0.5)); 
 	//addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speed));
 	//addSequential(new StopCommand()); 
+	addSequential(new MoveGearCollectorOutAutoCommand(90, 0.5, 2));
+	addSequential(new MoveGearCollectorOutAutoCommand(-20, 0.3, 2));
 
     }
 

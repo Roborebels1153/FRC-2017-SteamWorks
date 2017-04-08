@@ -104,6 +104,7 @@ public class Drive extends Subsystem {
 	//gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
 	try {
 	    gyro = new AHRS(SerialPort.Port.kUSB);
+//	    SerialPort.Port.
 	} catch (RuntimeException ex) {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 	    // TODO Add global variable

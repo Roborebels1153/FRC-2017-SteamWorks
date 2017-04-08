@@ -12,7 +12,7 @@ public class Shoot extends CommandGroup {
     public Shoot() { 
 	super(); 
 	
-	addSequential(new ShooterShootCommand());
+	addSequential(new ShooterShootCommand(2));
 	
 //	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, 3)); 
 //	addSequential(new StopCommand()); 

@@ -8,29 +8,39 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ShooterShootCommand extends Command {
+	
+	private double secondsTillAgitator;
+	private long startTimeMillis;
+
+
 
         // Use requires() here to declare subsystem dependencies
 	
-	public ShooterShootCommand() { 
-   
+	public ShooterShootCommand(double secondsTillAgitator) { 
 		requires(Robot.shooter); 
-    	
+    	this.secondsTillAgitator = secondsTillAgitator;
     }
 
     // Called just before this Command runs the first time
     
     	
 	protected void initialize() {
-		//Robot.shooter.shootingStartTime = System.currentTimeMillis();
+		startTimeMillis = System.currentTimeMillis();
+
+		
 	}
 
    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.shoot();
-    
-//  FOR TESTING RPM OF CERTAIN MOTOR POWER 	Robot.shooter.shootWhenWeDontHaveALightSensor();
+    	//Robot.shooter.shoot();
+    	Robot.shooter.shootWhenWeDontHaveALightSensor();  
+    	if (System.currentTimeMillis() - startTimeMillis >= secondsTillAgitator * 1000) {
+    		Robot.shooter.agitatorOn();
+    		
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
