@@ -57,7 +57,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 	double driveOutput = (leftOutput + rightOutput) / 2;
 	
 	//The 
-	Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);
+	Robot.drive.arcadeDrive(-leftOutput, gyroOutput, false);
 	Robot.floorGear.stayInPosition();
 	//This makes it goes forward
 	//Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
@@ -73,8 +73,10 @@ public class DriveForwardWithGyroEncoder extends Command {
 //    	} else {
 //    		return false; 
 //    	}
-    	return leftMotorPower <= 0.1 && error <= 100; 
-    	//return false;
+    	return leftMotorPower <= 0.1 && error <= 75; 
+    	
+    	// Use While Tuning
+//    	return false;
     }
     
 

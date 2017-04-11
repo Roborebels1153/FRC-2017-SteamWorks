@@ -6,6 +6,7 @@ import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
 import com.walpole.frc.team.robot.commands.StopGearCollectorCommand;
+import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -26,9 +27,10 @@ public class Drive10FeetShiftLow extends CommandGroup {
 	addSequential(new ShiftHighCommand()); 
 	//addSequential(new WaitCommand(secondsToWait)); 
 	//addSequential(new MoveGearCollectorOutAutoCommand(31, 0.4, 2));
-	addSequential(new MoveGearCollectorOutAutoCommand(95, 0.5, 2));
-	addSequential(new MoveGearCollectorOutAutoCommand(-20, 0.3, 2));
-	addSequential(new DriveForwardWithGyroEncoder(distance, 0.4, 15)); 
+//	addSequential(new MoveGearCollectorOutAutoCommand(95, 0.5, 2));
+//	addSequential(new MoveGearCollectorOutAutoCommand(-20, 0.3, 2));
+	addSequential(new DriveForwardWithGyroEncoder(distance, 0.3, 15)); 
+	//addSequential(new TurnWithGyroCommand(90, 0.2));
 	//addSequential(new WaitCommand(2));
 //	addSequential(new MoveGearCollectorOutAutoCommand(0, armSpeed, 1.5));
 	//addSequential(new MoveGearCollectorOutAutoCommand(50, 0.4));
