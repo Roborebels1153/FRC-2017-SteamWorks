@@ -35,9 +35,9 @@ public class Constants {
 //    public static double encoderD = 0.0055;
     
     //PID CONSTANTS 2017 WORKED ON PROTOTYPE(UNH) 
-    public static double encoderP = 0.3; 
+    public static double encoderP = 0.36; 
     public static double encoderI = 0;
-    public static double encoderD = 0.21;
+    public static double encoderD = 0.448;
     
 //    public static double encoderP = 0.017; 
 //    public static double encoderI = 0; 

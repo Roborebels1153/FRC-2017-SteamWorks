@@ -68,15 +68,18 @@ public class DriveForwardWithGyroEncoder extends Command {
     protected boolean isFinished() {
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-//    	if ((leftMotorPower <= 0.1 && error <= 50) || System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
-//    		return true;
-//    	} else {
-//    		return false; 
-//    	}
-    	return leftMotorPower <= 0.1 && error <= 75; 
-    	
+//    	double encoderTicks = Robot.drive.getLeftEncoderCount();
+////    	if ((leftMotorPower <= 0.1 && error <= 50) || System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
+////    		return true;
+////    	} else {
+////    		return false; 
+////    	}
+    	return leftMotorPower <= 0.1 && error <= 50; 
+//    	
     	// Use While Tuning
 //    	return false;
+    	
+    	//return encoderTicks == setPoint;
     }
     
 

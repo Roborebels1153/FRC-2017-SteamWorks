@@ -17,7 +17,7 @@ public class BlueLeftScoreAGear extends CommandGroup {
     private static final int inchesForward = 72;
    // private static final int inchesForwardProto = 65; //Distance manipulated for PROTOTYPE Robot
     private static final int degreesToTurn = 60;
-    private static final int inchesToAirship = 75;
+    private static final double inchesToAirship = 76;
     private static final int secondsToWait = 1; 
    // private static final int inchesBack = 60;
     private static final  double speedForward = 0.3; 

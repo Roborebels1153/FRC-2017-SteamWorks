@@ -5,6 +5,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
 import com.walpole.frc.team.robot.autonomous.BlueLeftKnockDownHopper;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGearShoot;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
 import com.walpole.frc.team.robot.autonomous.Shoot;
@@ -125,6 +126,7 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(80, 0.5, 2));
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.4));
+	chooser.addObject("Blue Left Deliver A Gear Shoot", new BlueLeftScoreAGearShoot());
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
 
 

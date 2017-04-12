@@ -65,7 +65,7 @@ public class Shooter extends Subsystem {
     
     public void shootWhenWeDontHaveALightSensor() {
 //    	agitatorMotor.set(-1);
-    	shooterMotor.set(1);
+    	shooterMotor.set(0.7);
     }
     
     public void stopShooting() {
