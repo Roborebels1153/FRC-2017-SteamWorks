@@ -29,8 +29,11 @@ public class DriveAndTurn extends CommandGroup {
 //	addSequential(new TurnWithGyroCommand(degreesNegative, 0.5)); 
 	//addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speed));
 	//addSequential(new StopCommand()); 
-	addSequential(new MoveGearCollectorOutAutoCommand(90, 0.5, 2));
-	addSequential(new MoveGearCollectorOutAutoCommand(-20, 0.3, 2));
+//	addSequential(new MoveGearCollectorOutAutoCommand(90, 0.5, 2));
+//	addSequential(new MoveGearCollectorOutAutoCommand(-20, 0.3, 2));
+	addSequential (new TurnWithGyroCommand (90, 0.4));
+	addSequential (new TurnWithGyroCommand (90, 0.4));
+	
 
     }
 

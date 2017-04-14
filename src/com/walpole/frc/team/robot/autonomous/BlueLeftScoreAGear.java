@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class BlueLeftScoreAGear extends CommandGroup {
-    private static final int inchesForward = 72;
+    private static final int inchesForward = 75;
    // private static final int inchesForwardProto = 65; //Distance manipulated for PROTOTYPE Robot
     private static final int degreesToTurn = 60;
-    private static final double inchesToAirship = 76;
+    private static final double inchesToAirship = 74;
     private static final int secondsToWait = 1; 
    // private static final int inchesBack = 60;
     private static final  double speedForward = 0.3; 
@@ -36,8 +36,9 @@ public class BlueLeftScoreAGear extends CommandGroup {
 	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
 //	addSequential(new MoveGearCollectorOutAutoCommand(0, -0.5, 1.5));
 	//addSequential(new WaitCommand(1));
-	addSequential(new MoveGearCollectorOutAutoCommand(95, 0.5, 2));
-	addSequential(new MoveGearCollectorOutAutoCommand(-20, 0.4, 2));
+//	addSequential(new MoveGearCollectorOutAutoCommand(95, 0.5, 2));
+//	addSequential(new MoveGearCollectorOutAutoCommand(-10, 0.4, 2));
+	addSequential(new MoveGearCollectorOutAutoCommand(35, 0.5, 2));
 	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 3));  
 	//addSequential(new MoveGearCollectorOutAutoCommand(37, 0.5, 2)); 
 	//addSequential(new WaitCommand(secondsToWait));
