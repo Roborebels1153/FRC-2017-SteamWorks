@@ -74,7 +74,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 ////    	} else {
 ////    		return false; 
 ////    	}
-    	return leftMotorPower <= 0.1 && error <= 50; 
+    	return error <= 400;//leftMotorPower <= 0.1 && error <= 500; 
 //    	
     	// Use While Tuning
 //    	return false;

@@ -14,7 +14,7 @@ public class TurnWithGyroCommand extends Command {
 	requires(Robot.drive);
 	requires(Robot.floorGear);
 	this.degreesToTurn = degreesToTurn;
-	this.speedTurn = 0.6;
+	this.speedTurn = 0.4;
     }
     
     public TurnWithGyroCommand(double degreesToTurn, double speed) {
@@ -30,6 +30,7 @@ public class TurnWithGyroCommand extends Command {
 	Robot.drive.setMaxGyroOutput(speedTurn);
 	Robot.drive.enableGyroPID();
 	Robot.floorGear.setMotorValue(-0.1);
+	Robot.drive.shiftHigh();
     }
 
     protected void execute() {
