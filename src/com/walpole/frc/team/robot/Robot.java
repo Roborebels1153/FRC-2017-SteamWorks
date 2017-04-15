@@ -117,14 +117,14 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
 	//chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
 //	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90, 0.4));
+	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90, 0.35));
 	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0, 0.5));
 	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
 	chooser.addObject("Drive And Turn", new DriveAndTurn());
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(50, 0.6, 2));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(30, 0.4, 2));
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.3));
 	chooser.addObject("Blue Left Deliver A Gear Shoot", new BlueLeftScoreAGearShoot());
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
