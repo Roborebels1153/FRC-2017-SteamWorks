@@ -48,7 +48,7 @@ public class BlueLeftScoreAGearShoot extends CommandGroup {
 	addSequential(new DriveForwardWithGyroEncoder(-10, 0.3));
 	addSequential(new TurnWithGyroCommand(-135, 0.3));
 	addSequential(new DriveForwardWithGyroEncoder(70, 0.3));
-	addSequential(new ShooterShootCommand(2));
+	addSequential(new ShooterShootCommand());
 	addSequential(new WaitCommand(5)); 
 	addSequential(new ShooterStopCommand());
 	//addSequential(new StopGearCollectorCommand());

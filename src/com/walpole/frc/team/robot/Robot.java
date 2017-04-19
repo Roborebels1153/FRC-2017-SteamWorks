@@ -17,6 +17,7 @@ import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
+import com.walpole.frc.team.robot.commands.GearCollectorIn;
 import com.walpole.frc.team.robot.commands.GearTrayWithJoysticks;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
@@ -124,7 +125,7 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(30, 0.4, 2));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(68, 0.6, 2));
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.3));
 	chooser.addObject("Blue Left Deliver A Gear Shoot", new BlueLeftScoreAGearShoot());
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
@@ -198,6 +199,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Shooter Error", shooter.shooterPIDError());
 	SmartDashboard.putNumber("Shooter Motor Power", shooter.getShooterMotorPower());
 	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+	
 
     }
     

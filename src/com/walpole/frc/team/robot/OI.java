@@ -106,7 +106,7 @@ public OI() {
 	opTriggerL.whileHeld(new FireBallFlapperCommand()); // This is a test
 	opTriggerL.whenReleased(new RetractBallFlapperCommand());
 	
-	opTriggerR.whenPressed(new ShooterShootCommand(2));
+	opTriggerR.whenPressed(new ShooterShootCommand());
 	opTriggerR.whenReleased(new ShooterStopCommand());
 	
 	
@@ -117,10 +117,10 @@ public OI() {
 	opB.whenPressed(new GearCollectorOut());
 	opB.whenReleased(new GearCollectorOff());
 
-	opY.whenPressed(new MoveGearCollectorOutAutoCommand(31, 0.4));
-	opX.whenPressed(new GearInPositionCommand()); 
+	opX.whileHeld(new MoveGearCollectorOutAutoCommand(68, 0.6, 2));
+	opX.whileHeld(new GearInPositionCommand()); 
 	
-	opY.toggleWhenPressed(new GearLEDOffCommand());
+	//opY.whenPressed(new GearLEDOffCommand());
 
 	}
 
