@@ -7,18 +7,23 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LineUpWithVision extends Command {
+public class GearLEDUpdateStateCommand extends Command {
 
-    public LineUpWithVision() {
-        requires(Robot.drive);
+    public GearLEDUpdateStateCommand() {
+    	requires(Robot.floorGear);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+//    	Robot.floorGear.gearLEDOff();
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
+    	Robot.floorGear.pickedUpGearLED();
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,5 +38,6 @@ public class LineUpWithVision extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.floorGear.gearLEDOff();
     }
 }

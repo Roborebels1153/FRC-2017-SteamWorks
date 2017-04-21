@@ -6,41 +6,40 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveForwardWithSeconds extends Command {
 
-    private double speed;
-    private double secondsToDrive;
-    private long startTimeMillis;
+	private long startTimeMillis;
+	// TODO Consider increasing the speed?
+	private double speed = 0.6;
+	private double secondsToDrive;
 
-    
+	public DriveForwardWithSeconds(double secondsToDrive) {
+		requires(Robot.drive);
+		
+		this.secondsToDrive = secondsToDrive;
+	}
 
-    public DriveForwardWithSeconds(double secondsToDrive) {
-	requires(Robot.drive);
-	this.speed = 0.6;
-	this.secondsToDrive = secondsToDrive;
-    }
+	@Override
+	protected void initialize() {
+		startTimeMillis = System.currentTimeMillis();
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-	startTimeMillis = System.currentTimeMillis();
-    }
+	@Override
+	protected void execute() {
+		Robot.drive.driveAtSpeed(-speed);
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-	Robot.drive.driveAtSpeed(-speed);
-    }
+	@Override
+	protected boolean isFinished() {
+		return System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000;
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-	return System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000;
-    }
+	@Override
+	protected void end() {
+		Robot.drive.stopDrive();
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-	Robot.drive.stopDrive();
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-
-    }
+	@Override
+	protected void interrupted() {
+		Robot.drive.stopDrive();
+	}
 }
+

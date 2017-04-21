@@ -1,3 +1,4 @@
+
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
@@ -12,7 +13,7 @@ public class ReleaseGearCommand extends Command {
 
 	protected void initialize() {
 			
-//		Robot.gear.retractGearRetainer();	
+//		Robot.gear.retractGearRetainer();
 	}
 
     	// Called repeatedly when this Command is scheduled to run
@@ -36,5 +37,4 @@ public class ReleaseGearCommand extends Command {
     	protected void interrupted() {
     
     	}
-	
 }

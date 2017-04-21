@@ -1,3 +1,4 @@
+
 package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
@@ -15,7 +16,7 @@ public class RetractGearPusherCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	Robot.gear.retractGearPusher();
+    	//Robot.gear.retractGearPusher();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,3 +37,4 @@ public class RetractGearPusherCommand extends Command {
     protected void interrupted() {
     }
 }
+

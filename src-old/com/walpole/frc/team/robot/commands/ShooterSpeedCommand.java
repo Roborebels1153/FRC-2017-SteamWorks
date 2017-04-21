@@ -1,31 +1,37 @@
-package com.walpole.frc.team.robot.commands;
+/*package com.walpole.frc.team.robot.commands;
 
 import com.walpole.frc.team.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShooterSpeedIncrement extends Command {
-
+public class ShooterSpeedCommand extends Command {
 	
-    public ShooterSpeedIncrement() {
+	private double shootSpeed;
+    public ShooterSpeedCommand(double speed) {
         // Use requires() here to declare subsystem dependencies
+    	shootSpeed = speed;
 //    	requires(Robot.shooter);
-
-
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	Robot.shooter.shootWhenWeDontHaveALightSensor();
+<<<<<<< HEAD:src/com/walpole/frc/team/robot/commands/ShooterSpeedCommand.java
+//		Robot.shooter.setShooterSpeed(shootSpeed);
+//		Robot.shooter.agitatorOff();
+=======
+>>>>>>> refs/remotes/origin/Cleanup:src-old/com/walpole/frc/team/robot/commands/ShooterSpeedCommand.java
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		Robot.shooter.setPower(shootSpeed);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+        return false;
     }
 
     // Called once after isFinished returns true
@@ -36,4 +42,4 @@ public class ShooterSpeedIncrement extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-}
+}*/

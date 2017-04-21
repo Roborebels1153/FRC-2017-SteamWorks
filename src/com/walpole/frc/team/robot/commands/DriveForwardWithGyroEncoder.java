@@ -12,15 +12,17 @@ public class DriveForwardWithGyroEncoder extends Command {
     private long startTimeMillis;
     private double secondsToDrive;
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double secondsToDrive) {
+    public DriveForwardWithGyroEncoder(double inchesToDrive, double speed) {
 	requires(Robot.drive);
-	this.speed = 0.8;
+	requires(Robot.floorGear);
+	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
-	this.secondsToDrive = secondsToDrive;
+	//this.secondsToDrive = secondsToDrive;
     }
     
-    public DriveForwardWithGyroEncoder(int inchesToDrive, double speed, double secondsToDrive) {
+    public DriveForwardWithGyroEncoder(double inchesToDrive, double speed, double secondsToDrive) {
 	requires(Robot.drive);
+	requires(Robot.floorGear);
 	this.speed = speed;
 	this.setPoint = Constants.ticksPerInch * inchesToDrive;
 	this.secondsToDrive = secondsToDrive;
@@ -30,11 +32,18 @@ public class DriveForwardWithGyroEncoder extends Command {
     protected void initialize() {
 	Robot.drive.setMaxGyroOutput(0.8);
 	Robot.drive.setTurnPIDSetpoint(Robot.drive.getGyroYaw());
-	startTimeMillis = System.currentTimeMillis();
+	//startTimeMillis = System.currentTimeMillis();
+	
+	Robot.drive.disableDrivePID();
+	Robot.drive.disableGyroPID();
 	
 	Robot.drive.resetEncoders();
 	Robot.drive.setMaxDrivePIDOutput(speed);
 	Robot.drive.setDrivePIDSetPoint(setPoint);
+	
+	
+	
+	//Robot.floorGear.setMotorValue(-0.1);
 	
 	Robot.drive.enableGyroPID();
 	Robot.drive.enableDrivePID();
@@ -48,7 +57,8 @@ public class DriveForwardWithGyroEncoder extends Command {
 	double driveOutput = (leftOutput + rightOutput) / 2;
 	
 	//The 
-	Robot.drive.arcadeDrive(-driveOutput, gyroOutput, false);
+	Robot.drive.arcadeDrive(-leftOutput, gyroOutput, false);
+	Robot.floorGear.stayInPosition();
 	//This makes it goes forward
 	//Robot.drive.arcadeDrive(-Robot.drive.getLeftPIDOutput(), 0);
 	//Robot.drive.arcadeTankDrive(leftOutput, rightOutput, gyroOutput);
@@ -56,33 +66,29 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	// double leftMotorPower = Robot.driveSubsystem.getLeftMotorPower();
-	// double leftError = Robot.driveSubsystem.getLeftPIDError();
-	// boolean leftMotorFinished = leftMotorPower <= 0.1 && leftError <= 50;
-	//
-	// double rightMotorPower = Robot.driveSubsystem.getRightMotorPower();
-	// double rightError = Robot.driveSubsystem.getRightPIDError();
-	// boolean rightMotorFinished = rightMotorPower <= 0.1 && rightError <=
-	// 50;
-	//
-	// return leftMotorFinished && rightMotorFinished;
-	//return Robot.driveSubsystem.isOnTarget();
-	// This is a new command that finishes DriveForwardWithEncoder when the
-	// robot is on target
     	double leftMotorPower = Robot.drive.getLeftMotorPower();
     	double error = Math.abs(Robot.drive.getLeftPIDError());
-    	if ((leftMotorPower <= 0.1 && error <= 1200) | System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
-    		return true;
-    	} else {
-    		return false; 
-    	}
+//    	double encoderTicks = Robot.drive.getLeftEncoderCount();
+////    	if ((leftMotorPower <= 0.1 && error <= 50) || System.currentTimeMillis() - startTimeMillis >= secondsToDrive * 1000) {
+////    		return true;
+////    	} else {
+////    		return false; 
+////    	}
+    	return error <= 400;//leftMotorPower <= 0.1 && error <= 500; 
+//    	
+    	// Use While Tuning
+//    	return false;
+    	
+    	//return encoderTicks == setPoint;
     }
+    
 
     // Called once after isFinished returns true
     protected void end() {
 	//Robot.driveSubsystem.stopDrive();
 	Robot.drive.disableDrivePID();
 	Robot.drive.disableGyroPID();
+//	Robot.floorGear.setGearMotor(-0.1);
     }
 
     // Called when another command which requires one or more of the same

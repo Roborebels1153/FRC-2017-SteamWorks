@@ -1,47 +1,35 @@
 package com.walpole.frc.team.robot;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
-import com.walpole.frc.team.robot.autonomous.BlueCenterScoreAGearWithSeconds;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
+import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGearShoot;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
-import com.walpole.frc.team.robot.autonomous.CrossGreenLine;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
+import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
-//import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
+import com.walpole.frc.team.robot.commands.CalibrateGyro;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
-import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
-import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
-import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
-import com.walpole.frc.team.robot.commands.RetainGearCommand;
+import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
-import com.walpole.frc.team.robot.commands.ShiftHighCommand;
-import com.walpole.frc.team.robot.commands.ShiftLowCommand;
-import com.walpole.frc.team.robot.commands.ShootWithTimer;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import com.walpole.frc.team.robot.subsystems.Climb;
-import com.walpole.frc.team.robot.subsystems.Collector;
 import com.walpole.frc.team.robot.subsystems.Drive;
+import com.walpole.frc.team.robot.subsystems.FloorGear;
 import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
-import com.walpole.frc.team.robot.subsystems.Vision;
-import com.walpole.frc.team.robot.vision.GripPipeline;
 
-import edu.wpi.cscore.AxisCamera;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.VisionThread;
@@ -54,29 +42,20 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    	private Preferences prefs = Preferences.getInstance();  //the prefs are not working so this is commented (Sunday 2/12)
-//	public static final Counter Counter = new Counter();
-//	public static final Collector collector = new Collector();
-	public static final Shooter shooter = new Shooter();
+    public static Preferences prefs;
 	public static final Drive drive = new Drive();
 	public static final Climb climb = new Climb();
-//	public static final Gear gear = new Gear();
-	public static OI oi = new OI();
-	private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240; 
-	
-	private VisionThread visionThread;
-	private static Vision vision;
-	private static double centerX = 0.0;
-	private static double[] defaultValue = new double[0];
-	private static double[] areas = new double[0];
-	
-	
-	private final Object imgLock = new Object();  
+	//public static final Gear gear = new Gear();
+	public static final FloorGear floorGear = new FloorGear();
+	public static final Shooter shooter = new Shooter();
+	public static OI oi = new OI(); 
 
     private Command autonomousCommand;
     private SendableChooser<Command> chooser;
-
+    
+    private DriverStation.Alliance alliance = DriverStation.Alliance.Invalid;
+	
+	public static AHRS gyro;
 
 
 	/**
@@ -84,12 +63,12 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     
-    public Vision getVision() {
-    	return vision;
-    }
     public void robotInit() {
-	oi = new OI();
-	chooser = new SendableChooser<Command>();
+    	prefs = Preferences.getInstance();;
+    	oi = new OI();
+    	chooser = new SendableChooser<Command>();
+
+	
 	// chooser.addObject("My Auto", new MyAutoCommand());
 	SmartDashboard.putData("Auto mode", chooser);
 	
@@ -99,68 +78,82 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Red Right Deliver A Gear", new RedRightScoreAGear());
 	chooser.addObject("Red Left Deliver A Gear", new RedLeftScoreAGear());
 	//chooser.addObject("Drive 10 Feet", new DriveForwardWithEncoder(120));
-	//chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
-	//chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90));
-	//chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0));
+//	chooser.addObject("Drive 10 ft with gyro", new DriveForwardWithGyroEncoder(120));
+	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90, 0.35));
+	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0, 0.5));
 	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
-	//chooser.addObject("Drive And Turn", new DriveAndTurn());
+	chooser.addObject("Drive And Turn", new DriveAndTurn());
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	//Shift high is actually shift low, due to the change in wiring for 2017 PROTOTYPE robot 
-	//chooser.addObject("Shift Low", new ShiftHighCommand()); 
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(68, 0.6, 2));
+	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.3));
+	chooser.addObject("Blue Left Deliver A Gear Shoot", new BlueLeftScoreAGearShoot());
+	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
+       
+        
 	
-	AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera-vision","10.11.54.69");
-	       camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-	        
-//	AxisCamera cameraTwo = CameraServer.getInstance().addAxisCamera("axis-camera-normal" , "10.11.54.70");
-//	       cameraTwo.setResolution(IMG_WIDTH, IMG_HEIGHT);
+	new Thread(() -> {
+		
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setVideoMode(VideoMode.PixelFormat.kMJPEG, 200, 160, 10);
+		
+	}).start();
 	
-	visionThread = new VisionThread(camera, new GripPipeline(), pipeline -> {
-        if (!pipeline.filterContoursOutput().isEmpty()) {
-            Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-            synchronized (imgLock) {
-                centerX = r.x + (r.width / 2);
-            }
-        }
-    });
-	
-    visionThread.start();
-    
-    vision = new Vision(NetworkTable.getTable("GRIP/myCountoursReport"));        
-    }    
-	
+    }   	
     
     public static void updateDashboard() {
-	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitchState());
+    	
+    // Climber Values
+//	SmartDashboard.putBoolean("Limit Switch", climb.getLimitSwitchState());
+//	SmartDashboard.putBoolean("Other Limit Switch", climb.getOtherLimitSwitchState());
+//	
+	//Drive Values
+	
+		//Left Encoder Values
 	SmartDashboard.putNumber("Left Encoder Value", drive.getLeftEncoderCount());
-	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
 	SmartDashboard.putNumber("Left Motor Power Value", drive.getLeftMotorPower());
-	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
-	//SmartDashboard.putNumber("Gyro Angle", drive.getGyroAngle());
-	SmartDashboard.putNumber("Target Tick Count", Constants.ticksPerInch * 120);
-	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
-	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
-	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
 	SmartDashboard.putNumber("Left Encoder PID Error", drive.getLeftPIDError());
 	SmartDashboard.putNumber("Left Encoder PID Output", drive.getLeftPIDOutput());
+	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
+
+		//Right Encoder Values
+	SmartDashboard.putNumber("Right Motor Power Value", drive.getRightMotorPower());
+	SmartDashboard.putNumber("Right Encoder Value", drive.getRightEncoderCount());
 	SmartDashboard.putNumber("Right Encoder PID Error", drive.getRightPIDError());
 	SmartDashboard.putNumber("Right Encoder PID Output", drive.getRightPIDOutput());
 	SmartDashboard.putNumber("Right Encoder Setpoint", drive.getRightEncoderSetpoint());
-	SmartDashboard.putNumber("Left Encoder Setpoint", drive.getLeftEncoderSetpoint());
+
+	//Gyro Values
+	SmartDashboard.putNumber("Gyro Error", drive.getGyroPIDError());
+	SmartDashboard.putNumber("Gyro PID Output", drive.getGyroPIDOutput());
+	SmartDashboard.putBoolean("Gyro Is Finished", drive.turnIsFinished());
 	SmartDashboard.putNumber("Gyro Angle", drive.getGyroYaw());
 	SmartDashboard.putNumber("Gyro Setpoint", drive.getTurnPIDSetpoint()); 
 	SmartDashboard.putBoolean("Gyro Calibration", drive.checkGyroCalibration());
-//	SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
-  	double[] centerX = vision.table.getNumberArray("centerX", defaultValue);
-	double[] centerY = vision.table.getNumberArray("centerY", defaultValue); 
-	try {
-		SmartDashboard.putString("centerX", Arrays.toString(centerX));
-    	SmartDashboard.putString("centerY", centerY.toString());
-	} catch (Exception e) {
-		SmartDashboard.putString("Center X and Center Y",  "Null Found");
+	
+	//General Values
+	SmartDashboard.putNumber("Target Tick Count(10ft)", Constants.ticksPerInch * 120);
+
+	//Gear Values
+	SmartDashboard.putNumber("Motor Power", floorGear.getGearMotorValue());
+	SmartDashboard.putNumber("Gear Encoder Value", floorGear.getGearEncoderCount());
+	SmartDashboard.putNumber("Gear PID Output", floorGear.getGearPIDOutput()); 
+	SmartDashboard.putNumber("Gear PID Error", floorGear.getGearPIDError()); 
+	SmartDashboard.putNumber("Gear Encoder Setpoint", floorGear.getGearPIDSetPoint());
+	SmartDashboard.putData("Calibrate Gyro", new CalibrateGyro());
+	SmartDashboard.putBoolean("Is Gear In", floorGear.getGearLightSensorState());
+
+	
+	//Shooter Values
+	SmartDashboard.putNumber("RPS", Robot.shooter.getRPS());
+	SmartDashboard.putNumber("RPM", Robot.shooter.getRPS() * 60);
+	SmartDashboard.putNumber("Shooter Error", shooter.shooterPIDError());
+	SmartDashboard.putNumber("Shooter Motor Power", shooter.getShooterMotorPower());
+	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
+	
+
     }
-}
 
     /**
      * This function is called once each time the robot enters Disabled mode.
@@ -175,9 +168,15 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		new RetractGearPusherCommand();
+		
+		
 		updateDashboard();
+//		
+//		updateAllianceColor();
+
 	}
+
+	
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
@@ -189,7 +188,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-//    	Robot.gear.keepGear();
+
+    	//Robot.gear.keepGear();]
         autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -225,6 +225,7 @@ public class Robot extends IterativeRobot {
             autonomousCommand = new DriveForwardWithEncoder(120);
             autonomousCommand.start();
 //        	Robot.gear.fireGearPusher();
+        	//Robot.gear.fireGearPusher();
         }
     }
 
@@ -232,16 +233,16 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	vision.updateVisionDashboard();
 	Scheduler.getInstance().run();
         
         updateDashboard();
     }
 
     public void teleopInit() {
-//    	Robot.gear.fireGearPusher();
-//    	Robot.gear.keepGear();
+    	//Robot.gear.fireGearPusher();
+    	//Robot.gear.keepGear();
     	Robot.drive.resetEncoders(); 
+    	Robot.floorGear.resetGearEncoder();
 	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
@@ -255,9 +256,12 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 	Scheduler.getInstance().run();
-	drive.drive(oi.getDriverJoystick());
+	//drive.drive(oi.getDriverJoystick());
+	drive.driveWithInertia(oi.getDriverJoystick());
+	floorGear.gear(oi.getOperatorJoystick());
+//	floorGear.gearLEDOn();
+	floorGear.pickedUpGearLED();
 	updateDashboard();
-	vision.updateVisionDashboard();
 	
 	Robot.shooter.turnLightOn();
     }
@@ -268,5 +272,10 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
 	LiveWindow.run();
     }
+    
+    public AHRS getGyro() {
+    	return gyro;
+    }
 
+	
 }

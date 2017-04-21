@@ -1,27 +1,45 @@
 package com.walpole.frc.team.robot;
 
+
 import com.walpole.frc.team.robot.commands.ClimbDownCommand;
 import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ClimbWithoutLimitSwitch;
 import com.walpole.frc.team.robot.commands.ConveyerOffCommand;
 import com.walpole.frc.team.robot.commands.ConveyerOnCommand;
 import com.walpole.frc.team.robot.commands.ExtendGearPusherCommand;
+import com.walpole.frc.team.robot.commands.FireBallFlapperCommand;
+import com.walpole.frc.team.robot.commands.GearCollectorOff;
+import com.walpole.frc.team.robot.commands.GearCollectorOut;
+import com.walpole.frc.team.robot.commands.GearInPositionCommand;
+import com.walpole.frc.team.robot.commands.GearLEDOffCommand;
+import com.walpole.frc.team.robot.commands.GearLEDPickUP;
+import com.walpole.frc.team.robot.commands.GearLEDUpdateStateCommand;
+import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
+import com.walpole.frc.team.robot.commands.GearCollectorIn;
 import com.walpole.frc.team.robot.commands.ReleaseGearCommand;
 import com.walpole.frc.team.robot.commands.RetainGearCommand;
+import com.walpole.frc.team.robot.commands.RetractBallFlapperCommand;
 import com.walpole.frc.team.robot.commands.RetractGearPusherCommand;
+
+import com.walpole.frc.team.robot.commands.ShooterShootCommand;
+import com.walpole.frc.team.robot.commands.ShooterStopCommand;
+import com.walpole.frc.team.robot.commands.TurnLightOffCommand;
+import com.walpole.frc.team.robot.commands.TurnLightOnCommand;
+import com.walpole.frc.team.robot.lib.RebelTrigger;
+import com.walpole.frc.team.robot.commands.ClimbDownCommand;
+import com.walpole.frc.team.robot.commands.ClimbUpCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.ShiftLowCommand;
-import com.walpole.frc.team.robot.commands.ShootWithTimer;
-import com.walpole.frc.team.robot.commands.ShooterShootCommand;
-import com.walpole.frc.team.robot.commands.ShooterSpeedCommand;
 import com.walpole.frc.team.robot.commands.StopClimbCommand;
+import com.walpole.frc.team.robot.commands.TurboModeOff;
+import com.walpole.frc.team.robot.commands.TurboModeOn;
 import com.walpole.frc.team.robot.lib.RebelTrigger;
+
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -30,8 +48,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 
     private Joystick opStick = new Joystick(RobotMap.OPERATOR_STICK);
-    private Joystick driverJoystick = new Joystick(RobotMap.DRIVER_JOYSTICK);
+    private Joystick driverStick = new Joystick(RobotMap.DRIVER_JOYSTICK);
     
+    // Reserved for Climbing
     Button opTriggerL = new RebelTrigger(opStick, 2);
     Button opTriggerR = new RebelTrigger(opStick, 3);
     
@@ -40,47 +59,76 @@ public class OI {
     Button opX = new JoystickButton(opStick, 3);
     Button opY = new JoystickButton(opStick, 4);
     
+    Button drA = new JoystickButton(driverStick, 1);
+    Button drB = new JoystickButton(driverStick, 2);
+    Button drX = new JoystickButton(driverStick, 3);
+    Button drY = new JoystickButton(driverStick, 4);
+    
     Button opBumperL = new JoystickButton(opStick, 5);
     Button opBumperR = new JoystickButton(opStick, 6);
     
     Button opStart = new JoystickButton(opStick, 8);
     Button opBack = new JoystickButton(opStick, 9);
     
-
 	
-	private Button drLT = new RebelTrigger(driverJoystick, 2);
-	private Button drRT = new RebelTrigger(driverJoystick, 3);
-	private Button drRB = new JoystickButton(driverJoystick, 6);     //the drLb and drRb are the left and right bumpers on the XBOX controller
-	private Button drLB = new JoystickButton(driverJoystick, 5 );
-
-	
-
+	private Button drLT = new RebelTrigger(driverStick, 2);
+	private Button drRT = new RebelTrigger(driverStick, 3);
+	private Button drRB = new JoystickButton(driverStick, 6);     //the drLb and drRb are the left and right bumpers on the XBOX controller
+	private Button drLB = new JoystickButton(driverStick, 5 );
 
 
 public OI() {
 	opBumperL.whileHeld(new ReleaseGearCommand());
 	opBumperL.whenReleased(new RetainGearCommand());
-	opBumperR.whenReleased(new ExtendGearPusherCommand());
-	opBumperR.whileHeld(new RetractGearPusherCommand());
-	
-	opTriggerL.whileHeld(new ConveyerOnCommand()); // This is a test
-	opTriggerL.whenReleased(new ConveyerOffCommand());
-	
-	opTriggerR.whenPressed(new ShootWithTimer());
-	opTriggerR.whenReleased(new ShooterSpeedCommand(0));
+	//opBumperR.whenReleased(new ExtendGearPusherCommand());
+//	opBumperR.whileHeld(new RetractGearPusherCommand());
 
 	drLT.whenPressed(new ShiftHighCommand());
 	drLT.whenReleased(new ShiftLowCommand());
 
-	drRB.whenPressed(new ClimbWithoutLimitSwitch());        // when right bumper is held, robot motor will spin in one direction
-	drRB.whenReleased(new StopClimbCommand());   // when right bumper is released, robot motor will stop spinning
+	//drRB.whenPressed(new ClimbWithoutLimitSwitch());    
+	opBumperR.whenReleased(new StopClimbCommand()); //Changed to BumperL due to change in climb motor for PROTO 
+	opBumperR.whenPressed(new ClimbUpCommand());     
 
-	drLB.whileHeld(new ClimbDownCommand());      // when left bumper is held, robot motor will spin in the opposite direction
-	drLB.whenReleased(new StopClimbCommand());   // when left bumper is released, robot motor will stop spinning
-	}
+	// when right bumper is released, robot motor will stop spinning
+
+	opBumperL.whileHeld(new ClimbDownCommand());  //Changed to BumperR due to change in climb motor for PROTO   
+	opBumperL.whenReleased(new StopClimbCommand());   
 	
-	public Joystick getDriverJoystick() {
-		return driverJoystick;
+	
+	
+	drRT.whenPressed(new TurboModeOn());
+	drRT.whenReleased(new TurboModeOff());
+	
+	drA.whileHeld(new GearLEDOffCommand()); 
+	drA.whenReleased(new GearLEDPickUP());
+	
+	opTriggerL.whileHeld(new FireBallFlapperCommand()); // This is a test
+	opTriggerL.whenReleased(new RetractBallFlapperCommand());
+	
+	opTriggerR.whenPressed(new ShooterShootCommand());
+	opTriggerR.whenReleased(new ShooterStopCommand());
+	
+	
+	
+	
+	opA.whenPressed(new GearCollectorIn());
+	opA.whenReleased(new GearCollectorOff());
+	opB.whenPressed(new GearCollectorOut());
+	opB.whenReleased(new GearCollectorOff());
+
+	opX.whileHeld(new MoveGearCollectorOutAutoCommand(68, 0.6, 2));
+	opX.whileHeld(new GearInPositionCommand()); 
+	
+	//opY.whenPressed(new GearLEDOffCommand());
+
 	}
 
+	public Joystick getDriverJoystick() {
+		return driverStick;
+	}
+
+	public Joystick getOperatorJoystick() {
+		return opStick;
+	}
 }

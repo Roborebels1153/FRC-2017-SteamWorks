@@ -29,8 +29,6 @@ public class Drive extends Subsystem {
 
     private RebelDrive robotDrive;
 
-    private Preferences prefs;
-
     private SpeedController leftFrontVictor;
     private SpeedController leftBackVictor;
     private SpeedController rightFrontVictor;
@@ -60,6 +58,13 @@ public class Drive extends Subsystem {
     private DummyPIDOutput gyroOutput;
     private boolean turnIsFinished;
     private double driveTolerance = 15;
+    
+    private double previousJoystickValue = 0;
+
+    private double joystickChangeLimiter = .08;
+    
+    private boolean turboMode = false;
+   
 
     public enum Shifter {
 	High, Low
@@ -85,26 +90,28 @@ public class Drive extends Subsystem {
 	leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, false, EncodingType.k4X);
 	leftEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
-	leftEncoderPID = new PIDController(encoderP, encoderI, encoderD, leftEncoder, leftEncoderOutput);
+	leftEncoderPID = new PIDController(Constants.encoderP,Constants.encoderI,Constants.encoderD, leftEncoder, leftEncoderOutput);
 	rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_A, RobotMap.RIGHT_ENCODER_B, false, EncodingType.k4X);
 	rightEncoder.setReverseDirection(true);
-	leftEncoder.setReverseDirection(true);
+	leftEncoder.setReverseDirection(true); // TODO:This is set FALSE to work on Prototype Robot, change TRUE on FINAL
 	rightEncoderOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
-	rightEncoderPID = new PIDController(encoderP, encoderI, encoderD, rightEncoder, rightEncoderOutput);
+	rightEncoderPID = new PIDController(Constants.encoderP, Constants.encoderI, Constants.encoderD, rightEncoder, rightEncoderOutput); 
+
 
 	//gyro = new RebelGyro();
 	//gyro.startThread();
 	//gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
 	try {
 	    gyro = new AHRS(SerialPort.Port.kUSB);
+//	    SerialPort.Port.
 	} catch (RuntimeException ex) {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 	    // TODO Add global variable
 	}
 	gyroOutput = new DummyPIDOutput();
 	//Add Constants here if you want to load PID values from constants class
-	gyroPID = new PIDController(gyroP, gyroI, gyroD, gyro, gyroOutput);
+	gyroPID = new PIDController(Constants.gyroP, Constants.gyroI, Constants.gyroD, gyro, gyroOutput);
 	gyroPID.setOutputRange(-1, 1);
 	gyroPID.setInputRange(-180, 180);
 	gyroPID.setContinuous();
@@ -116,13 +123,14 @@ public class Drive extends Subsystem {
      * Load PID values from preferences and write them to variables
      */
     private void loadPIDValues() {
-	encoderP = prefs.getDouble("encoderP", encoderP);
-	encoderI = prefs.getDouble("encoderI", encoderI);
-	encoderD = prefs.getDouble("encoderD", encoderD);
+	encoderP = Robot.prefs.getDouble("encoderP", encoderP);
+	encoderI = Robot.prefs.getDouble("encoderI", encoderI);
+	encoderD = Robot.prefs.getDouble("encoderD", encoderD);
 
-	gyroP = prefs.getDouble("gyroP", Constants.gyroP);
-	gyroI = prefs.getDouble("gyroI", Constants.gyroI);
-	gyroD = prefs.getDouble("gyroD", Constants.gyroD);
+	gyroP = Robot.prefs.getDouble("gyroP", gyroP);
+	gyroI = Robot.prefs.getDouble("gyroI", gyroI);
+	gyroD = Robot.prefs.getDouble("gyroD", gyroD);
+
     }
 
     /**
@@ -131,26 +139,68 @@ public class Drive extends Subsystem {
     public void updatePIDControllers() {
 	loadPIDValues();
 
-	leftEncoderPID.setPID(encoderP, encoderI, encoderD); 
-	rightEncoderPID.setPID(encoderP, encoderI, encoderD); 
-	gyroPID.setPID(gyroP, gyroI, gyroD);
+	/*leftEncoderPID.setPID(encoderP, encoderI, encoderD); 
+	rightEncoderPID.setPID(encoderP, encoderI, encoderD); */
+	//gyroPID.setPID(gyroP, gyroI, gyroD);
     }
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
+    @Override
     public void initDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// setDefaultCommand(new MySpecialCommand());
-	prefs = Preferences.getInstance();
     }
 
     public void drive(Joystick joystick) {
-	double moveValue = 0.8 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
-	double rotateValue = 0.75 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
-	robotDrive.arcadeDrive(moveValue, rotateValue, true);
+		double moveValue = 1 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+		double rotateValue = 0.7 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		robotDrive.arcadeDrive(moveValue, rotateValue, true);
     }
-
+    
+    public void driveWithInertia(Joystick joystick) {
+    	
+    	double currentJoystick = joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+    	double changeInJoystick = currentJoystick - previousJoystickValue;
+    	
+    	if (changeInJoystick > joystickChangeLimiter) {
+    		changeInJoystick = joystickChangeLimiter;
+    	} else if (changeInJoystick < -joystickChangeLimiter) {
+    		changeInJoystick = -joystickChangeLimiter;
+    	}
+    	double speedMultiplyer;
+  	
+    	if (turboMode == true) {
+    		//speedMultiplyer = 1;
+        	 speedMultiplyer = 1;
+    	} else {
+    		//speedMultiplyer = 0.8;
+        	 speedMultiplyer = 0.8; 
+    	}
+   	
+    	previousJoystickValue = previousJoystickValue + changeInJoystick;
+    	
+		double moveValue = speedMultiplyer * previousJoystickValue;
+		double rotateValue = 0.75 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+		robotDrive.arcadeDrive(moveValue, rotateValue, true);
+    	
+    }
+    
+    public Shifter getCurrGear() {
+    	return currGear;
+    }
+    
+    public void turboOn() {
+    	turboMode = true;
+    }
+    
+    public void turboOff() {
+    	turboMode = false;
+    }
+    
+    public void Nitro(Joystick joystick) {
+    	//double moveValue = speed;
+    	double moveValue = 1 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
+    	double rotateValue = 0.8 * joystick.getRawAxis(RobotMap.JOYSTICK_RIGHT_X);
+    	robotDrive.arcadeDrive(moveValue, rotateValue, true); 
+    }
+    
     public Speed getCurrSpeed() {
 	return currSpeed;
     }
@@ -174,14 +224,22 @@ public class Drive extends Subsystem {
 	transmission.set(DoubleSolenoid.Value.kReverse);
 	currGear = Shifter.Low;
     }
+    
+   /* public rampUpCode() {
+    	
+    }*/
 
     public int getLeftEncoderCount() {
 	//we are negating this as it shows up as a negative on the SmartDashboard
-	return -leftEncoder.get();
+	return leftEncoder.get();
     }
 
     public double getGyroAngle() {
 	return gyro.getAngle();
+    }
+    
+    public void calibrateGyro() {
+    	gyro.reset();
     }
 
     public int getRightEncoderCount() {
@@ -278,6 +336,7 @@ public class Drive extends Subsystem {
     public double getRightEncoderSetpoint () {
 	return rightEncoderPID.getSetpoint();
     }
+ 
     
     public double getLeftEncoderSetpoint () {
 	return leftEncoderPID.getSetpoint();

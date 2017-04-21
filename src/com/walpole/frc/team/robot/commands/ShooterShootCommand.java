@@ -9,29 +9,21 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShooterShootCommand extends Command {
 
-    public ShooterShootCommand() {
-        // Use requires() here to declare subsystem dependencies
-//       requires(Robot.shooter);
-
-
+	public ShooterShootCommand() { 
+		requires(Robot.shooter); 
     }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-//        	Robot.shooter.agitatorOn();
-//        	Robot.shooter.shootWhenWeDontHaveALightSensor();
-    	}
-//    	Robot.shooter.getPIDController().enable();
-//    	SmartDashboard.putBoolean("shooting", true);
     	
+	protected void initialize() {
+		
+	}
 
    
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	
-// the amazing variable names    	Robot.shooter.shootWhenWeDontHaveALightSensor();
+    	//Robot.shooter.shoot();
+    	Robot.shooter.shoot();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -47,8 +39,6 @@ public class ShooterShootCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	
-    	
     }
 }
 
