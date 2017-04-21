@@ -20,6 +20,7 @@ import com.walpole.frc.team.robot.subsystems.Drive;
 import com.walpole.frc.team.robot.subsystems.FloorGear;
 import com.walpole.frc.team.robot.subsystems.Gear;
 import com.walpole.frc.team.robot.subsystems.Shooter;
+import com.walpole.frc.team.robot.subsystems.Vision;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode;
@@ -48,6 +49,7 @@ public class Robot extends IterativeRobot {
 	//public static final Gear gear = new Gear();
 	public static final FloorGear floorGear = new FloorGear();
 	public static final Shooter shooter = new Shooter();
+	public static final Vision vision = new Vision();
 	public static OI oi = new OI(); 
 
     private Command autonomousCommand;
@@ -152,6 +154,16 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Shooter Motor Power", shooter.getShooterMotorPower());
 	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 	
+	//Vision Values
+	SmartDashboard.putNumber("Angle Offset", vision.getVisionAngle());
+	SmartDashboard.putBoolean("Vision Angle Functioning", vision.checkVisionAngle());
+	
+	SmartDashboard.putNumber("TargetCenter", vision.getTargetCenter());
+	SmartDashboard.putBoolean("Vision TargetCenter Functioning", vision.checkTargetCenter());
+	
+	
+	SmartDashboard.putNumber("Distance From TargetCenter", vision.getDistanceFromCenter());
+	SmartDashboard.putBoolean("Vision DistanceFromCenter Functioning", vision.checkDistanceFromCenter());
 
     }
 
