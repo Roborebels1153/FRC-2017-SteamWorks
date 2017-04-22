@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 	//public static final Gear gear = new Gear();
 	public static final FloorGear floorGear = new FloorGear();
 	public static final Shooter shooter = new Shooter();
-	public static final Vision vision = new Vision();
+	public static Vision vision = new Vision();
 	public static OI oi = new OI(); 
 
     private Command autonomousCommand;
@@ -69,6 +69,7 @@ public class Robot extends IterativeRobot {
     	prefs = Preferences.getInstance();;
     	oi = new OI();
     	chooser = new SendableChooser<Command>();
+    	vision = new Vision();
 
 	
 	// chooser.addObject("My Auto", new MyAutoCommand());
@@ -154,16 +155,17 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Shooter Motor Power", shooter.getShooterMotorPower());
 	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 	
-	//Vision Values
+//	//Vision Values
+	SmartDashboard.putString("Arduino Output", vision.arduinoString);
 	SmartDashboard.putNumber("Angle Offset", vision.getVisionAngle());
-	SmartDashboard.putBoolean("Vision Angle Functioning", vision.checkVisionAngle());
-	
-	SmartDashboard.putNumber("TargetCenter", vision.getTargetCenter());
-	SmartDashboard.putBoolean("Vision TargetCenter Functioning", vision.checkTargetCenter());
-	
-	
-	SmartDashboard.putNumber("Distance From TargetCenter", vision.getDistanceFromCenter());
-	SmartDashboard.putBoolean("Vision DistanceFromCenter Functioning", vision.checkDistanceFromCenter());
+	//SmartDashboard.putBoolean("Vision Angle Functioning", vision.checkVisionAngle());
+//	
+//	SmartDashboard.putNumber("TargetCenter", vision.getTargetCenter());
+//	SmartDashboard.putBoolean("Vision TargetCenter Functioning", vision.checkTargetCenter());
+//	
+//	
+//	SmartDashboard.putNumber("Distance From TargetCenter", vision.getDistanceFromCenter());
+//	SmartDashboard.putBoolean("Vision DistanceFromCenter Functioning", vision.checkDistanceFromCenter());
 
     }
 
@@ -246,7 +248,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
 	Scheduler.getInstance().run();
-        
+    vision.getTargets();   
         updateDashboard();
     }
 
@@ -273,9 +275,10 @@ public class Robot extends IterativeRobot {
 	floorGear.gear(oi.getOperatorJoystick());
 //	floorGear.gearLEDOn();
 	floorGear.pickedUpGearLED();
+//	vision.getTargets();
 	updateDashboard();
 	
-	Robot.shooter.turnLightOn();
+//	Robot.shooter.turnLightOn();
     }
 
     /**

@@ -22,7 +22,7 @@ public class Shooter extends Subsystem {
     
 	private PIDController shooterPID;
 	
-    private Relay light;
+//    private Relay light;
 	
 //	 private Solenoid indexer;
 	
@@ -33,7 +33,7 @@ public class Shooter extends Subsystem {
 		shooterMotor = new Victor(RobotMap.SHOOTER_MOTOR);
 		agitatorMotor = new Victor(RobotMap.AGITATOR_MOTOR);
 		
-		light = new Relay(RobotMap.LIGHT);
+//		light = new Relay(RobotMap.LIGHT);
 
 		shooterCounter.setUpDownCounterMode();
 		shooterCounter.setDistancePerPulse(1);
@@ -93,21 +93,21 @@ public class Shooter extends Subsystem {
     	shooterMotor.set(speed);
     }
 
-    public Value getLight() {
-    	
-    	return light.get(); 
-   
-    }
-    public void turnLightOn() {
-    	
-    	light.set(Value.kReverse); 
-    	
-    }
-    public void turnLightOff() {
-	  
-	  light.set(Value.kForward); 
-	  
-    }
+//    public Value getLight() {
+//    	
+//    	return light.get(); 
+//   
+//    }
+//    public void turnLightOn() {
+//    	
+//    	light.set(Value.kReverse); 
+//    	
+//    }
+//    public void turnLightOff() {
+//	  
+//	  light.set(Value.kForward); 
+//	  
+//    }
     
 //       
 //    public double getShooterPIDError() {

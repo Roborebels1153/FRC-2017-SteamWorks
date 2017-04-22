@@ -103,7 +103,9 @@ public class Drive extends Subsystem {
 	//gyro.startThread();
 	//gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO));
 	try {
-	    gyro = new AHRS(SerialPort.Port.kUSB);
+	    gyro = new AHRS(SerialPort.Port.kUSB2);
+	    //gyro = new AHRS(SerialPort.Port.kUSB1);
+
 //	    SerialPort.Port.
 	} catch (RuntimeException ex) {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);

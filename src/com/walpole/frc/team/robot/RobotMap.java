@@ -47,7 +47,7 @@ public class RobotMap {
 	
 	public static  int COLLECT_MOTOR = 8;
 	
-	public static int INTERNAL_MOTOR = 9;
+	public static int INTERNAL_MOTOR = 10;
 	
 	
 
