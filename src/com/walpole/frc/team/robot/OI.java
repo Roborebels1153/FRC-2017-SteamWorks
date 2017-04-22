@@ -117,8 +117,8 @@ public OI() {
 	opB.whenPressed(new GearCollectorOut());
 	opB.whenReleased(new GearCollectorOff());
 
-	opX.whileHeld(new MoveGearCollectorOutAutoCommand(68, 0.6, 2));
-	opX.whileHeld(new GearInPositionCommand()); 
+	opX.whileHeld(new MoveGearCollectorOutAutoCommand(50, 0.6, 2));
+	//opX.whileHeld(new GearInPositionCommand()); 
 	
 	//opY.whenPressed(new GearLEDOffCommand());
 

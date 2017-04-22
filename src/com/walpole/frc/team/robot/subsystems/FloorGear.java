@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Command;
@@ -73,7 +75,7 @@ public class FloorGear extends Subsystem {
 		gearEncoderD = Robot.prefs.getDouble("gearEncoderD", gearEncoderD);
 	}
 	
-	public void updateGearPIDControllers() { 
+	public void updateGearPIDControllers() {    
 		loadGearPIDValues();
 		//gearPID.setPID(gearEncoderP, gearEncoderI, gearEncoderD); 
 	}
@@ -81,14 +83,19 @@ public class FloorGear extends Subsystem {
 	
 	public void gear(Joystick joystick) {
 		double speed = Constants.FLOOR_GEAR_LEVER_SPEED * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);
-		if(Math.abs(joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y)) < 0.1) { 
+		//double output = Robot.floorGear.getGearPIDOutput(); 
+		 if(Robot.oi.getOperatorJoystick().getRawButton(3) == true && Math.abs(joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y)) < 0.1) { 
+			gearMotor.set(0);
+			//Robot.floorGear.setGearMotor(output);
+					}
+		 else if( Math.abs(joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y)) < 0.1) { 
 			gearMotor.set(-0.05); }		
 		else { 
 		gearMotor.set(speed);		
 		}
-	
-			
 	}
+			
+	
 	
 	public boolean getGearLightSensorState () {
 		return gearLightSensor.get();

@@ -125,7 +125,7 @@ public class Robot extends IterativeRobot {
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
-	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(68, 0.6, 2));
+	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(40, 0.6, 2));
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.3));
 	chooser.addObject("Blue Left Deliver A Gear Shoot", new BlueLeftScoreAGearShoot());
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));

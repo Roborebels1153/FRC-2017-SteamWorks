@@ -30,7 +30,7 @@ public class MoveGearCollectorOutAutoCommand extends Command {
 	@Override
 	protected void initialize() {
 
-		//Robot.floorGear.resetGearEncoder();
+		Robot.floorGear.resetGearEncoder();
 //		Robot.floorGear.getGearPIDSetPoint(); 
 		Robot.floorGear.setGearEncoderPIDSetpoint(setPoint);
 		Robot.floorGear.setMaxGearCollectorPIDOutput(speed);
@@ -56,7 +56,8 @@ public class MoveGearCollectorOutAutoCommand extends Command {
 	protected boolean isFinished() {
 		
 		double error = Math.abs(Robot.floorGear.getGearPIDError()); 
-		return System.currentTimeMillis() - startTimeMillis >= secondsArm * 1000 || error < 10; 
+		//return System.currentTimeMillis() - startTimeMillis >= secondsArm * 1000 || error < 10; 
+		 return error < 10; 
 
 		
 		//Encoders Only:
@@ -67,22 +68,6 @@ public class MoveGearCollectorOutAutoCommand extends Command {
 //		}
 		//return false;  
 				
-		
-		
-		/*//LimitSwitch only:
-		 if (!Robot.floorGear.getGearLimitSwitchState() == true) {
-    		return true;
-    	} else {
-    		return false;
-    	}*/
-		 
-		/*//Encoders and Limit Switch:
-		return (error < 100 | Robot.floorGear.getGearLimitSwitchState());  */
-		 
-		//Testing Purposes:
-		//return false;
-		
-		//return true; 
 		
 	}
 

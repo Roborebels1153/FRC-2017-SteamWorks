@@ -12,14 +12,14 @@ public class Shooter extends Subsystem {
 	private Victor shooterMotor;
 	private Victor agitatorMotor;
 	    
-    static double shooterP = 0.007;
+    static double shooterP = 0.008;
     static double shooterI = 0;
     static double shooterD = 0.015;
     static double shooterF = 0.014;
     
 	private PIDController shooterPID;
 	
-	//public long shootingStartTime = System.currentTimeMillis();
+	public long shootingStartTime = System.currentTimeMillis();
 	
 	private Counter shooterCounter = new Counter(RobotMap.LIGHT_SENSOR);
 	
@@ -65,7 +65,12 @@ public class Shooter extends Subsystem {
     
     public void shootWhenWeDontHaveALightSensor() {
 //    	agitatorMotor.set(-1);
-    	shooterMotor.set(0.7);
+    	shooterMotor.set(0.8);
+//    	if (System.currentTimeMillis() - 1000 >= shootingStartTime) {
+//    		agitatorMotor.set(-1);
+//    	} else {
+//    		agitatorMotor.set(0);
+//    	}
     }
     
     public void stopShooting() {
