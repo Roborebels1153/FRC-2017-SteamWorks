@@ -147,6 +147,11 @@ public class Drive extends Subsystem {
     @Override
     public void initDefaultCommand() {
     }
+    
+    public void turnWithVision(double turnValue) {
+		robotDrive.arcadeDrive(0,turnValue,true);
+		
+	}
 
     public void drive(Joystick joystick) {
 		double moveValue = 1 * joystick.getRawAxis(RobotMap.JOYSTICK_LEFT_Y);

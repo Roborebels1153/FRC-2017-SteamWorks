@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class Drive10FeetShiftLow extends CommandGroup {
 
     
-    private static final int distance = 120; 
+    private static final int distance = 5; 
     private static final double secondsToWait = 2; 
     private static final double speed = 0.5;
     //Testing

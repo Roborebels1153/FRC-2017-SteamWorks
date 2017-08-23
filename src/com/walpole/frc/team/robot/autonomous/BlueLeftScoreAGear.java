@@ -9,6 +9,7 @@ import com.walpole.frc.team.robot.commands.RetainGearCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
 import com.walpole.frc.team.robot.commands.StopGearCollectorCommand;
 import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
+import com.walpole.frc.team.robot.commands.TurnWithVisionCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -29,27 +30,35 @@ public class BlueLeftScoreAGear extends CommandGroup {
     public BlueLeftScoreAGear() {
 	super();
 	
-	addSequential(new ShiftHighCommand());
-	//addSequential(new MoveGearCollectorOutAutoCommand(35, 0.5)); 
-	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 5));
-	addSequential(new WaitCommand(0.5)); 
-	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
-	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
-	addSequential(new WaitCommand(2)); 
-//	addSequential(new MoveGearCollectorOutAutoCommand(0, -0.5, 1.5));
-	//addSequential(new WaitCommand(1));
-	//addSequential(new MoveGearCollectorOutAutoCommand(65, 0.4, 2));
-	//addSequential(new MoveGearCollectorOutAutoCommand(-10, 0.5, 2));
-	addSequential(new MoveGearCollectorOutAutoCommand(31, 0.6, 2));
-//	addSequential(new MoveGearCollectorOutAutoCommand(35, 0.5, 2));
-	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 3));  
-	//addSequential(new MoveGearCollectorOutAutoCommand(37, 0.5, 2)); 
-	//addSequential(new WaitCommand(secondsToWait));
-	//addSequential(new WaitCommand(1)); 
-	addSequential(new GearCollectorOut()); 
-	addSequential(new WaitCommand(3));
-	addSequential(new StopGearCollectorCommand());
-	//addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
+//	addSequential(new ShiftHighCommand());
+//	//addSequential(new MoveGearCollectorOutAutoCommand(35, 0.5)); 
+//	addSequential(new DriveForwardWithGyroEncoder(inchesForward, speedForward, 5));
+//	addSequential(new WaitCommand(0.5)); 
+//	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+//	addSequential(new TurnWithGyroCommand(degreesToTurn, speedToTurn));
+//	addSequential(new WaitCommand(2)); 
+////	addSequential(new MoveGearCollectorOutAutoCommand(0, -0.5, 1.5));
+//	//addSequential(new WaitCommand(1));
+//	//addSequential(new MoveGearCollectorOutAutoCommand(65, 0.4, 2));
+//	//addSequential(new MoveGearCollectorOutAutoCommand(-10, 0.5, 2));
+//	addSequential(new MoveGearCollectorOutAutoCommand(31, 0.6, 2));
+////	addSequential(new MoveGearCollectorOutAutoCommand(35, 0.5, 2));
+//	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, speedToAirShip, 3));  
+//	//addSequential(new MoveGearCollectorOutAutoCommand(37, 0.5, 2)); 
+//	//addSequential(new WaitCommand(secondsToWait));
+//	//addSequential(new WaitCommand(1)); 
+//	addSequential(new GearCollectorOut()); 
+//	addSequential(new WaitCommand(3));
+//	addSequential(new StopGearCollectorCommand());
+//	//addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
 	
+	
+	addSequential(new TurnWithGyroCommand(45, 0.4));
+	addSequential(new WaitCommand(2)); 
+	addSequential(new TurnWithVisionCommand());
+	addSequential(new WaitCommand(2)); 
+	addSequential(new DriveForwardWithGyroEncoder(120, speedForward, 5));
+	addSequential(new TurnWithVisionCommand());
     }
+    
 }

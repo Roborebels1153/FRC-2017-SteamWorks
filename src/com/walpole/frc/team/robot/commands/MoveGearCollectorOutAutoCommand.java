@@ -56,8 +56,8 @@ public class MoveGearCollectorOutAutoCommand extends Command {
 	protected boolean isFinished() {
 		
 		double error = Math.abs(Robot.floorGear.getGearPIDError()); 
-		//return System.currentTimeMillis() - startTimeMillis >= secondsArm * 1000 || error < 10; 
-		 return error < 10; 
+		return System.currentTimeMillis() - startTimeMillis >= secondsArm * 1000 || error < 10; 
+		// return error < 10; 
 
 		
 		//Encoders Only:
