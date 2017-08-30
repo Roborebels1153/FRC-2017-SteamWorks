@@ -107,10 +107,9 @@ public class Robot extends IterativeRobot {
 	public static int target2_width = 0;
 	public static int target2_height = 0;
 	public static int target_center = 0;
-	public static int center_x = 120;
+	public int center_x = 115; //120;
 	public static int error = 0;
 	public static int loopCount = 0;
- 
 
 	public SerialPort arduinoSerial;
 	public String outputString = new String("no target detected");
@@ -118,17 +117,15 @@ public class Robot extends IterativeRobot {
 	public String packetPattern = "B,([0-9.,]*),[EN]$";
 	public Pattern r;
 
-	
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	prefs = Preferences.getInstance();;
-	oi = new OI();
-	chooser = new SendableChooser<Command>();
-	arduinoSerial = new SerialPort(9600,Port.kMXP,8,Parity.kNone,StopBits.kOne);
+    	prefs = Preferences.getInstance();
+    	oi = new OI();
+    	chooser = new SendableChooser<Command>();
+		arduinoSerial = new SerialPort(9600,Port.kMXP,8,Parity.kNone,StopBits.kOne);
 	
 //	new Thread(() -> {
 //		
@@ -272,7 +269,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
     	r = Pattern.compile(packetPattern); 
     	//Robot.gear.keepGear();
-    	autonomousCommand = new TurnWithVisionCommand();
+    	autonomousCommand = new TurnWithVisionCommand(5);
 
         autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)

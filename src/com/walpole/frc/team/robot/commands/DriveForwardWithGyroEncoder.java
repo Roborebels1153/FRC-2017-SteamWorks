@@ -74,7 +74,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 ////    	} else {
 ////    		return false; 
 ////    	}
-    	return error <= 400;//leftMotorPower <= 0.1 && error <= 500; 
+    	return error <=100;//leftMotorPower <= 0.1 && error <= 500; 
 //    	
     	// Use While Tuning
 //    	return false;
@@ -85,7 +85,7 @@ public class DriveForwardWithGyroEncoder extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-	//Robot.driveSubsystem.stopDrive();
+	Robot.drive.stopDrive();
 	Robot.drive.disableDrivePID();
 	Robot.drive.disableGyroPID();
 //	Robot.floorGear.setGearMotor(-0.1);

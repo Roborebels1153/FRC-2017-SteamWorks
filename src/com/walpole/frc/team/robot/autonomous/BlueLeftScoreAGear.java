@@ -52,13 +52,17 @@ public class BlueLeftScoreAGear extends CommandGroup {
 //	addSequential(new StopGearCollectorCommand());
 //	//addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
 	
-	
+	addSequential(new DriveForwardWithGyroEncoder(65, speedForward, 5));
 	addSequential(new TurnWithGyroCommand(45, 0.4));
-	addSequential(new WaitCommand(2)); 
-	addSequential(new TurnWithVisionCommand());
-	addSequential(new WaitCommand(2)); 
-	addSequential(new DriveForwardWithGyroEncoder(120, speedForward, 5));
-	addSequential(new TurnWithVisionCommand());
+	addSequential(new WaitCommand(0.5)); 
+	addSequential(new TurnWithVisionCommand(5)); //parameter is error Tolerance
+	addSequential(new WaitCommand(0.5)); 
+	addSequential(new DriveForwardWithGyroEncoder(24, 0.32, 5));
+	addSequential (new WaitCommand(10));
+	addSequential(new TurnWithVisionCommand(12));
+	addSequential(new DriveForwardWithGyroEncoder(30, 0.32, 5));
+	addSequential (new MoveGearCollectorOutAutoCommand(27, 0.4));
+	
     }
     
 }
