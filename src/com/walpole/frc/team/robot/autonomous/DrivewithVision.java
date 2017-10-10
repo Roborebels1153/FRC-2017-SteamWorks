@@ -2,6 +2,7 @@ package com.walpole.frc.team.robot.autonomous;
 
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
+import com.walpole.frc.team.robot.commands.DriveForwardWithVision;
 import com.walpole.frc.team.robot.commands.GearCollectorOut;
 import com.walpole.frc.team.robot.commands.MoveGearCollectorOutAutoCommand;
 import com.walpole.frc.team.robot.commands.ShiftHighCommand;
@@ -12,7 +13,7 @@ import com.walpole.frc.team.robot.commands.TurnWithGyroCommand;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class DriveAndTurn extends CommandGroup {
+public class DrivewithVision extends CommandGroup {
     
 	  private static final double inchesForward = 62;
 	   // private static final int inchesForwardProto = 65; //Distance manipulated for PROTOTYPE Robot
@@ -25,7 +26,7 @@ public class DriveAndTurn extends CommandGroup {
 	    private static final int encoderTicksDown = 140;            
 	    private static final double armSpeed = 0.3; 
 	    private static final double speedToTurn = 0.35; 
-    public DriveAndTurn() {
+    public DrivewithVision() {
 	super();
 //	addSequential(new ShiftHighCommand());
 //	addSequential(new DriveForwardWithGyroEncoder(-66, speedToAirShip, 3));
@@ -35,11 +36,11 @@ public class DriveAndTurn extends CommandGroup {
 
 	
 	
-	addSequential(new MoveGearCollectorOutAutoCommand(65, 0.4, 2));
-	addSequential(new MoveGearCollectorOutAutoCommand(-10, 0.5, 2));
+	//addSequential(new MoveGearCollectorOutAutoCommand(65, 0.4, 2));
+	//addSequential(new MoveGearCollectorOutAutoCommand(-10, 0.5, 2));
 
 	
-	
+	addSequential(new DriveForwardWithVision(85, 0.32, 5, 5, -25));
 	
 	
 	
@@ -65,7 +66,7 @@ public class DriveAndTurn extends CommandGroup {
 
     }
 
-    public DriveAndTurn(String name) {
+    public DrivewithVision(String name) {
 	super(name);
     }
 }          

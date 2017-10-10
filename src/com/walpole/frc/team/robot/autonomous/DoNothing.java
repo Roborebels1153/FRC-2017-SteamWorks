@@ -5,14 +5,14 @@ import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.ShooterShootCommand;
 import com.walpole.frc.team.robot.commands.StopCommand;
 
-public class Shoot extends CommandGroup {
+public class DoNothing extends CommandGroup {
     
     int inchesToAirship = 94; 
    
-    public Shoot() { 
+    public DoNothing() { 
 	super(); 
 	
-	addSequential(new ShooterShootCommand());
+	//addSequential(new ShooterShootCommand());
 	
 //	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, 3)); 
 //	addSequential(new StopCommand()); 

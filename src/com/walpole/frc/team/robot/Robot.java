@@ -11,9 +11,9 @@ import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueLeftScoreAGearShoot;
 import com.walpole.frc.team.robot.autonomous.BlueRedCenterScoreAGear;
 import com.walpole.frc.team.robot.autonomous.BlueRightScoreAGear;
-import com.walpole.frc.team.robot.autonomous.Shoot;
+import com.walpole.frc.team.robot.autonomous.DoNothing;
 import com.walpole.frc.team.robot.autonomous.Drive10FeetShiftLow;
-import com.walpole.frc.team.robot.autonomous.DriveAndTurn;
+import com.walpole.frc.team.robot.autonomous.DrivewithVision;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightHopperShoot;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
@@ -101,15 +101,20 @@ public class Robot extends IterativeRobot {
 	public static int target1_x = 0;
 	public static int target1_y = 0;
 	public static int target1_width = 0;
-	public static int target1_height = 0;
+	public static float target1_height = 0;
 	public static int target2_x = 0;
 	public static int target2_y = 0;
 	public static int target2_width = 0;
-	public static int target2_height = 0;
+	public static float target2_height = 0;
 	public static int target_center = 0;
-	public int center_x = 115; //120;
+	public static double distance = 0;
+	public int center_x = 160; //120;
 	public static int error = 0;
 	public static int loopCount = 0;
+	public static double dist = 0;
+    public static void findDist() {
+    		dist = distance;
+    }
 
 	public SerialPort arduinoSerial;
 	public String outputString = new String("no target detected");
@@ -149,13 +154,14 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Turn Right With Gyro", new TurnWithGyroCommand(90, 0.35));
 	chooser.addObject("Center With Gyro", new TurnWithGyroCommand(0, 0.5));
 	//chooser.addObject("Drive Forward With Seconds", new DriveForwardWithSeconds(5));
-	chooser.addObject("Drive And Turn", new DriveAndTurn());
+	chooser.addObject("Drive with Vision", new DrivewithVision());
 	//chooser.addObject("Cross The Green Line", new CrossGreenLine()); 
 	//chooser.addObject("Score A Gear With Seconds Center", new BlueCenterScoreAGearWithSeconds());
 	chooser.addObject("Drive 10 feet ShiftLow Forward", new Drive10FeetShiftLow()); 
 	chooser.addObject("Move Gear Collector Down", new MoveGearCollectorOutAutoCommand(40, 0.6, 2));
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.3));
 	chooser.addObject("Blue Left Deliver A Gear Shoot", new BlueLeftScoreAGearShoot());
+	chooser.addObject("Do Nothing", new DoNothing());
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
 
 
@@ -228,6 +234,9 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Shooter Motor Power", shooter.getShooterMotorPower());
 	//SmartDashboard.putNumber("RPM", Robot.Counter.getRPMCount());
 	
+	//Vision
+	SmartDashboard.putNumber("Vision distance", Robot.dist);
+	SmartDashboard.putNumber("Vision current distance", Robot.distance);
 
     }
     
@@ -268,8 +277,10 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	r = Pattern.compile(packetPattern); 
+    	SmartDashboard.putString("Am I Getting Vision Distance", "no");
+
     	//Robot.gear.keepGear();
-    	autonomousCommand = new TurnWithVisionCommand(5);
+    	autonomousCommand = new TurnWithVisionCommand(5,0);
 
         autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
@@ -371,13 +382,14 @@ public class Robot extends IterativeRobot {
 									target1_x = Integer.parseInt(target1x);
 									target1_y = Integer.parseInt(target1y);
 									//target1_width = Integer.parseInt(outputArray[3]);
-									//target1_height = Integer.parseInt(outputArray[4]);
+									target1_height = Integer.parseInt(outputArray[4]);
 									target2_x = 0;
 									target2_y = 0;
 									target2_width = 0;
 									target2_height = 0;
 									target_center = 0;
-								 
+									distance = (77.5/target1_height)*12; //(-(target1_height + 46)/6)*12;
+
 									 error = center_x - target1_x;
 									
 									outputString = "target1: " + String.valueOf(target1_x) + "," + String.valueOf(target1_y);
@@ -397,8 +409,8 @@ public class Robot extends IterativeRobot {
 										target2_y = Integer.parseInt(target2y);
 										 error = center_x - ((target1_x + target2_x)/2);
 					//					target2_width = Integer.parseInt(outputArray[7]);
-					//					target2_height = Integer.parseInt(outputArray[8]);
-										
+										target2_height = Integer.parseInt(outputArray[8]);
+										distance = (77.5/((target1_height + target2_height)/2))*12; //((-(target1_height + target2_height)/2 + 46)/6)*12;
 										//// estimate distance based on average height
 										//int avg_height = (int) (target1_height + target2_height)/2;
 										
