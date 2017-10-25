@@ -17,6 +17,7 @@ import com.walpole.frc.team.robot.autonomous.DrivewithVision;
 import com.walpole.frc.team.robot.autonomous.RedLeftScoreAGear;
 import com.walpole.frc.team.robot.autonomous.RedRightHopperShoot;
 import com.walpole.frc.team.robot.autonomous.RedRightScoreAGear;
+import com.walpole.frc.team.robot.autonomous.VisionWorkingTest;
 import com.walpole.frc.team.robot.commands.DriveForwardWithEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithGyroEncoder;
 import com.walpole.frc.team.robot.commands.DriveForwardWithSeconds;
@@ -162,6 +163,7 @@ public class Robot extends IterativeRobot {
 	chooser.addObject("Turn With Gyro Slow", new TurnWithGyroCommand(90, 0.3));
 	chooser.addObject("Blue Left Deliver A Gear Shoot", new BlueLeftScoreAGearShoot());
 	chooser.addObject("Do Nothing", new DoNothing());
+	chooser.addObject("Vision Test", new VisionWorkingTest());
 	//chooser.addObject("Turn With Gyro Normal", new TurnWithGyroCommand(90));
 
 

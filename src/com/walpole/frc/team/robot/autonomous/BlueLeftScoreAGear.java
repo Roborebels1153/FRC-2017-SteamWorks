@@ -58,14 +58,14 @@ public class BlueLeftScoreAGear extends CommandGroup {
 //	addSequential(new StopGearCollectorCommand());
 //	//addSequential(new MoveGearCollectorOutAutoCommand(encoderTicksDown, armSpeed)); 
 	
-	addSequential(new DriveForwardWithGyroEncoder(59, speedForward, 5));
-	addSequential(new TurnWithGyroCommand(45, 0.4));
-	addSequential(new WaitCommand(0.5)); 
-	addSequential(new TurnWithVisionCommand(5,-15));
-	addSequential(new DriveStraightWithVisionDistance(0, speedForward, 0.50));
-	addSequential(new VisionGetAngle());
+//	addSequential(new DriveForwardWithGyroEncoder(59, speedForward, 5));
+//	addSequential(new TurnWithGyroCommand(45, 0.4));
+//	addSequential(new WaitCommand(0.5)); 
+//	addSequential(new TurnWithVisionCommand(5,-15));
+//	addSequential(new DriveStraightWithVisionDistance(0, speedForward, 0.50));
+//	addSequential(new VisionGetAngle());
 	
-	
+	addSequential(new DriveForwardWithVision(85, 0.32, 5, 5, -25));
 	
 	/* Summer Vision Sequence- Driving with vision=works
 	addSequential(new DriveForwardWithGyroEncoder(59, speedForward, 5));
@@ -73,7 +73,7 @@ public class BlueLeftScoreAGear extends CommandGroup {
 	addSequential(new WaitCommand(0.5)); 
 	addSequential(new TurnWithVisionCommand(5,-15)); //parameter is error Tolerance
 	addSequential(new WaitCommand(0.5)); 
-	//addSequential(new DriveForwardWithVision(85, 0.32, 5, 5, -25));
+	addSequential(new DriveForwardWithVision(85, 0.32, 5, 5, -25));
 	
 	addSequential(new DriveForwardWithVisionDistance(0, 0.32, 5, -20));*/
 	
