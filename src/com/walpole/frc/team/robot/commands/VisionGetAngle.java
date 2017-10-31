@@ -15,6 +15,10 @@ public class VisionGetAngle extends Command {
     protected void initialize() {
     	SmartDashboard.putNumber("Target 1 Height", Robot.target1_height);
 		SmartDashboard.putNumber("Target 2 Height", Robot.target2_height);
+		SmartDashboard.putNumber("Target Right Height", Robot.target_right_height);
+		SmartDashboard.putNumber("Target Left Height", Robot.target_left_height);
+
+
     }
 
     @Override
@@ -22,6 +26,8 @@ public class VisionGetAngle extends Command {
     	if(Robot.number_targets == 2.0) {
     		SmartDashboard.putNumber("Target 1 Height", Robot.target1_height);
     		SmartDashboard.putNumber("Target 2 Height", Robot.target2_height);
+    		SmartDashboard.putNumber("Target Right Height", Robot.target_right_height);
+    		SmartDashboard.putNumber("Target Left Height", Robot.target_left_height);
     	//TODO:Compare heights
     		
     	}

@@ -15,6 +15,7 @@ public class VisionWorkingTest extends CommandGroup {
 	
 	//addSequential(new ShooterShootCommand());
 	 addSequential(new TurnWithVisionCommand (5,0));
+	 
 //	addSequential(new DriveForwardWithGyroEncoder(inchesToAirship, 3)); 
 //	addSequential(new StopCommand()); 
     }

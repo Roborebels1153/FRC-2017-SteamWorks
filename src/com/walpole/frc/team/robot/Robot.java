@@ -103,10 +103,12 @@ public class Robot extends IterativeRobot {
 	public static int target1_y = 0;
 	public static int target1_width = 0;
 	public static float target1_height = 0;
+	public static float target_right_height = 0;
 	public static int target2_x = 0;
 	public static int target2_y = 0;
 	public static int target2_width = 0;
 	public static float target2_height = 0;
+	public static float target_left_height = 0;
 	public static int target_center = 0;
 	public static double distance = 0;
 	public int center_x = 160; //120;
@@ -413,6 +415,15 @@ public class Robot extends IterativeRobot {
 					//					target2_width = Integer.parseInt(outputArray[7]);
 										target2_height = Integer.parseInt(outputArray[8]);
 										distance = (77.5/((target1_height + target2_height)/2))*12; //((-(target1_height + target2_height)/2 + 46)/6)*12;
+										//code for assinging heights to left and right traget heights
+										
+										if (target1_x > target2_x) {
+											target_right_height = target1_height;
+											target_left_height = target2_height; 
+										} else {
+											target_right_height = target2_height;
+											target_left_height = target_height; 
+										}
 										//// estimate distance based on average height
 										//int avg_height = (int) (target1_height + target2_height)/2;
 										
