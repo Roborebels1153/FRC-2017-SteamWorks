@@ -3,6 +3,7 @@ package com.walpole.frc.team.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.walpole.frc.team.robot.Constants;
 import com.walpole.frc.team.robot.Robot;
 
 /**
@@ -43,6 +44,8 @@ public class TurnWithVisionCommand extends Command {
 		SmartDashboard.putNumber("Target 2 Height", Robot.target2_height);
 		SmartDashboard.putNumber("Target Right Height", Robot.target_right_height);
 		SmartDashboard.putNumber("Target Left Height", Robot.target_left_height);
+		
+		Robot.findDist();
 		
 		withinErrorRange = 0;
 		Robot.drive.turnWithVision(0);

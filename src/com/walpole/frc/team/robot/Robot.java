@@ -118,6 +118,14 @@ public class Robot extends IterativeRobot {
     public static void findDist() {
     		dist = distance;
     }
+    
+    //New Vision Distance Calculations
+    public static double newDistance = 0;
+    public static double visionHeightPixels = 47;
+    public static double FOVPixels = 240;
+    public static double targetHeight = 5; //height of each reflective tape 
+    
+    
 
 	public SerialPort arduinoSerial;
 	public String outputString = new String("no target detected");
@@ -241,6 +249,13 @@ public class Robot extends IterativeRobot {
 	//Vision
 	SmartDashboard.putNumber("Vision distance", Robot.dist);
 	SmartDashboard.putNumber("Vision current distance", Robot.distance);
+
+	SmartDashboard.putNumber("Target 1 Height", Robot.target1_height);
+	SmartDashboard.putNumber("Target 2 Height", Robot.target2_height);
+	SmartDashboard.putNumber("Target Right Height", Robot.target_right_height);
+	SmartDashboard.putNumber("Target Left Height", Robot.target_left_height);
+	
+	SmartDashboard.putNumber("New Vision Distance", newDistance);
 
     }
     
@@ -414,15 +429,19 @@ public class Robot extends IterativeRobot {
 										 error = center_x - ((target1_x + target2_x)/2);
 					//					target2_width = Integer.parseInt(outputArray[7]);
 										target2_height = Integer.parseInt(outputArray[8]);
-										distance = (77.5/((target1_height + target2_height)/2))*12; //((-(target1_height + target2_height)/2 + 46)/6)*12;
+										
+										distance = (93/((target1_height + target2_height)/2))*12; //((-(target1_height + target2_height)/2 + 46)/6)*12;
 										//code for assinging heights to left and right traget heights
+										
+										newDistance = targetHeight * FOVPixels/(2*(Math.tan(visionHeightPixels))*((target1_height + target2_height)/2));
+										
 										
 										if (target1_x > target2_x) {
 											target_right_height = target1_height;
 											target_left_height = target2_height; 
 										} else {
 											target_right_height = target2_height;
-											target_left_height = target_height; 
+											target_left_height = target1_height; 
 										}
 										//// estimate distance based on average height
 										//int avg_height = (int) (target1_height + target2_height)/2;
@@ -477,6 +496,7 @@ public class Robot extends IterativeRobot {
 				}
 				SmartDashboard.putNumber("Error", error);	
 				SmartDashboard.putString("Last Pixy Output", outputString); 
+
 			}		
 				//outputString = " : " + arduinoString;
 			//}
@@ -485,8 +505,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		loopCount++;
-        }
-        
+        }   
     }
 
     public void teleopInit() {

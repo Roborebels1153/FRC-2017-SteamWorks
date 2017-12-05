@@ -62,13 +62,14 @@ public class DriveForwardWithVisionDistance extends Command {
     		SmartDashboard.putString("Am I Getting Vision Distance", "bad");
 
     		this.setPoint = Constants.ticksPerInch * inchesToDrive; //this line alone = original
+    		SmartDashboard.putNumber("inchesToDrive", inchesToDrive);
     	} else {
     		SmartDashboard.putString("Am I Getting Vision Distance", "yes");
     		Robot.findDist();
     		this.setPoint = Constants.ticksPerInch * (1.0*(Robot.dist));
     	}
     	//this.secondsToDrive = secondsToDrive;
-    	SmartDashboard.putNumber("inchesToDrive", inchesToDrive);
+    	
     	
     	
 	//startTimeMillis = System.currentTimeMillis();
