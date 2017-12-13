@@ -256,6 +256,7 @@ public class Robot extends IterativeRobot {
 	SmartDashboard.putNumber("Target Left Height", Robot.target_left_height);
 	
 	SmartDashboard.putNumber("New Vision Distance", newDistance);
+	SmartDashboard.putNumber("Tangent Angle Calculation", (Math.tan(Math.toRadians(visionHeightPixels))));
 
     }
     
@@ -299,9 +300,9 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putString("Am I Getting Vision Distance", "no");
 
     	//Robot.gear.keepGear();
-    	autonomousCommand = new TurnWithVisionCommand(5,0);
+    	autonomousCommand = new VisionWorkingTest();
 
-        autonomousCommand = (Command) chooser.getSelected();
+        //autonomousCommand = (Command) chooser.getSelected();
         drive.updatePIDControllers();  //the prefs are not working so this is commented (Sunday 2/12)
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -411,6 +412,7 @@ public class Robot extends IterativeRobot {
 
 									 error = center_x - target1_x;
 									
+									 
 									outputString = "target1: " + String.valueOf(target1_x) + "," + String.valueOf(target1_y);
 									
 									if ((number_targets >= 2) && (outputArray.length == 9)) {
@@ -433,7 +435,7 @@ public class Robot extends IterativeRobot {
 										distance = (93/((target1_height + target2_height)/2))*12; //((-(target1_height + target2_height)/2 + 46)/6)*12;
 										//code for assinging heights to left and right traget heights
 										
-										newDistance = targetHeight * FOVPixels/(2*(Math.tan(visionHeightPixels))*((target1_height + target2_height)/2));
+										newDistance = targetHeight * FOVPixels/(2*(Math.tan(Math.toRadians(visionHeightPixels)))*((target1_height + target2_height)/2));
 										
 										
 										if (target1_x > target2_x) {
